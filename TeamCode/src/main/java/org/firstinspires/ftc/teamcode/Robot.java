@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Mechanisms;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -31,16 +31,19 @@ public  class Robot {
     public ElapsedTime time;
     public HardwareMap hardwareMap;
 
+    public String[] motorNames = {"frontRight","frontLeft","backLeft","backRight"};
+
     //Robot constructor class; creates robot object
     public Robot(OpMode opMode) {
         oop = opMode;
         hardwareMap = oop.hardwareMap;
 
         motors = new ArrayList<>();
-        motors.add((DcMotorEx)hardwareMap.get(DcMotor.class,"frontLeft"));
-        motors.add((DcMotorEx)hardwareMap.get(DcMotor.class,"frontRight"));
-        motors.add((DcMotorEx)hardwareMap.get(DcMotor.class,"backLeft"));
-        motors.add((DcMotorEx)hardwareMap.get(DcMotor.class,"backRight"));
+        motors.add((DcMotorEx)hardwareMap.get(DcMotorEx.class,"frontLeft"));
+        motors.add((DcMotorEx)hardwareMap.get(DcMotorEx.class,"frontRight"));
+        motors.add((DcMotorEx)hardwareMap.get(DcMotorEx.class,"backLeft"));
+        motors.add((DcMotorEx)hardwareMap.get(DcMotorEx.class,"backRight"));
+        motors.get(0).setDirection(DcMotorSimple.Direction.REVERSE);
         motors.get(1).setDirection(DcMotorSimple.Direction.REVERSE);
         motors.get(3).setDirection(DcMotorSimple.Direction.REVERSE);
         time = new ElapsedTime();
@@ -54,24 +57,23 @@ public  class Robot {
 //
     }
     public  Robot(LinearOpMode opMode) {
-        oop = opMode;
-        Linoop = opMode;
 
+        oop=opMode;
         hardwareMap = oop.hardwareMap;
-//
+
         motors = new ArrayList<>();
         motors.add((DcMotorEx)hardwareMap.get(DcMotor.class,"frontLeft"));
         motors.add((DcMotorEx)hardwareMap.get(DcMotor.class,"frontRight"));
         motors.add((DcMotorEx)hardwareMap.get(DcMotor.class,"backLeft"));
         motors.add((DcMotorEx)hardwareMap.get(DcMotor.class,"backRight"));
         motors.get(1).setDirection(DcMotorSimple.Direction.REVERSE);
+        motors.get(0).setDirection(DcMotorSimple.Direction.REVERSE);
         motors.get(3).setDirection(DcMotorSimple.Direction.REVERSE);
         time = new ElapsedTime();
 //
         gamepad1 = oop.gamepad1;
         gamepad2 = oop.gamepad2;
 //
-        hardwareMap = oop.hardwareMap;
         telemetry = oop.telemetry;
 //        dt = new Drivetrain(this, new int[]{0, 1, 2, 3});
 //

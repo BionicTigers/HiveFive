@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import org.firstinspires.ftc.teamcode.Mechanisms.Mechanism;
+import org.firstinspires.ftc.teamcode.Mechanism;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
@@ -16,7 +16,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.tel
 public class RookieDrivetrain extends Mechanism {
 
     //Declares values
-    public org.firstinspires.ftc.teamcode.Mechanisms.Robot rookieBot;
+    public org.firstinspires.ftc.teamcode.Robot rookieBot;
     public double[] motorPowers;
     public int[] motorIndices;
 
@@ -34,7 +34,7 @@ public class RookieDrivetrain extends Mechanism {
 
     //Constructor method
     /*Use more effective and desrciptive names. I like the funny, but make them descriptive as to what the variable actually is.*/
-    public RookieDrivetrain(org.firstinspires.ftc.teamcode.Mechanisms.Robot bot, int[] motorNumbers) {
+    public RookieDrivetrain(org.firstinspires.ftc.teamcode.Robot bot, int[] motorNumbers) {
         DcMotorEx motorPlaceholder;
         rookieBot = bot;
         motorIndices = motorNumbers;
