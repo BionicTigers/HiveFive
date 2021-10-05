@@ -20,6 +20,7 @@ public class RookieTeleOp extends LinearOpMode {
         thomas = new RookieDrivetrain(rookieBot, motorNumbers);
         rookieBot.initMotors(motorNames);
         waitForStart();
+
         //what runs constantly once play button is pressed
         while(opModeIsActive()) {
             thomas.update(gamepad1, gamepad2);
