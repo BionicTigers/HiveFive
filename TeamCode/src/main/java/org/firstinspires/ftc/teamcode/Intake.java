@@ -7,7 +7,7 @@ public class Intake extends Mechanism {
     public void update(Gamepad gp1, Gamepad gp2) {
 
     }
-
+//plz
     public void write() {
 
     }
