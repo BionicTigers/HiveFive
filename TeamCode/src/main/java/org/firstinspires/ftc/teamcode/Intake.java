@@ -1,15 +1,32 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class Intake extends Mechanism {
 
-    public void update(Gamepad gp1, Gamepad gp2) {
+    public boolean goingin;
+    public boolean goingout;
 
+    public Intake (DcMotorEx intaker) {
+        super();
+        motors.add(intaker);
     }
-//plz
-    public void write() {
 
+    public void update(Gamepad gp1, Gamepad gp2) {
+        if (gp1.right_trigger >= 0.5) {
+            goingin = true;
+        } else if (gp1.left_trigger >= 0.5) {
+            goingout = true;
+        }
+    }
+
+    public void write() {
+        if (goingin) {
+            motors.get(0).setPower(1);
+        } else if (goingout) {
+            motors.get(0).setPower(-1);
+        }
     }
 }
 
