@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class Transfer extends Mechanism{
 
+    //One motor and either another motor or a servo
+
     public void update(Gamepad gp1, Gamepad gp2) {
 
     }
