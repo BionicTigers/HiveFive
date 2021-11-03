@@ -42,7 +42,17 @@ public class Drivetrain extends Mechanism {
             motorPowers[3] = v4;
         }
 
-        //This code was in the wrong place, it was in the constructor method when it should be after.
+    @Override
+    public void update(Gamepad gp1, Gamepad gp2) {
+
+    }
+
+    @Override
+    public void write() {
+
+    }
+
+    //This code was in the wrong place, it was in the constructor method when it should be after.
 
 //        //Uses values from motor powers array to move the robot
 //        public void robotMovement () {
