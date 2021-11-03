@@ -18,9 +18,13 @@ public class Intake extends Mechanism {
     public void update(Gamepad gp1, Gamepad gp2) {
         if (gp1.right_trigger >= 0.5) { //If right trigger is pressed
             goingin = true; //Set direction: In
+        } else {
+            goingin = false;
         }
         if (gp1.left_trigger >= 0.5) { //Otherwise if left trigger is pressed
             goingout = true; //Set direction: Out
+        } else {
+            goingout = false;
         }
     }
 
