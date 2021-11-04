@@ -26,5 +26,5 @@ public class RookieTeleOp extends LinearOpMode {
             thomas.update(gamepad1, gamepad2);
             thomas.write();
         }
-    }
-}
+
+}}

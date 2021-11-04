@@ -2,18 +2,25 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+/*
+This class declares the drivetrain mechanism and sends data from the controller to the robot and
+ uses that data to set the motor powers
+ */
 public class Drivetrain extends Mechanism {
     //Declares values
     public org.firstinspires.ftc.teamcode.Robot robot;
     public double[] motorPowers;
     public int[] motorIndices;
+    public Telemetry telemetree;
 
     //Constructor method
-    public Drivetrain(org.firstinspires.ftc.teamcode.Robot bot, int[] motorNumbers) {
+    public Drivetrain(org.firstinspires.ftc.teamcode.Robot bot, int[] motorNumbers, Telemetry T) {
         DcMotorEx motorPlaceholder;
         robot = bot;
         motorIndices = motorNumbers;
+        telemetree = T;
 
         for (int motNum : motorNumbers) {
             motorPlaceholder = robot.motors.get(motNum);
@@ -42,32 +49,31 @@ public class Drivetrain extends Mechanism {
             motorPowers[3] = v4;
         }
 
-    @Override
-    public void update(Gamepad gp1, Gamepad gp2) {
 
-    }
+        //Uses values from motor powers array to move the robot
+        public void robotMovement () {
 
-    @Override
-    public void write() {
+        }
+        public void update (Gamepad gp1, Gamepad gp2){
+            /*
+            All telemetree commands implement telemetry to allow the driver to view motor powers
+            while code is active
+             */
+            telemetree.addLine("Motor Powers");
+            telemetree.addData("Front Right Power", motorPowers[0]);
+            telemetree.addData("Front Left Power", motorPowers[1]);
+            telemetree.addData("Back Right Power", motorPowers[2]);
+            telemetree.addData("Back Left Power", motorPowers[3]);
+            telemetree.update();
+            determineMotorPowers(gp1); //Updates values in motorPowers array
+        }
 
-    }
-
-    //This code was in the wrong place, it was in the constructor method when it should be after.
-
-//        //Uses values from motor powers array to move the robot
-//        public void robotMovement () {
-//
-//        }
-//        public void update (Gamepad gp1, Gamepad gp2){
-//            determineMotorPowers(gp1);
-//        }
-//
-//        public void write () {
-//            //Sets the motor powers based on the determineMotorPowers() method that was run in the update() method
-//            int i = 0;
-//            for (DcMotorEx motor : motors.subList(motorIndices[0], motorIndices[3] + 1)) {
-//                motor.setPower(motorPowers[i]);
-//                i++;
-//            }
-//        }
+        public void write () {
+            //Sets the motor powers based on the determineMotorPowers() method that was run in the update() method
+            int i = 0;
+            for (DcMotorEx motor : motors.subList(motorIndices[0], motorIndices[3] + 1)) {
+                motor.setPower(motorPowers[i]);
+                i++;
+           }
+       }
     }
