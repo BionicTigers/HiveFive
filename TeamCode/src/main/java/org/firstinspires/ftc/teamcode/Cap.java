@@ -13,17 +13,18 @@ public class Cap extends Mechanism {
     /**Length of the cap arm*/
     private final float armLength = 1;
     /**New instance of robot*/
-    Robot robot;
+    public Robot robot;
 
     /**
      * Cap constructor
      * Makes a new instance of cap
      * @param armServo    servo used to control the arm
      */
-    public Cap(Robot robot, Servo armServo){
+    public Cap(Servo armServo){
         super();
         getServos().add(armServo);
     }
+
 
     /**
      * Moves the arm to the intake height
