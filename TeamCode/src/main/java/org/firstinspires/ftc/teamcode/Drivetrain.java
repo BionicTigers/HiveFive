@@ -14,6 +14,7 @@ public class Drivetrain extends Mechanism {
     public double[] motorPowers;
     public int[] motorIndices;
     public Telemetry telemetree;
+    private Odometry odo;
 
     //Constructor method
     public Drivetrain(org.firstinspires.ftc.teamcode.Robot bot, int[] motorNumbers, Telemetry T) {
@@ -21,6 +22,7 @@ public class Drivetrain extends Mechanism {
         robot = bot;
         motorIndices = motorNumbers;
         telemetree = T;
+        odo = bot.odometry;
 
         for (int motNum : motorNumbers) {
             motorPlaceholder = robot.motors.get(motNum);

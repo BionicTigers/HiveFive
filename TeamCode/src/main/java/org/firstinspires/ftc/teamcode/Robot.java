@@ -30,6 +30,7 @@ public  class Robot {
     public ArrayList<DigitalChannel> sensors;
     public ElapsedTime time;
     public HardwareMap hardwareMap;
+    public Odometry odometry;
 
     public String[] motorNames = {"frontRight","frontLeft","backLeft","backRight"};
 
