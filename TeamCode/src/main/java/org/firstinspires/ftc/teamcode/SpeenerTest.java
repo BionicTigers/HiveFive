@@ -1,24 +1,22 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-@TeleOp(name = "Intake")
-public class IntakeTest extends LinearOpMode {
+public class SpeenerTest extends LinearOpMode {
 
-    public Intake intake;
+    public Speener speener;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        intake = new Intake((DcMotorEx) hardwareMap.get(DcMotor.class, "intake"));
+        speener = new Speener((DcMotorEx)hardwareMap.get(DcMotor.class, "speener"));
 
         waitForStart();
 
         while (opModeIsActive()) {
-            intake.update(gamepad1, gamepad2);
-            intake.write();
+            speener.update(gamepad1, gamepad2);
+            speener.write();
         }
     }
 }
