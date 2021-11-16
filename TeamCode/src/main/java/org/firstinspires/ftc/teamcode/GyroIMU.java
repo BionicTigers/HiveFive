@@ -31,7 +31,7 @@ public class GyroIMU extends LinearOpMode{
         imu.initialize(parameters);
 
         while(true){
-            telemetry.addData("orientation:", "Angle:x=%6.1f,z=%6.1f",
+            telemetry.addData("orientation:", "Angle:x=%6.1f,y=%6.1f,z=%6.1f",
                     imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle,
                     imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).secondAngle,
                     imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle);

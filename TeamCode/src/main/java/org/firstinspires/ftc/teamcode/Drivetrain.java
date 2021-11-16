@@ -3,6 +3,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /*
 This class declares the drivetrain mechanism and sends data from the controller to the robot and
@@ -14,7 +15,15 @@ public class Drivetrain extends Mechanism {
     public double[] motorPowers;
     public int[] motorIndices;
     public Telemetry telemetree;
+    public Servo servo1;
     private Odometry odo;
+    private Location forward = new Location (0, 0, 1000, 0);
+    private Location backward = new Location (0, 0, -1000, 0);
+    private Location left = new Location (-500, 0, 0, 0);
+    private Location right = new Location (500, 0, 0, 0);
+    private Location clockwise = new Location (0, 0, 0, 90);
+    private Location counterclockwise = new Location (0, 0, 0, 270);
+    private Location center = new Location (0, 0, 0, 0);
 
     //Constructor method
     public Drivetrain(org.firstinspires.ftc.teamcode.Robot bot, int[] motorNumbers, Telemetry T) {
@@ -50,7 +59,13 @@ public class Drivetrain extends Mechanism {
             motorPowers[2] = v3;
             motorPowers[3] = v4;
         }
-
+        public void determineServoMovement(Gamepad driverPad, Servo servo1){
+            if (driverPad.a = true){
+                servo1.setDirection(Servo.Direction.FORWARD);
+            } else if(driverPad.b = true){
+                servo1.setDirection(Servo.Direction.REVERSE);
+            }
+        }
 
         //Uses values from motor powers array to move the robot
         public void robotMovement () {
@@ -68,6 +83,7 @@ public class Drivetrain extends Mechanism {
             telemetree.addData("Back Left Power", motorPowers[3]);
             telemetree.update();
             determineMotorPowers(gp1); //Updates values in motorPowers array
+            determineServoMovement(gp1,servo1);
         }
 
         public void write () {
