@@ -6,8 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import com.qualcomm.robotcore.hardware.Servo;
-import org.firstinspires.ftc.robotcore.external.navigation.*;
-import com.qualcomm.hardware.bosch.BNO055IMU;
 
 /*
 This class declares the drivetrain mechanism and sends data from the controller to the robot and
@@ -28,6 +26,10 @@ public class Drivetrain extends Mechanism {
     private Location clockwise = new Location (0, 0, 0, 90);
     private Location counterclockwise = new Location (0, 0, 0, 270);
     private Location center = new Location (0, 0, 0, 0);
+    //Spin PID variables
+    public double spinError;
+    public double previousSpinError=20;
+    public double timeWhenLeave;
 
     //Constructor method
     public Drivetrain(@NonNull org.firstinspires.ftc.teamcode.Robot bot, @NonNull int[] motorNumbers, Telemetry T, Servo servo) {
