@@ -1,21 +1,25 @@
 package org.firstinspires.ftc.teamcode;
+import androidx.annotation.NonNull;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.robotcore.external.navigation.*;
+import com.qualcomm.hardware.bosch.BNO055IMU;
 
 /*
 This class declares the drivetrain mechanism and sends data from the controller to the robot and
  uses that data to set the motor powers
  */
+
 public class Drivetrain extends Mechanism {
     //Declares values
     public org.firstinspires.ftc.teamcode.Robot robot;
     public double[] motorPowers;
     public int[] motorIndices;
     public Telemetry telemetree;
-    public Servo servo1;
     private Odometry odo;
     private Location forward = new Location (0, 0, 1000, 0);
     private Location backward = new Location (0, 0, -1000, 0);
@@ -26,12 +30,13 @@ public class Drivetrain extends Mechanism {
     private Location center = new Location (0, 0, 0, 0);
 
     //Constructor method
-    public Drivetrain(org.firstinspires.ftc.teamcode.Robot bot, int[] motorNumbers, Telemetry T) {
+    public Drivetrain(@NonNull org.firstinspires.ftc.teamcode.Robot bot, @NonNull int[] motorNumbers, Telemetry T, Servo servo) {
         DcMotorEx motorPlaceholder;
         robot = bot;
         motorIndices = motorNumbers;
         telemetree = T;
         odo = bot.odometry;
+        getServos().add(servo);
 
         for (int motNum : motorNumbers) {
             motorPlaceholder = robot.motors.get(motNum);
@@ -59,14 +64,14 @@ public class Drivetrain extends Mechanism {
             motorPowers[2] = v3;
             motorPowers[3] = v4;
         }
-        public void determineServoMovement(Gamepad driverPad, Servo servo1){
-            if (driverPad.a = true){
-                servo1.setDirection(Servo.Direction.FORWARD);
-            } else if(driverPad.b = true){
-                servo1.setDirection(Servo.Direction.REVERSE);
+        public void determineServoMovement(Gamepad driverPad){
+            if (driverPad.a){
+                servos.get(0).setPosition(0.6);
+
+            } else if(driverPad.b){
+                servos.get(0).setPosition(0.67);
             }
         }
-
         //Uses values from motor powers array to move the robot
         public void robotMovement () {
 
@@ -83,7 +88,7 @@ public class Drivetrain extends Mechanism {
             telemetree.addData("Back Left Power", motorPowers[3]);
             telemetree.update();
             determineMotorPowers(gp1); //Updates values in motorPowers array
-            determineServoMovement(gp1,servo1);
+            determineServoMovement(gp1);
         }
 
         public void write () {

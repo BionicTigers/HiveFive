@@ -21,16 +21,11 @@ public class GyroIMU extends LinearOpMode{
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
         parameters.loggingEnabled = true;
         parameters.loggingTag = "IMU";
-        //parameters.accelerationIntegrationAlgorithm = imu.startAccelerationIntegration(new Position(DistanceUnit.METER,0,0,0,0), new Velocity(DistanceUnit.METER,0,0,0,0), 100);
         imu = hardwareMap.get(BNO055IMU.class, "imu");
-        //imu.getPosition()
-        imu.initialize(parameters);
-
-        imu = hardwareMap.get(BNO055IMU.class, " imu");
-        imu.getPosition();
         imu.initialize(parameters);
 
         while(true){
+            //Returns values of angles, velocity, and acceleration on each axis
             telemetry.addData("orientation:", "Angle:x=%6.1f,y=%6.1f,z=%6.1f",
                     imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle,
                     imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).secondAngle,
