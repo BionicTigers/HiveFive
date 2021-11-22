@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -15,7 +14,6 @@ public class DrivetrainTesting extends LinearOpMode{
     public String[] motorNames = {"frontRight","frontLeft","backLeft","backRight"}; //establishes motor names
     public Drivetrain drivetrain; //declares drivetrain
     public Robot robot; //declares robot
-    public Servo servo;
 
     public int[] motorNumbers = {0, 1, 2, 3}; //creates motor numbers array
 
@@ -25,6 +23,7 @@ public class DrivetrainTesting extends LinearOpMode{
         drivetrain = new Drivetrain(robot, motorNumbers, telemetry, hardwareMap.get(Servo.class, "servo1"));
         robot.initMotors(motorNames);
         waitForStart();
+        //establishes IMU parameters/variables
         BNO055IMU imu;
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
