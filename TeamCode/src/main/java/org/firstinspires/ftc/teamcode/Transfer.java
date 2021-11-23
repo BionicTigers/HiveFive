@@ -15,9 +15,9 @@ public class Transfer extends Mechanism{
 
     @Override
     public void update(Gamepad gp1, Gamepad gp2) {
-        if(gp1.x){
+        if(gp1.dpad_up){
             up = true;
-        } else if(gp1.y){
+        } else if(gp1.dpad_down){
             down = true;
         } else{
             up = false;
