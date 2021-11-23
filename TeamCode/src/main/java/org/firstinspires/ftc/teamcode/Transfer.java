@@ -5,6 +5,9 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class Transfer extends Mechanism{
 
+    boolean up;
+    boolean down;
+
     public Transfer(DcMotorEx transferMotor){
         super();
         motors.add(transferMotor);
@@ -12,17 +15,24 @@ public class Transfer extends Mechanism{
 
     @Override
     public void update(Gamepad gp1, Gamepad gp2) {
-        if(gp1.a){
-            motors.get(0).setPower(60);
-        } else if(gp1.b){
-            motors.get(0).setPower(-60);
+        if(gp1.x){
+            up = true;
+        } else if(gp1.y){
+            down = true;
         } else{
-            motors.get(0).setPower(0);
+            up = false;
+            down = false;
         }
     }
 
     @Override
     public void write() {
-
+        if(up){
+            motors.get(0).setPower(60);
+        } else if(down){
+            motors.get(0).setPower(-60);
+        } else{
+            motors.get(0).setPower(0);
+        }
     }
 }
