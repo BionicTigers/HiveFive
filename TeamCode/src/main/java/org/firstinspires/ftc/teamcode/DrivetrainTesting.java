@@ -20,7 +20,7 @@ public class DrivetrainTesting extends LinearOpMode{
 
     public void runOpMode() {
         robot = new Robot(this);
-        drivetrain = new Drivetrain(robot, motorNumbers, telemetry, hardwareMap.get(Servo.class, "servo1"));
+        drivetrain = new Drivetrain(robot, motorNumbers, telemetry, hardwareMap.get(Servo.class, "servo1"), hardwareMap.get(Servo.class, "servo2"), hardwareMap.get(Servo.class, "servo3"));
         robot.initMotors(motorNames);
         waitForStart();
         //establishes IMU parameters/variables
