@@ -32,7 +32,7 @@ public class Drivetrain extends Mechanism {
     public double timeWhenLeave;
 
     //Constructor method
-    public Drivetrain(@NonNull org.firstinspires.ftc.teamcode.Robot bot, @NonNull int[] motorNumbers, Telemetry T, Servo servo) {
+    public Drivetrain(@NonNull org.firstinspires.ftc.teamcode.Robot bot, @NonNull int[] motorNumbers, Telemetry T, Servo servo, Servo servo2, Servo servo3) {
         DcMotorEx motorPlaceholder;
         robot = bot;
         motorIndices = motorNumbers;
@@ -68,10 +68,14 @@ public class Drivetrain extends Mechanism {
     }
     public void determineServoMovement(Gamepad driverPad){
         if (driverPad.a){
-            servos.get(0).setPosition(0.6);
+            servos.get(0).setPosition(0.46);
+            servos.get(1).setPosition(0.6);
+            servos.get(2).setPosition(0.6);
 
         } else if(driverPad.b){
             servos.get(0).setPosition(0.67);
+            servos.get(1).setPosition(0.67);
+            servos.get(2).setPosition(0.67);
         }
     }
     //Uses values from motor powers array to move the robot
