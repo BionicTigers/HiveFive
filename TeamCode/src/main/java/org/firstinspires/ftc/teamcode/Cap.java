@@ -18,11 +18,11 @@ public class Cap extends Mechanism {
     /**
      * Cap constructor
      * Makes a new instance of cap
-     * @param armServo    servo used to control the arm
+     * @param capServo    servo used to control the cap arm
      */
-    public Cap(Servo armServo){
+    public Cap(Servo capServo){
         super();
-        getServos().add(armServo);
+        getServos().add(capServo);
     }
 
 

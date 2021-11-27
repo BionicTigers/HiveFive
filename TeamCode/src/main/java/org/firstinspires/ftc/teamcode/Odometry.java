@@ -9,18 +9,19 @@ import org.openftc.revextensions2.RevBulkData;
 /**
  * Tracks the position of the robot
  * @author Jack 2
+ *
  */
 public class Odometry extends Mechanism {
     //Declares constants that relate to odometry wheels
     /**Diameter of the encoders*/
-    private static final double ODO_DIAMETER_MM = 50.8;
+    private static final double ODO_DIAMETER_MM = 87.5;
     /**Number of ticks on the encoders*/
     private static final double ODO_ENCODER_TICKS = 8192;
     /**Distance between odometry encoders*/
-    private static final double ODO_DISTANCE_MM = 375.7; //CHANGE!!!
+    private static final double ODO_DISTANCE_MM = 402.085;
     /**Circumference of the encoder*/
     private static final double ODO_CIRCUMFERENCE_MM = ODO_DIAMETER_MM * Math.PI;
-    /**Distance from the encoder to the center of the robot*/
+    /**Distance from the center encoder to the center of the robot*/
     private static final double ODO_DISTANCE_FROM_CENTER = 38.1; //CHANGE!!!
     /**The number of encoder ticks per millimeter*/
     private static final double ENCODER_TICKS_PER_MM = ODO_ENCODER_TICKS / ODO_CIRCUMFERENCE_MM;
@@ -36,8 +37,8 @@ public class Odometry extends Mechanism {
     //Current position fields
     /**Declares a new Location object to track position*/
     private Location pos = new Location();
-    /**Declares a new Location object to track*/
-    public Location realMaybe = new Location();
+    /**Declares another new Location object to track position*/
+    public Location pos2 = new Location();
     /**X position relative to starting location*/
     public double relativeX;
     /**Y position relative to starting location*/
@@ -180,7 +181,7 @@ public class Odometry extends Mechanism {
             // if you are running into issues with this method this may be the cause
             // I have to reset a little backwards because of the jank way the odo is switched for backawards compatability
             pos = resetPos;
-            realMaybe=new Location(resetPos.getLocation(2),0,resetPos.getLocation(0),resetPos.getLocation(3));
+            pos2=new Location(resetPos.getLocation(2),0,resetPos.getLocation(0),resetPos.getLocation(3));
 
             rotOffset = resetPos.getLocation(3);
         } catch (NullPointerException e) {
@@ -231,7 +232,7 @@ public class Odometry extends Mechanism {
                 addPublicTelemetry("relativex ", ""+relativeX);
             }
             pos.translateLocal(relativeY, relativeX, 0);
-            realMaybe.setLocation(pos.getLocation(2), pos.getLocation(1), pos.getLocation(0), pos.getLocation(3));
+            pos2.setLocation(pos.getLocation(2), pos.getLocation(1), pos.getLocation(0), pos.getLocation(3));
         } catch (NullPointerException e) {
 
         }
