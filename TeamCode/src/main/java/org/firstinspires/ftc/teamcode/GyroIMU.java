@@ -8,6 +8,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.*;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.*;
 
+/*
+Uses the gyro integrated into the expansion hub to return data on robot angles, velocity, and
+linear acceleration on the x, y, and z axes
+ */
+
 @Autonomous(name="Gyro")
 public class GyroIMU extends LinearOpMode{
     Orientation angles;

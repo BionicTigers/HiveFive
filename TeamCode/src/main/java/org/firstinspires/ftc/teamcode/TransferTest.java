@@ -5,6 +5,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+/*
+Calls the transfer mechanism class to allow it to actually move
+*/
+
 @TeleOp (name = "transfer_test")
 public class TransferTest extends LinearOpMode{
     public Transfer transfer; //declares transfer

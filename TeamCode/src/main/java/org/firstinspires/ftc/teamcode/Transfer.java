@@ -3,6 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+/*
+Runs a motor to transfer elements from the intake to the output
+ */
+
 public class Transfer extends Mechanism{
 
     //variables used to determine what the motor is doing

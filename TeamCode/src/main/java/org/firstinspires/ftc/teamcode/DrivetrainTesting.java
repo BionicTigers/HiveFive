@@ -8,7 +8,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
-/*This class utilizes the drivetrain class in order to move the robot*/
+/*
+This class utilizes the drivetrain class in order to move the robot as well as utilizing the
+gyro to return information on the angle, velocity, and acceleration of each axis of the drivetrain
+*/
+
 @TeleOp (name = "drivetrain_testing")
 public class DrivetrainTesting extends LinearOpMode{
     public String[] motorNames = {"frontRight","frontLeft","backLeft","backRight"}; //establishes motor names
