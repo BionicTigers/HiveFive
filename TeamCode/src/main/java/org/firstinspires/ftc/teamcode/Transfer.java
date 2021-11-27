@@ -5,14 +5,17 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class Transfer extends Mechanism{
 
+    //variables used to determine what the motor is doing
     boolean up;
     boolean down;
 
+    //establishes the motor
     public Transfer(DcMotorEx transferMotor){
         super();
         motors.add(transferMotor);
     }
 
+    //determines the true/false value of the up and down variables
     @Override
     public void update(Gamepad gp1, Gamepad gp2) {
         if(gp1.dpad_up){
@@ -25,6 +28,7 @@ public class Transfer extends Mechanism{
         }
     }
 
+    //using the values of up and down, determines what to do next
     @Override
     public void write() {
         if(up){

@@ -7,14 +7,16 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 @TeleOp (name = "transfer_test")
 public class TransferTest extends LinearOpMode{
-    public Transfer transfer;
+    public Transfer transfer; //declares transfer
 
     public void runOpMode(){
+        //establishes the transfer motor
         transfer = new Transfer((DcMotorEx) hardwareMap.get(DcMotor.class, "transfer"));
         waitForStart();
+        //what actually happens when the code is running
         while(opModeIsActive()){
-            transfer.update(gamepad1, gamepad2);
-            transfer.write();
+            transfer.update(gamepad1, gamepad2); //updates values of variables
+            transfer.write(); //sets power for the motor
         }
     }
 }
