@@ -29,7 +29,7 @@ public class GyroIMU extends LinearOpMode{
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
 
-        while(true){
+        while(opModeIsActive()){
             //Returns values of angles, velocity, and acceleration on each axis
             telemetry.addData("orientation:", "Angle:x=%6.1f,y=%6.1f,z=%6.1f",
                     imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle,
