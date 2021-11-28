@@ -31,12 +31,24 @@ public class Intake extends Mechanism {
 
     public void write() {
         if (goingin) { //If direction is set to in
-            motors.get(0).setPower(1); //Turn on the intake
+            inspin(); //Turn on the intake
         } else if (goingout) { //If direction is set to out
-            motors.get(0).setPower(-1); //Reverse the intake
+            nospin(); //Reverse the intake
         } else { //If no direction is set
-            motors.get(0).setPower(0); //Stop the intake
+            outspin(); //Stop the intake
         }
+    }
+
+    public void inspin() {
+        motors.get(0).setPower(1);
+    }
+
+    public void nospin() {
+        motors.get(0).setPower(0);
+    }
+
+    public void outspin() {
+        motors.get(0).setPower(-1);
     }
 }
 
