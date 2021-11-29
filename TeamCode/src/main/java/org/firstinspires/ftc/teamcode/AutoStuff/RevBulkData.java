@@ -19,7 +19,7 @@
  * SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.AutoStuff;
 
 import com.qualcomm.hardware.lynx.LynxAnalogInputController;
 import com.qualcomm.hardware.lynx.LynxController;
@@ -37,6 +37,8 @@ import com.qualcomm.robotcore.hardware.DigitalChannelImpl;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Rotation;
+import org.firstinspires.ftc.teamcode.AutoStuff.RE2Exception;
+import org.firstinspires.ftc.teamcode.AutoStuff.Utils;
 
 import java.lang.reflect.Field;
 

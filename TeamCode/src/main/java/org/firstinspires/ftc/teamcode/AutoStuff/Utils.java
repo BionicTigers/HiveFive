@@ -19,7 +19,7 @@
  * SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.AutoStuff;
 
 import com.qualcomm.hardware.lynx.LynxController;
 import com.qualcomm.hardware.lynx.LynxDcMotorController;
@@ -37,6 +37,10 @@ import com.qualcomm.robotcore.hardware.configuration.typecontainers.ServoConfigu
 
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeManagerImpl;
 import org.firstinspires.ftc.robotcore.internal.system.AppUtil;
+import org.firstinspires.ftc.teamcode.AutoStuff.ExpansionHubEx;
+import org.firstinspires.ftc.teamcode.AutoStuff.ExpansionHubMotor;
+import org.firstinspires.ftc.teamcode.AutoStuff.ExpansionHubServo;
+import org.firstinspires.ftc.teamcode.AutoStuff.RE2Exception;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

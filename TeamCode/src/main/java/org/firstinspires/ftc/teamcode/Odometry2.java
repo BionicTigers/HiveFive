@@ -2,9 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.*;
 
-import org.firstinspires.ftc.robotcore.internal.android.dex.EncodedValueReader;
-import org.openftc.revextensions2.ExpansionHubEx;
-import org.openftc.revextensions2.RevBulkData;
+import org.firstinspires.ftc.teamcode.AutoStuff.ExpansionHubEx;
+import org.firstinspires.ftc.teamcode.AutoStuff.RevBulkData;
+import org.firstinspires.ftc.teamcode.AutoStuff.ExpansionHubEx;
+import org.firstinspires.ftc.teamcode.AutoStuff.RevBulkData;
 
 /**
  * Tracks the position of the robot
