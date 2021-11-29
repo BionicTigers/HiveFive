@@ -31,6 +31,10 @@ public  class Robot {
     public ElapsedTime time;
     public HardwareMap hardwareMap;
 
+
+    public org.firstinspires.ftc.teamcode.Odometry odometry;
+
+
     public String[] motorNames = {"frontRight","frontLeft","backLeft","backRight"};
 
     //Robot constructor class; creates robot object

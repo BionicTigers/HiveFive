@@ -6,24 +6,24 @@ import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
  * A custom class to store the robot's position data. Stores X, Y, Z, and Azimuth (degrees).
  */
 public class Location {
-    private float[] pos;
+    public float[] position;
 
     public Location() {
-        pos = new float[4];
+        position = new float[4];
         setLocation(0, 0, 0, 0);
     }
 
     public Location(float[] location) {
-        pos = new float[4];
+        position = new float[4];
         setLocation(location);
     }
 
     public Location(float x, float y, float z, float rot) {
-        pos = new float[4];
+        position = new float[4];
         setLocation(x, y, z, rot);
     }
     public Location(double x, double y, double z, double rot) {
-        pos = new float[4];
+        position = new float[4];
         setLocation(x, y, z, rot);
     }
     /**
@@ -32,7 +32,7 @@ public class Location {
      * @return float[]
      */
     public float[] getLocation() {
-        return pos;
+        return position;
     }
 
     /**
@@ -44,7 +44,7 @@ public class Location {
     public float getLocation(int index) {
         if (index < 0 || index > 4)
             throw new IllegalArgumentException("getLocation requires range of 1-4.");
-        return pos[index];
+        return position[index];
     }
 
     /**
@@ -54,8 +54,8 @@ public class Location {
      */
     public void setLocation(float[] location) {
         if (location.length == 4) {
-            pos = location;
-            pos[3] %= 360;
+            position = location;
+            position[3] %= 360;
         } else throw new IllegalArgumentException("Invalid location array: x,y,z,rot required.");
     }
 
@@ -68,16 +68,16 @@ public class Location {
      * @param rot Rotation in degrees.
      */
     public void setLocation(float x, float y, float z, float rot) {
-        pos[0] = x;
-        pos[1] = y;
-        pos[2] = z;
-        pos[3] = rot % 360;
+        position[0] = x;
+        position[1] = y;
+        position[2] = z;
+        position[3] = rot % 360;
     }
     public void setLocation(double x, double y, double z, double rot) {
-        pos[0] = (float) x;
-        pos[1] = (float)y;
-        pos[2] = (float)z;
-        pos[3] = (float)(rot % 360);
+        position[0] = (float) x;
+        position[1] = (float)y;
+        position[2] = (float)z;
+        position[3] = (float)(rot % 360);
     }
 
     /**
@@ -87,7 +87,7 @@ public class Location {
      * @param x wanted value
      */
     public void setLocation(int co, float x) {
-        pos[co] = x;
+        position[co] = x;
     }
 
     /**
@@ -96,10 +96,10 @@ public class Location {
      * @param o OpenGLMatrix for position.
      */
     public void setLocation(OpenGLMatrix o) {
-        pos[0] = o.getTranslation().get(0);
-        pos[1] = o.getTranslation().get(1);
-        pos[2] = o.getTranslation().get(2);
-        pos[3] = o.getTranslation().get(3); //<- test plz
+        position[0] = o.getTranslation().get(0);
+        position[1] = o.getTranslation().get(1);
+        position[2] = o.getTranslation().get(2);
+        position[3] = o.getTranslation().get(3); //<- test plz
     }
 
     /**
@@ -112,7 +112,7 @@ public class Location {
         if (angle<0){
             angle = 360f+angle;
         }
-        pos[3] = (float) angle;
+        position[3] = (float) angle;
     }
     /**
      * Sets stored rotation.
@@ -124,7 +124,7 @@ public class Location {
         if (angle<0){
             angle = 360f+angle;
         }
-        pos[3] = (float) angle;
+        position[3] = (float) angle;
     }
 
 
@@ -160,9 +160,9 @@ public class Location {
      * @param up      Translates position given units up.
      */
     public void translateLocal(float forward, float up, float right) {
-        pos[0] += (float) (forward * Math.cos(Math.toRadians(pos[3])) + right * Math.cos(Math.toRadians(pos[3] - 90)));
-        pos[1] += up;
-        pos[2] += (float) (forward * Math.sin(Math.toRadians(pos[3])) + right * Math.sin(Math.toRadians(pos[3] - 90)));
+        position[0] += (float) (forward * Math.cos(Math.toRadians(position[3])) + right * Math.cos(Math.toRadians(position[3] - 90)));
+        position[1] += up;
+        position[2] += (float) (forward * Math.sin(Math.toRadians(position[3])) + right * Math.sin(Math.toRadians(position[3] - 90)));
     }
     public void openGLTranslateLocal(float forward, float right, float rot){
 
@@ -176,8 +176,8 @@ public class Location {
      * @param z Translates position given distance on z axis.
      */
     public void translateWorld(float x, float z) {
-        pos[0] += x;
-        pos[1] += z;
+        position[0] += x;
+        position[1] += z;
     }
 
     /**
@@ -186,7 +186,7 @@ public class Location {
      * @return String
      */
     public String toString() {
-        return "[" + Math.round(pos[0]*1000)/1000f + ","+ Math.round(1000*pos[2] )/1000f+ "," + Math.round(1000*pos[3])/1000 + "]";
+        return "[" + Math.round(position[0]*1000)/1000f + ","+ Math.round(1000* position[2] )/1000f+ "," + Math.round(1000* position[3])/1000 + "]";
     }
 
 }
