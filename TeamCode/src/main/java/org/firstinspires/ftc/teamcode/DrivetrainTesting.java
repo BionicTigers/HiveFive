@@ -24,7 +24,7 @@ public class DrivetrainTesting extends LinearOpMode{
 
     public void runOpMode() {
         robot = new Robot(this);
-        drivetrain = new Drivetrain(robot, motorNumbers, telemetry, hardwareMap.get(Servo.class, "servo1"), hardwareMap.get(Servo.class, "servo2"), hardwareMap.get(Servo.class, "servo3"));
+        drivetrain = new Drivetrain(robot, motorNumbers, telemetry, hardwareMap.get(Servo.class, "SDrive1"), hardwareMap.get(Servo.class, "SDrive2"), hardwareMap.get(Servo.class, "SDrive3"));
         robot.initMotors(motorNames);
         waitForStart();
         //establishes IMU parameters/variables
@@ -43,6 +43,7 @@ public class DrivetrainTesting extends LinearOpMode{
             drivetrain.update(gamepad1, gamepad2);
             drivetrain.write();
             //Returns values of angles, velocity, and acceleration on each axis
+            telemetry.addLine("IMU Data");
             telemetry.addData("orientation:", "Angle:x=%6.1f,y=%6.1f,z=%6.1f",
                     imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle,
                     imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).secondAngle,

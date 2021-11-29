@@ -1,11 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 import androidx.annotation.NonNull;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import com.qualcomm.hardware.bosch.BNO055IMU;
 
 /*
 This class declares the drivetrain mechanism and sends data from the controller to the robot and
@@ -70,15 +75,16 @@ public class Drivetrain extends Mechanism {
     public void determineServoMovement(Gamepad driverPad){
         if (driverPad.a){
             servos.get(0).setPosition(0.46);
-            servos.get(1).setPosition(0.6);
-            servos.get(2).setPosition(0.6);
+            servos.get(1).setPosition(0.61);
+            servos.get(2).setPosition(0.31);
 
         } else if(driverPad.b){
-            servos.get(0).setPosition(0.3);
-            servos.get(1).setPosition(0.67);
-            servos.get(2).setPosition(0.67);
+            servos.get(0).setPosition(0.25);
+            servos.get(1).setPosition(0.32);
+            servos.get(2).setPosition(0.57);
         }
     }
+
     //Uses values from motor powers array to move the robot
     public void robotMovement () {
 
