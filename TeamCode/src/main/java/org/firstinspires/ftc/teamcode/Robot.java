@@ -32,7 +32,7 @@ public  class Robot {
     public HardwareMap hardwareMap;
 
 
-    public org.firstinspires.ftc.teamcode.Odometry odometry;
+    public Odometry odometry;
 
 
     public String[] motorNames = {"frontRight","frontLeft","backLeft","backRight"};

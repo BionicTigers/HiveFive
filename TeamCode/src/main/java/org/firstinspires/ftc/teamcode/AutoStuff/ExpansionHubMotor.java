@@ -19,12 +19,13 @@
  * SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.AutoStuff;
 
 import com.qualcomm.hardware.lynx.LynxController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorImplEx;
-import org.firstinspires.ftc.teamcode.ExpansionHubEx.CurrentDrawUnits;
+import org.firstinspires.ftc.teamcode.AutoStuff.ExpansionHubEx.CurrentDrawUnits;
+import org.firstinspires.ftc.teamcode.AutoStuff.Utils;
 
 /**
  * Extends a DcMotorImplEx to provide access to new features.

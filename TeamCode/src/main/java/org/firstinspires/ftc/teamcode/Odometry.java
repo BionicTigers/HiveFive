@@ -3,6 +3,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.AutoStuff.ExpansionHubEx;
+import org.firstinspires.ftc.teamcode.AutoStuff.RevBulkData;
+
 public class Odometry {
 
 

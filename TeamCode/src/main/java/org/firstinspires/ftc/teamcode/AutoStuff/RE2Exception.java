@@ -19,13 +19,13 @@
  * SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.AutoStuff;
 
-class RevBulkDataException extends RE2Exception
+class RE2Exception extends RuntimeException
 {
-    RevBulkDataException(){}
+    RE2Exception(){}
 
-    RevBulkDataException(String msg)
+    RE2Exception(String msg)
     {
         super(msg);
     }
