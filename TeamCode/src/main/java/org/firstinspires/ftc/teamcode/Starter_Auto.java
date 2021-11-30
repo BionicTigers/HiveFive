@@ -30,6 +30,8 @@ public class Starter_Auto extends LinearOpMode {
         drivey = new Drivetrain(robo, wheels, telemetry, hardwareMap.get(Servo.class, "SDrive1"), hardwareMap.get(Servo.class, "SDrive2"), hardwareMap.get(Servo.class, "SDrive3"));
 //        intaker = new Intake((DcMotorEx) hardwareMap.get(DcMotor.class, "intake"));
 
+        robo.odometry.reset();
+
 
         waitForStart();
 //        intaker.inspin();

@@ -18,13 +18,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.AutoStuff;
 
 import com.qualcomm.hardware.lynx.LynxController;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoControllerEx;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.ServoConfigurationType;
+
+import org.firstinspires.ftc.teamcode.AutoStuff.Utils;
 
 /**
  * Extends a ServoImplEx to provide access to new features.
