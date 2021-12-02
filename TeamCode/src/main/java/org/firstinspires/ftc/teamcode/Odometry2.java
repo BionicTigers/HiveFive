@@ -82,10 +82,10 @@ public class Odometry2 extends Mechanism {
 
     /**
      * Odometry constructor
-     * @param hardwareMap
-     * @param distance
-     * @param centerDistance
-     * @param startingLocation
+     * @param hardwareMap the hardware map of the robot
+     * @param distance distance the robot hsa moved
+     * @param centerDistance distance from the center
+     * @param startingLocation starting location of the robot
      */
     //New odometry constructor for new robot! The distance and distance from center will be different
     public Odometry2(HardwareMap hardwareMap, double distance, double centerDistance,Location startingLocation) {
@@ -100,9 +100,9 @@ public class Odometry2 extends Mechanism {
 
     /**
      * Odometry constructor
-     * @param hardwareMap
-     * @param distance
-     * @param centerDistance
+     * @param hardwareMap the hardware map of the robot
+     * @param distance distance the robot has moved
+     * @param centerDistance distance from the center of the field
      */
     public Odometry2(HardwareMap hardwareMap, double distance, double centerDistance) {
         expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 173");

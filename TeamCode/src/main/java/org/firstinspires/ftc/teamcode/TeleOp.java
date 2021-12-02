@@ -13,8 +13,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import java.util.ArrayList;
 
 /**
- *
- * controls the movements of the robot
+ * Controls the movements of the robot during the TeleOp
  */
 public class TeleOp extends LinearOpMode {
     /**creates a new instance of Drivetrain*/
