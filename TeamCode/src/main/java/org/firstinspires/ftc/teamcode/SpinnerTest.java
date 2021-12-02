@@ -14,8 +14,7 @@ public class SpinnerTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        speener = new Speener(hardwareMap.get(CRServo.class, "carouselA"), hardwareMap.get(Servo.class, "carouselB"));
-        spinner = new Spinner((DcMotorEx)hardwareMap.get(DcMotor.class, "speener"));
+        spinner = new Spinner(hardwareMap.get(CRServo.class, "carouselA"), hardwareMap.get(Servo.class, "carouselB"));
 
         waitForStart();
 
