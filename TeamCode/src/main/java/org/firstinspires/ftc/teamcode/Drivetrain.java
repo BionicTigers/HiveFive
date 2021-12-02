@@ -11,42 +11,64 @@ import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
-This class declares the drivetrain mechanism and sends data from the controller to the robot and
-uses that data to set the motor powers
+ * This class declares the drivetrain mechanism and sends data from the controller to the robot and uses that data to set the motor powers
  */
 public class Drivetrain extends Mechanism {
     //Declares variables
-    public org.firstinspires.ftc.teamcode.Robot robot;
+    /**declares a new instance of Robot*/
+    public Robot robot;
+    /**declares an array of motor powers*/
     public double[] motorPowers;
+    /**declares a new array of motor indices*/
     public int[] motorIndices;
+    /**declares a new instance of Telemetry*/
     public Telemetry telemetry;
-    //private Odometry odo;
+    /**declares an instance of Location to move the robot forward*/
     private Location forward = new Location (0, 0, 1000, 0);
+    /**declares an instance of Location to move the robot backward*/
     private Location backward = new Location (0, 0, -1000, 0);
+    /**declares an instance of Location to move the robot left*/
     private Location left = new Location (-500, 0, 0, 0);
+    /**declares an instance of Location to move the robot back*/
     private Location right = new Location (500, 0, 0, 0);
+    /**declares an instance of Location to move the robot clockwise*/
     private Location clockwise = new Location (0, 0, 0, 90);
+    /**declares an instance of Location to move the robot counterclockwise*/
     private Location counterclockwise = new Location (0, 0, 0, 270);
+    /**Creates an instance of Location to move the robot to the center*/
     private Location center = new Location (0, 0, 0, 0);
+
     //Spin PID variables
+    /**the error of a spin*/
     public double spinError;
+    /**the last spin error*/
     public double previousSpinError=20;
+    /**?*/
     public double timeWhenLeave;
 
-
+    /**the last forward error*/
     private double lastForwardError;
+    /**the last sideways error*/
     private double lastSidewaysError;
+    /**the last rotation error*/
     private double lastRotationError;
+    /**boolean that shows if auto is finished*/
     public boolean autoIsDone = false;
 
+    /**declares a new instance of Telemetry*/
     private Telemetry dashboardTelemetry;
 
+    /**declares a new instance of location to store x y and z errors*/
     public Location error = new Location();
 
+    /**?*/
     public double[] integralValues=new double[4];
 
+    /**?*/
     public double sinrang = 0;
+    /**?*/
     public double cosrang = 0;
+    /**motor powers*/
     public double pow = 0;
 
 
