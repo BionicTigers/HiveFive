@@ -2,7 +2,12 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
+
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import java.util.ArrayList;
 
@@ -17,14 +22,14 @@ public class TeleOp extends LinearOpMode {
     public Cap cap;
     /**creates a new instance of Intake*/
     public Intake intake;
-    /**creates a new instance of Odometry*/
-    public Odometry2 odometry;
     /**creates a new instance of Robot*/
     public Robot robot;
-    /**creates a new instance of "Speener"*/
-    public Speener spinner;
+    /**creates a new instance of Spinner*/
+    public Spinner spinner;
     /**creates a new instance of Transfer*/
     public Transfer transfer;
+    /**creates a new instance of Output*/
+    public Output output;
 
     //private FtcDashboard dashboard;
     /**creates a new instance of Telemetry*/
@@ -43,17 +48,12 @@ public class TeleOp extends LinearOpMode {
         //Assigns a motor to the intake object
         intake = new Intake((DcMotorEx) hardwareMap.get(DcMotor.class, "intake"));
         //Adds a servo to the transfer object
-        transfer = new Transfer( hardwareMap.get(Servo.class,"hopper"),
-                //Adds another servo to the transfer object
-                (DcMotorEx) hardwareMap.get(DcMotor.class, "transfer"));
+        transfer = new Transfer((DcMotorEx) hardwareMap.get(DcMotor.class, "transfer"));
         //Assigns motors to the drivetrain object
-        drivetrain = new Drivetrain(robot, wheelies, telemetry, shooter);
-        drivetrain.testing=true;
+        drivetrain = new Drivetrain(robot, wheels, telemetry,(Servo) hardwareMap.get(Servo.class, "odo1"),(Servo) hardwareMap.get(Servo.class, "odo2"),(Servo) hardwareMap.get(Servo.class, "odo3"));
 
-        shooter.write();
         //Creates an array list with all the mechanisms in it
-        Mechanism[] mechanisms ={intake, transfer, drivetrain, wobblegoal, shooter, robot.odometry};
-        drivetrain.testing=false;
+        Mechanism[] mechanisms ={intake, transfer, drivetrain, robot.odometry};
         waitForStart(); //Doesn't progress until the start button is pressed
 
         while(opModeIsActive()) { //Runs through this code constantly after the start button is pressed
@@ -79,7 +79,7 @@ public class TeleOp extends LinearOpMode {
             }
 
 
-            //telemetry.addData("Robot position", robot.odometry.currentRobotPositionString());
+            //telemetry.addData("Robot position", odometry.currentRobotPositionString());
             // telemetry.addData("distance", shooter.length);
 
             telemetry.update();

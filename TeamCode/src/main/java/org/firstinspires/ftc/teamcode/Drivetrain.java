@@ -175,7 +175,7 @@ public class Drivetrain extends Mechanism {
 
             //Telemetry is updated with general data
             telemetry.addData("Error", + error.getLocation(0) + ", " + error.getLocation(2) + ", " + error.getLocation(3));
-            telemetry.addData("Location", robot.odometry.getPosition().getLocation(0) + " " + robot.odometry.getPosition().getLocation(2) + " " + robot.odometry.getPosition().getLocation(3));
+            telemetry.addData("Location", robot.odometry.getPos().getLocation(0) + " " + robot.odometry.getPos().getLocation(2) + " " + robot.odometry.getPos().getLocation(3));
             telemetry.update();
 
             //Telemetry is updated with data for the x, y, and rotation errors
@@ -198,13 +198,13 @@ public class Drivetrain extends Mechanism {
      */
     public Location findError(Location goalPos) {
         Location error = new Location(
-                goalPos.getLocation(0)-robot.odometry.getPosition().getLocation(0),
+                goalPos.getLocation(0)-robot.odometry.getPos().getLocation(0),
                 0,
-                goalPos.getLocation(2) - (robot.odometry.getPosition().getLocation(2)),
-                rotationError( goalPos.getLocation(3), robot.odometry.getPosition().getLocation(3)));
+                goalPos.getLocation(2) - (robot.odometry.getPos().getLocation(2)),
+                rotationError( goalPos.getLocation(3), robot.odometry.getPos().getLocation(3)));
         //This is to change the global xy error into robot specific error
         double magnitude = Math.sqrt(Math.pow(error.getLocation(0),2)+ Math.pow(error.getLocation(2),2));
-        double robotheading = robot.odometry.getPosition().getLocation(3)- Math.atan(error.getLocation(0)/error.getLocation(2));
+        double robotheading = robot.odometry.getPos().getLocation(3)- Math.atan(error.getLocation(0)/error.getLocation(2));
 
         if(Math.abs(Variables.kfP*error.getLocation(0) + Variables.kfI*integralValues[0] + Variables.kfD * (error.getLocation(0) - lastForwardError))<1)
             integralValues[0]= integralValues[0]+error.getLocation(0) ;
@@ -246,8 +246,8 @@ public class Drivetrain extends Mechanism {
         double robotAngle = Math.atan2(z, -x);
         double rightX = rot;
 
-        double sinRAngle = Math.sin(robotAngle-Math.toRadians(robot.odometry.getPosition().getLocation(3)));
-        double cosRAngle = 1.2*Math.cos(robotAngle-Math.toRadians(robot.odometry.getPosition().getLocation(3)));
+        double sinRAngle = Math.sin(robotAngle-Math.toRadians(robot.odometry.getPos().getLocation(3)));
+        double cosRAngle = 1.2*Math.cos(robotAngle-Math.toRadians(robot.odometry.getPos().getLocation(3)));
 //        telemetry.addData("robot angle",robotAngle);
 //        telemetry.addData("sin angle",sinRAngle);
 //        telemetry.addData("cos angle",cosRAngle);
