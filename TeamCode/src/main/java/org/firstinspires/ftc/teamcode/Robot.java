@@ -32,7 +32,7 @@ public  class Robot {
     public HardwareMap hardwareMap;
 
 
-    public Odometry odometry;
+    public Odometry2 odometry;
 
 
     public String[] motorNames = {"frontRight","frontLeft","backLeft","backRight"};
@@ -84,6 +84,10 @@ public  class Robot {
     }
 
     public Robot() {}
+
+    public Robot(TeleOp teleOp, Location transitionLocation) {
+
+    }
 
     public long getTimeMS(){
         return time.now(TimeUnit.MILLISECONDS);

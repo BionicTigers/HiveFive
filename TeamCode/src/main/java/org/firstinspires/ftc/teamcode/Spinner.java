@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-public class Speener extends Mechanism{
+public class Spinner extends Mechanism{
     
     public boolean spin;
     public boolean spinBack;

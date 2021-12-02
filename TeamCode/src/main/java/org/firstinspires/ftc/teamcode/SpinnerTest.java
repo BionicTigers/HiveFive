@@ -8,19 +8,20 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "Spinner")
-public class SpeenerTest extends LinearOpMode {
+public class SpinnerTest extends LinearOpMode {
 
-    public Speener speener;
+    public Spinner spinner;
 
     @Override
     public void runOpMode() throws InterruptedException {
         speener = new Speener(hardwareMap.get(CRServo.class, "carouselA"), hardwareMap.get(Servo.class, "carouselB"));
+        spinner = new Spinner((DcMotorEx)hardwareMap.get(DcMotor.class, "speener"));
 
         waitForStart();
 
         while (opModeIsActive()) {
-            speener.update(gamepad1, gamepad2);
-            speener.write();
+            spinner.update(gamepad1, gamepad2);
+            spinner.write();
         }
     }
 }
