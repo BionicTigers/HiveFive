@@ -1,54 +1,51 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class Intake extends Mechanism {
 
     //Both of these variables control the direction of the intake
-    public boolean goingin;
-    public boolean goingout;
+    public boolean goingUp;
+    public boolean goingDown;
 
     //Creates, declares, and assigns a motor to the motors array list
-    public Intake(DcMotorEx intaker) {
+    public Intake(Servo intakeLeft, Servo intakeRight) {
         super();
-        motors.add(intaker);
+        servos.add(intakeLeft);
+        servos.add(intakeRight);
     }
 
     public void update(Gamepad gp1, Gamepad gp2) {
         if (gp1.right_trigger >= 0.5) { //If right trigger is pressed
-            goingin = true; //Set direction to in
+            goingUp = true; //Set direction to in
         } else if (gp1.left_trigger >= 0.5) { //Otherwise if left trigger is pressed
-            goingout = true; //Set direction to out
+            goingDown = true; //Set direction to out
         } else { //If neither is pressed
             //Set direction to none
-            goingin = false;
-            goingout = false;
+            goingUp = false;
+            goingDown = false;
             //-----
         }
     }
 
 
     public void write() {
-        if (goingin) { //If direction is set to in
-            inspin(); //Turn on the intake
-        } else if (goingout) { //If direction is set to out
-            nospin(); //Reverse the intake
-        } else { //If no direction is set
-            outspin(); //Stop the intake
+        if (goingUp) { //If direction is set to in
+            up(); //Move servos to the up position
+        } else if (goingDown) { //If direction is set to out
+            down(); //Move servos to the down position
         }
     }
 
-    public void inspin() {
-        motors.get(0).setPower(1);
+    public void up() {
+        servos.get(0).setPosition(0.5);
+        servos.get(1).setPosition(0.5);
     }
 
-    public void nospin() {
-        motors.get(0).setPower(0);
-    }
-
-    public void outspin() {
-        motors.get(0).setPower(-1);
+    public void down() {
+        servos.get(0).setPosition(0);
+        servos.get(1).setPosition(0);
     }
 }
 

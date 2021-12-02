@@ -46,7 +46,7 @@ public class TeleOp extends LinearOpMode {
         //dashboardTelemetry = dashboard.getTelemetry();
 
         //Assigns a motor to the intake object
-        intake = new Intake((DcMotorEx) hardwareMap.get(DcMotor.class, "intake"));
+        intake = new Intake(hardwareMap.get(Servo.class, "intakeLeft"), hardwareMap.get(Servo.class, "intakeRight"));
         //Adds a servo to the transfer object
         transfer = new Transfer((DcMotorEx) hardwareMap.get(DcMotor.class, "transfer"));
         //Assigns motors to the drivetrain object
