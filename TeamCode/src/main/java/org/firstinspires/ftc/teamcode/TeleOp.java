@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -45,15 +46,21 @@ public class TeleOp extends LinearOpMode {
         //dashboard = FtcDashboard.getInstance();
         //dashboardTelemetry = dashboard.getTelemetry();
 
-        //Assigns a motor to the intake object
+        //Assigns servos to the intake object
         intake = new Intake(hardwareMap.get(Servo.class, "intakeLeft"), hardwareMap.get(Servo.class, "intakeRight"));
-        //Adds a servo to the transfer object
+        //Adds a motor to the transfer object
         transfer = new Transfer((DcMotorEx) hardwareMap.get(DcMotor.class, "transfer"));
+        //Assigns a servo to the output object
+        output = new Output(hardwareMap.get(Servo.class, "output"));
         //Assigns motors to the drivetrain object
-        drivetrain = new Drivetrain(robot, wheels, telemetry,(Servo) hardwareMap.get(Servo.class, "odo1"),(Servo) hardwareMap.get(Servo.class, "odo2"),(Servo) hardwareMap.get(Servo.class, "odo3"));
+        drivetrain = new Drivetrain(robot, wheels, telemetry,(Servo) hardwareMap.get(Servo.class, "SDrive1"),(Servo) hardwareMap.get(Servo.class, "SDrive2"),(Servo) hardwareMap.get(Servo.class, "SDrive3"));
+        //Assigns servos to the carousel spinner object
+        spinner = new Spinner(hardwareMap.get(CRServo.class, "spinner"), hardwareMap.get(Servo.class, "carouselB"));
+        //Assigns a servo to the cap arm object
+        cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
 
         //Creates an array list with all the mechanisms in it
-        Mechanism[] mechanisms ={intake, transfer, drivetrain, robot.odometry};
+        Mechanism[] mechanisms ={intake, transfer, output, drivetrain, spinner, cap, robot.odometry};
         waitForStart(); //Doesn't progress until the start button is pressed
 
         while(opModeIsActive()) { //Runs through this code constantly after the start button is pressed
