@@ -9,7 +9,7 @@ public class Spinner extends Mechanism{
     public boolean spin;
     public boolean spinBack;
     public boolean servoB;
-    public Speener(CRServo spinner, Servo carouselB) {
+    public Spinner(CRServo spinner, Servo carouselB) {
         super();
         crServos.add(spinner);
         servos.add(carouselB);
