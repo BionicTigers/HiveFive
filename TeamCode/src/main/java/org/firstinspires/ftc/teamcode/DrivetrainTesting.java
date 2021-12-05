@@ -33,9 +33,7 @@ public class DrivetrainTesting extends LinearOpMode{
         robot = new Robot(this);
         drivetrain = new Drivetrain(robot, motorNumbers, telemetry, hardwareMap.get(Servo.class, "SDrive1"), hardwareMap.get(Servo.class, "SDrive2"), hardwareMap.get(Servo.class, "SDrive3"));
         intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intakeLeft"), hardwareMap.get(Servo.class, "intakeRight"));
-        //Adds a motor to the transfer object
         transfer = new Transfer((DcMotorEx) hardwareMap.get(DcMotor.class, "transfer"));
-        //Assigns a servo to the output object
         output = new Output(hardwareMap.get(Servo.class, "output"));
         robot.initMotors(motorNames);
         waitForStart();
