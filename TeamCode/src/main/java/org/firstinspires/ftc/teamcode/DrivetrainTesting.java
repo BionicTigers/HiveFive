@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -23,7 +24,7 @@ public class DrivetrainTesting extends LinearOpMode{
     public Intake intake;
     public Transfer transfer;
     public Output output;
-    public Cap cap;
+   // public Cap cap;
     public Spinner spinner;
 
     public int[] motorNumbers = {0, 1, 2, 3}; //creates motor numbers array
@@ -35,6 +36,8 @@ public class DrivetrainTesting extends LinearOpMode{
         intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intakeLeft"), hardwareMap.get(Servo.class, "intakeRight"));
         transfer = new Transfer((DcMotorEx) hardwareMap.get(DcMotor.class, "transfer"));
         output = new Output(hardwareMap.get(Servo.class, "output"));
+        spinner = new Spinner(hardwareMap.get(CRServo.class, "spinner"), hardwareMap.get(Servo.class, "carouselB"));
+       // cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
         robot.initMotors(motorNames);
         waitForStart();
         //establishes IMU parameters/variables
@@ -54,13 +57,13 @@ public class DrivetrainTesting extends LinearOpMode{
             intake.update(gamepad1, gamepad2);
             transfer.update(gamepad1, gamepad2);
             output.update(gamepad1, gamepad2);
-            cap.update(gamepad1, gamepad2);
+          //  cap.update(gamepad1, gamepad2);
             spinner.update(gamepad1, gamepad2);
             drivetrain.write();
             intake.write();
             transfer.write();
             output.write();
-            cap.write();
+          //  cap.write();
             spinner.write();
             //Returns values of angles, velocity, and acceleration on each axis
 //            telemetry.addLine("IMU Data");
