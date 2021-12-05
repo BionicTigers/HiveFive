@@ -61,7 +61,7 @@ public  class Robot {
 //
 
 
-        odometry = new Odometry(hardwareMap);
+        odometry = new Odometry2(hardwareMap);
     }
     public  Robot(LinearOpMode opMode) {
 
@@ -86,7 +86,7 @@ public  class Robot {
 //
 
 
-        odometry = new Odometry(hardwareMap);
+        odometry = new Odometry2(hardwareMap);
     }
 
     public Robot() {}
