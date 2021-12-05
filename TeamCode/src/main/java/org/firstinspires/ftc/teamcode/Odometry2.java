@@ -7,58 +7,59 @@ import org.firstinspires.ftc.teamcode.AutoStuff.RevBulkData;
 import org.firstinspires.ftc.teamcode.AutoStuff.ExpansionHubEx;
 import org.firstinspires.ftc.teamcode.AutoStuff.RevBulkData;
 
-/*
-  Tracks the position of the robot
-  @author Jack 2
+/**
+ * Tracks the position of the robot
+ * @author Jack 2
+ *
  */
 public class Odometry2 extends Mechanism {
     //Declares constants that relate to odometry wheels
-    //Diameter of the encoders
+    /**Diameter of the encoders*/
     private static final double ODO_DIAMETER_MM = 87.5;
-    //Number of ticks on the encoders
+    /**Number of ticks on the encoders*/
     private static final double ODO_ENCODER_TICKS = 8192;
-    //Distance between odometry encoders
+    /**Distance between odometry encoders*/
     private static final double ODO_DISTANCE_MM = 402.085;
-    //Circumference of the encoder
+    /**Circumference of the encoder*/
     private static final double ODO_CIRCUMFERENCE_MM = ODO_DIAMETER_MM * Math.PI;
-    //Distance from the center encoder to the center of the robot
+    /**Distance from the center encoder to the center of the robot*/
     private static final double ODO_DISTANCE_FROM_CENTER = 38.1; //CHANGE!!!
-    //The number of encoder ticks per millimeter
+    /**The number of encoder ticks per millimeter*/
     private static final double ENCODER_TICKS_PER_MM = ODO_ENCODER_TICKS / ODO_CIRCUMFERENCE_MM;
 
     //Expansion hub data for the encoders
-    //Declares the first expansion hub
+    /**Declares the first expansion hub*/
     private final ExpansionHubEx expansionHub;
-    //Declares the second expansion hub
+    /**Declares the second expansion hub*/
     private final ExpansionHubEx expansionHub2;
-    //Declares an object that stores all of the static data
+    /**Declares an object that stores all of the static data*/
     private RevBulkData bulkData;
 
     //Current position fields
-    //Declares a new Location object to track position
+    /**Declares a new Location object to track position*/
     private Location pos = new Location();
-    //Declares another new Location object to track position
+    /**Declares another new Location object to track position*/
     public Location pos2 = new Location();
-    //X position relative to starting location
+    /**X position relative to starting location*/
     public double relativeX;
-    //Y position relative to starting location
+    /**Y position relative to starting location*/
     public double relativeY;
-    //Offset of the rotation
+    /**Offset of the rotation*/
     private float rotOffset=0;
-    //Declares an array of encoder positions
+    /**Declares an array of encoder positions*/
     private int[] encoderPosition = new int[3];
-    //Declares an array of the offset for each encoder
+    /**Declares an array of the offset for each encoder*/
     private int[] encoderPositionoffset = new int[3];
 
-    //Declares an array of encoder values
+    /**Declares an array of encoder values*/
     public double[] encoderDeltamm = new double[3];
 
     /* *************************** ODOMETRY CONSTRUCTOR METHODS *************************** */
 
-    /*
-      Odometry Constructor
-      @param hardwareMap
-    */
+    /**
+     * Odometry Constructor
+     * @param hardwareMap
+     */
     public Odometry2(HardwareMap hardwareMap) {
         expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 173");
         expansionHub2 = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 7");
@@ -67,11 +68,11 @@ public class Odometry2 extends Mechanism {
 
     }
 
-    /*
-      Odometry Constructor
-      @param hardwareMap
-      @param startPos Starting position of the robot
-    */
+    /**
+     * Odometry Constructor
+     * @param hardwareMap
+     * @param startPos Starting position of the robot
+     */
     public Odometry2(HardwareMap hardwareMap, Location startPos) {
         expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 173");
         expansionHub2 = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 7");
@@ -79,13 +80,13 @@ public class Odometry2 extends Mechanism {
         reset(startPos);
     }
 
-    /*
-      Odometry constructor
-      @param hardwareMap
-      @param distance
-      @param centerDistance
-      @param startingLocation
-    */
+    /**
+     * Odometry constructor
+     * @param hardwareMap the hardware map of the robot
+     * @param distance distance the robot hsa moved
+     * @param centerDistance distance from the center
+     * @param startingLocation starting location of the robot
+     */
     //New odometry constructor for new robot! The distance and distance from center will be different
     public Odometry2(HardwareMap hardwareMap, double distance, double centerDistance,Location startingLocation) {
         expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 173");
@@ -97,12 +98,12 @@ public class Odometry2 extends Mechanism {
         //ENCODER_TICKS_PER_MM = ODO_ENCODER_TICKS / ODO_CIRCUMFERENCE_MM;
     }
 
-    /*
-      Odometry constructor
-      @param hardwareMap
-      @param distance
-      @param centerDistance
-    */
+    /**
+     * Odometry constructor
+     * @param hardwareMap the hardware map of the robot
+     * @param distance distance the robot has moved
+     * @param centerDistance distance from the center of the field
+     */
     public Odometry2(HardwareMap hardwareMap, double distance, double centerDistance) {
         expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 173");
         expansionHub2 = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 7");
@@ -115,11 +116,11 @@ public class Odometry2 extends Mechanism {
 
     /* *************************** RESET METHODS *************************** */
 
-    /*
-      Resets methods and the robot's position, either to whatever argument
-      is/arguments are passed in, or, in the case of no arguments, to (0, 0, 0),
-      also resets the encoder positions.
-    */
+    /**
+     * Resets methods and the robot's position, either to whatever argument
+     * is/arguments are passed in, or, in the case of no arguments, to (0, 0, 0),
+     * also resets the encoder positions.
+     */
     public void reset() {
         try {
             bulkData = expansionHub.getBulkInputData();
@@ -138,13 +139,13 @@ public class Odometry2 extends Mechanism {
         }
     }
 
-    /*
-      Resets methods and the robot's position, either to whatever argument is/arguments are passed
-      in, or, in the case of no arguments, to (0, 0, 0), also resets the encoder positions.
-      @param x The x coordinate for the robot to reset to
-      @param z The z coordinate that the robot needs to reset to
-      @param rot   The rotation angle
-    */
+    /**
+     * Resets methods and the robot's position, either to whatever argument is/arguments are passed
+     * in, or, in the case of no arguments, to (0, 0, 0), also resets the encoder positions.
+     * @param x The x coordinate for the robot to reset to
+     * @param z The z coordinate that the robot needs to reset to
+     * @param rot   The rotation angle
+     */
     public void reset(float x, float z, float rot) {
         try {
             bulkData=expansionHub.getBulkInputData();
@@ -163,11 +164,11 @@ public class Odometry2 extends Mechanism {
         }
     }
 
-    /*
-      Resets methods and the robot's position, either to whatever argument is/arguments are passed
-      in, or, in the case of no arguments, to (0, 0, 0), also resets the encoder positions.
-      @param resetPos  a  position for the robot to reset to
-    */
+    /**
+     * Resets methods and the robot's position, either to whatever argument is/arguments are passed
+     * in, or, in the case of no arguments, to (0, 0, 0), also resets the encoder positions.
+     * @param resetPos  a  position for the robot to reset to
+     */
     public void reset(Location resetPos) {
         try {
             bulkData = expansionHub.getBulkInputData();
@@ -189,12 +190,12 @@ public class Odometry2 extends Mechanism {
         }
     }
 
-    /*
-      Update Position Method
-      Updates position to where the robot currently is. Counter-clockwise rotation is negative.
-      Loooooots of math exists here, we have to take into account the encoder positions and how
-      they've changed since the previous read.
-    */
+    /**
+     * Update Position Method
+     * Updates position to where the robot currently is. Counter-clockwise rotation is negative.
+     * Loooooots of math exists here, we have to take into account the encoder positions and how
+     * they've changed since the previous read.
+     */
     public void updatePosition() {
         try {
             bulkData = expansionHub.getBulkInputData();
@@ -240,16 +241,16 @@ public class Odometry2 extends Mechanism {
 
     /* *************************** GETTER METHODS *************************** */
 
-    /*
-      Get's the position of the encoder
-      @return encoderPosition  the position of the encoder
-    */
+    /**
+     * Get's the position of the encoder
+     * @return encoderPosition  the position of the encoder
+     */
     public int[] getEncoderPosition() {return encoderPosition;}
 
-    /*
-      Gets the position
-      @return Location or pos
-    */
+    /**
+     * Gets the position
+     * @return Location or pos
+     */
     public Location getPos() {
         try {return pos;}
         catch (NullPointerException e) {
@@ -259,29 +260,29 @@ public class Odometry2 extends Mechanism {
 
     /* *************************** TELEMETRY STRING METHODS *************************** */
 
-    /*
-      Converts the encoder position to a string
-    */
+    /**
+     * Converts the encoder position to a string
+     */
     public String currentEncoderPosString() {return encoderPosition[0] + ", " + encoderPosition[1] + ", " + encoderPosition[2];}
 
-    /*
-      Converts the robot position to a string
-    */
+    /**
+     * Converts the robot position to a string
+     */
     public String currentRobotPositionString() {return pos.getLocation(0) + ", " + pos.getLocation(2) + ", " + pos.getLocation(3);}
 
     /* *************************** GETTER METHODS *************************** */
 
-    /*
-      Updates every cycle
-    */
+    /**
+     * Updates every cycle
+     */
     @Override
     public void update(Gamepad gp1, Gamepad gp2) {
 
     }
 
-    /*
-      Updates every cycle
-    */
+    /**
+     * Updates every cylcle
+     */
     @Override
     public void write() {
 

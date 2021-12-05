@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "Intake")
 public class IntakeTest extends LinearOpMode {
@@ -12,7 +13,7 @@ public class IntakeTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        intake = new Intake((DcMotorEx) hardwareMap.get(DcMotor.class, "intake"));
+        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intakeLeft"), hardwareMap.get(Servo.class, "intakeRight"));
 
         waitForStart();
 

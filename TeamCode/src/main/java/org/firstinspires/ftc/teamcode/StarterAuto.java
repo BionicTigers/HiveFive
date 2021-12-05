@@ -10,10 +10,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.Location;
 
 @Autonomous(name="Starter Auto", group="Autonomous")
-public class Starter_Auto extends LinearOpMode {
-    private Robot robo;
-    private Intake intaker;
-    private Drivetrain drivey;
+public class StarterAuto extends LinearOpMode {
+    private Robot robot;
+    private Intake intake;
+    private Drivetrain drive;
 
 
     private Location position = new Location();
@@ -26,20 +26,20 @@ public class Starter_Auto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        robo = new Robot (this);
-        drivey = new Drivetrain(robo, wheels, telemetry, hardwareMap.get(Servo.class, "SDrive1"), hardwareMap.get(Servo.class, "SDrive2"), hardwareMap.get(Servo.class, "SDrive3"));
-//        intaker = new Intake((DcMotorEx) hardwareMap.get(DcMotor.class, "intake"));
+        robot = new Robot (this);
+        drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDrive1"), hardwareMap.get(Servo.class, "SDrive2"), hardwareMap.get(Servo.class, "SDrive3"));
+//        intake = new Intake((DcMotorEx) hardwareMap.get(DcMotor.class, "intake"));
 
-        robo.odometry.reset();
+        robot.odometry.reset();
 
 
         waitForStart();
-//        intaker.inspin();
+//        intake.inspin();
 //        sleep(2000);
-//        intaker.nospin();
+//        intake.nospin();
 //        sleep(2000);
-//        intaker.outspin();
+//        intake.outspin();
 //        sleep(2000);
-        drivey.actuallyMoveToPosition(Tester, 25, 25, 1, 2000);
+        drive.actuallyMoveToPosition(Tester, 25, 25, 1, 2000);
     }
 }
