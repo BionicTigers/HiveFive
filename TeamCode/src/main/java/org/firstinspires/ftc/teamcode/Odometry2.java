@@ -32,6 +32,7 @@ public class Odometry2 extends Mechanism {
     private final ExpansionHubEx expansionHub;
     /**Declares the second expansion hub*/
     private final ExpansionHubEx expansionHub2;
+    public Location realMaybe;
     /**Declares an object that stores all of the static data*/
     private RevBulkData bulkData;
 
