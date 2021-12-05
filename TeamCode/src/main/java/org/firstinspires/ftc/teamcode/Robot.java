@@ -59,6 +59,9 @@ public  class Robot {
         telemetry = oop.telemetry;
 //        dt = new Drivetrain(this, new int[]{0, 1, 2, 3});
 //
+
+
+        odometry = new Odometry(hardwareMap);
     }
     public  Robot(LinearOpMode opMode) {
 
@@ -81,6 +84,9 @@ public  class Robot {
         telemetry = oop.telemetry;
 //        dt = new Drivetrain(this, new int[]{0, 1, 2, 3});
 //
+
+
+        odometry = new Odometry(hardwareMap);
     }
 
     public Robot() {}

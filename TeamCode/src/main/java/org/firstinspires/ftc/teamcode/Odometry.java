@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.AutoStuff.ExpansionHubEx;
 import org.firstinspires.ftc.teamcode.AutoStuff.RevBulkData;
 
-public class Odometry {
+public class Odometry extends Mechanism{
 
 
     /**
@@ -41,7 +41,7 @@ public class Odometry {
 
     /* *************************** CONSTRUCTOR METHODS *************************** */
     public Odometry(HardwareMap hardwareMap) {
-        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 173");
+        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Control Hub");
         expansionHub2 = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 7");
 
         reset();
@@ -95,7 +95,7 @@ public class Odometry {
             rotOffset = 0;
             encoderPosition = new int[3];
             position.setLocation(0, 0, 0, 0);
-        } catch (NullPointerException e) {
+        } catch (NullPointerException ResetNoParams) {
 
         }
     }
@@ -113,7 +113,7 @@ public class Odometry {
             encoderPosition = new int[3];
             position = resettiSpot;
             rotOffset = resettiSpot.getLocation(3);
-        } catch (NullPointerException e) {
+        } catch (NullPointerException ResetXZRotParams) {
 
         }
     }
@@ -134,7 +134,7 @@ public class Odometry {
             realMaybe=new Location(resetPos.getLocation(2),0,resetPos.getLocation(0),resetPos.getLocation(3));
 
             rotOffset = resetPos.getLocation(3);
-        } catch (NullPointerException e) {
+        } catch (NullPointerException ResetLocationParams) {
 
         }
     }
@@ -182,7 +182,7 @@ public class Odometry {
             }
             position.translateLocal(relativeY, relativeX, 0);
             realMaybe.setLocation(position.getLocation(2), position.getLocation(1), position.getLocation(0), position.getLocation(3));
-        } catch (NullPointerException e) {
+        } catch (NullPointerException UpdatePositionNoParams) {
 
         }
     }
@@ -192,7 +192,7 @@ public class Odometry {
 
     public Location getPosition() {
         try {return position;}
-        catch (NullPointerException e) {
+        catch (NullPointerException GetPositionNoParams) {
             return new Location();
         }
     }
