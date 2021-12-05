@@ -4,6 +4,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Location;
@@ -27,8 +29,8 @@ public class PIDloops extends Drivetrain {
     private Location centerth = new Location (0, 0, 0, 0);
     private String cap;
 
-    public PIDloops(Robot bot, int[] motorNumbers, Telemetry telem, PID pidx, PID pidz, PID pidr){
-        super(bot, motorNumbers, telem);
+    public PIDloops(Robot bot, int[] motorNumbers, Telemetry telem, Servo servo1, Servo servo2, Servo servo3, PID pidx, PID pidz, PID pidr){
+        super(bot, motorNumbers, telem, servo1, servo2, servo3);
         dtPIDx = pidx;
         dtPIDz = pidz;
         dtPIDr = pidr;
