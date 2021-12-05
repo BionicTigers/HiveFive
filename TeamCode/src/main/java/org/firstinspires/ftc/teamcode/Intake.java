@@ -36,7 +36,7 @@ public class Intake extends Mechanism {
 
         if (gp1.right_bumper){
             up = true;
-        } else if (gp1.right_trigger > 25){
+        } else if (gp1.left_bumper){
             down = true;
         }
     }

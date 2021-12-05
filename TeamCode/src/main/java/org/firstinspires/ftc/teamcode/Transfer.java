@@ -22,9 +22,9 @@ public class Transfer extends Mechanism{
     //determines the true/false value of the up and down variables
     @Override
     public void update(Gamepad gp1, Gamepad gp2) {
-        if(gp1.dpad_up){
+        if(gp2.right_trigger >= 0.5){
             up = true;
-        } else if(gp1.dpad_down){
+        } else if(gp2.left_trigger >= 0.5){
             down = true;
         } else{
             up = false;
