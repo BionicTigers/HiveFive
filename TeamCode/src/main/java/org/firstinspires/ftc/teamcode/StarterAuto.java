@@ -27,7 +27,7 @@ public class StarterAuto extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         robot = new Robot (this);
-        drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDrive1"), hardwareMap.get(Servo.class, "SDrive2"), hardwareMap.get(Servo.class, "SDrive3"));
+        drive = new Drivetrain(robot, wheels, telemetry);
 //        intake = new Intake((DcMotorEx) hardwareMap.get(DcMotor.class, "intake"));
 
         robot.odometry.reset();

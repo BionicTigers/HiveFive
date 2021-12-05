@@ -52,12 +52,13 @@ public class TeleOp extends LinearOpMode {
         //Assigns a servo to the output object
         output = new Output(hardwareMap.get(Servo.class, "output"));
         //Assigns motors to the drivetrain object
-        drivetrain = new Drivetrain(robot, wheels, telemetry,(Servo) hardwareMap.get(Servo.class, "SDrive1"),(Servo) hardwareMap.get(Servo.class, "SDrive2"),(Servo) hardwareMap.get(Servo.class, "SDrive3"));
+        drivetrain = new Drivetrain(robot, wheels, telemetry);
         //Assigns servos to the carousel spinner object
         spinner = new Spinner(hardwareMap.get(CRServo.class, "spinner"), hardwareMap.get(Servo.class, "carouselB"));
         //Assigns a servo to the cap arm object
         cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
 
+        dtServo = new dtServo(hardwareMap.get(Servo.class, "SDrive1"), hardwareMap.get(Servo.class, "SDrive2"), hardwareMap.get(Servo.class, "SDrive3"));
         //Creates an array list with all the mechanisms in it
         Mechanism[] mechanisms ={intake, transfer, output, drivetrain, spinner, cap, robot.odometry};
         waitForStart(); //Doesn't progress until the start button is pressed

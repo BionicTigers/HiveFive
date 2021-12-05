@@ -36,11 +36,8 @@ public class Intake extends Mechanism {
 
         if (gp1.right_bumper){
             up = true;
-        } else if (gp1.left_bumper){
+        } else if (gp1.right_trigger > 25){
             down = true;
-        } else{
-            up = false;
-            down = false;
         }
     }
 
@@ -56,11 +53,11 @@ public class Intake extends Mechanism {
     }
 
     public void runIn() {
-        motors.get(0).setPower(50);
+        motors.get(0).setPower(100);
     }
 
     public void runOut() {
-        motors.get(0).setPower(-50);
+        motors.get(0).setPower(-100);
     }
 
     public void stop() {

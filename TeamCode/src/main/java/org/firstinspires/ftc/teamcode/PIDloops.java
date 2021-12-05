@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.dashboard.FtcDashboard;
+//import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Location;
 import org.firstinspires.ftc.teamcode.PID;
-import org.firstinspires.ftc.teamcode.Variables;
+import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -27,7 +27,7 @@ public class PIDloops extends Drivetrain {
     private Location centerth = new Location (0, 0, 0, 0);
     private String cap;
 
-    public PIDloops(NewBot bot, int[] motorNumbers, Telemetry telem, PID pidx, PID pidz, PID pidr){
+    public PIDloops(Robot bot, int[] motorNumbers, Telemetry telem, PID pidx, PID pidz, PID pidr){
         super(bot, motorNumbers, telem);
         dtPIDx = pidx;
         dtPIDz = pidz;

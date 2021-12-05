@@ -16,19 +16,21 @@ public class Spinner extends Mechanism{
     }
 
     public void update(Gamepad gp1, Gamepad gp2) {
-        spin = gp2.y;
-        spinBack = gp2.x;
+        spin = gp2.dpad_right;
+        spinBack = gp2.dpad_left;
         servoB = gp2.a;
     }
 
     public void write() {
         if (spin) {
             crServos.get(0).setPower(60);
+            servos.get(0).setPosition(1);
         } else if (spinBack){
             crServos.get(0).setPower(-60);
+            servos.get(0).setPosition(.5);
         } else if (servoB){
             crServos.get(0).setPower(0);
-            servos.get(0).setPosition(1);
+            servos.get(0).setPosition(0);
         } else{
             crServos.get(0).setPower(0);
         }

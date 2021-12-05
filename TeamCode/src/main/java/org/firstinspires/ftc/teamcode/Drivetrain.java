@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
@@ -77,16 +78,14 @@ public class Drivetrain extends Mechanism {
      * @param bot a new instance of Robot
      * @param motorNumbers motor data
      * @param T declares a new instance of Telemetry
-     * @param servo first servo
-     * @param servo2 second servo
-     * @param servo3 third servo
      */
-    public Drivetrain(@NonNull org.firstinspires.ftc.teamcode.Robot bot, @NonNull int[] motorNumbers, Telemetry T, Servo servo, Servo servo2, Servo servo3) {
+    public Drivetrain(@NonNull org.firstinspires.ftc.teamcode.Robot bot, @NonNull int[] motorNumbers, Telemetry T) {
         DcMotorEx motorPlaceholder;
         robot = bot;
         motorIndices = motorNumbers;
         telemetry = T;
         //odo = bot.odometry;
+
         getServos().add(servo);
 
         for (int motNum : motorNumbers) {
