@@ -91,7 +91,7 @@ public  class Robot {
 
     public Robot() {}
 
-    public Robot(TeleOp teleOp, Location transitionLocation) {
+    public Robot(FullTeleOp teleOp, Location transitionLocation) {
 
     }
 

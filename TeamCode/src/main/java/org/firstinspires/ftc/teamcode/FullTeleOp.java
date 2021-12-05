@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import java.util.ArrayList;
@@ -15,7 +16,8 @@ import java.util.ArrayList;
 /**
  * Controls the movements of the robot during the TeleOp
  */
-public class TeleOp extends LinearOpMode {
+@TeleOp (name ="TeleOp")
+public class FullTeleOp extends LinearOpMode {
     /**creates a new instance of Drivetrain*/
     public Drivetrain drivetrain;
     /**creates a new instance of Cap*/
