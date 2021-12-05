@@ -66,7 +66,6 @@ public class FullTeleOp extends LinearOpMode {
         waitForStart(); //Doesn't progress until the start button is pressed
 
         while(opModeIsActive()) { //Runs through this code constantly after the start button is pressed
-
             telemetry.addData("Encoder positions: ", robot.odometry.currentEncoderPosString());
             for (Mechanism mech : mechanisms) { //For each mechanism in the mechanism array
                 mech.update(gamepad1, gamepad2); //Run their respective update methods
