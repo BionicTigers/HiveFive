@@ -30,8 +30,6 @@ public class Odometry2 extends Mechanism {
     //Expansion hub data for the encoders
     /**Declares the first expansion hub*/
     private final ExpansionHubEx expansionHub;
-    /**Declares the second expansion hub*/
-    private final ExpansionHubEx expansionHub2;
     public Location realMaybe;
     /**Declares an object that stores all of the static data*/
     private RevBulkData bulkData;
@@ -62,9 +60,7 @@ public class Odometry2 extends Mechanism {
      * @param hardwareMap
      */
     public Odometry2(HardwareMap hardwareMap) {
-        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 173");
-        expansionHub2 = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 7");
-
+       expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 1");
         reset();
 
     }
@@ -75,8 +71,7 @@ public class Odometry2 extends Mechanism {
      * @param startPos Starting position of the robot
      */
     public Odometry2(HardwareMap hardwareMap, Location startPos) {
-        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 173");
-        expansionHub2 = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 7");
+        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 1");
 
         reset(startPos);
     }
@@ -90,8 +85,7 @@ public class Odometry2 extends Mechanism {
      */
     //New odometry constructor for new robot! The distance and distance from center will be different
     public Odometry2(HardwareMap hardwareMap, double distance, double centerDistance,Location startingLocation) {
-        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 173");
-        expansionHub2 = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 7");
+        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 1");
         reset(startingLocation);
         //ODO_DISTANCE_MM = 414.25;
         //ODO_DISTANCE_FROM_CENTER = -56.92; //-88.42
@@ -106,8 +100,7 @@ public class Odometry2 extends Mechanism {
      * @param centerDistance distance from the center of the field
      */
     public Odometry2(HardwareMap hardwareMap, double distance, double centerDistance) {
-        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 173");
-        expansionHub2 = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 7");
+        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 1");
         reset();
         //ODO_DISTANCE_MM = 420.478;
         //ODO_DISTANCE_FROM_CENTER = -56.92; //-88.42
