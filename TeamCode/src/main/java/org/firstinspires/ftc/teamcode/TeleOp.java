@@ -86,7 +86,7 @@ public class TeleOp extends LinearOpMode {
             }
 
 
-            //telemetry.addData("Robot position", odometry.currentRobotPositionString());
+            //telemetry.addData("Robot position", robot.odometry.currentRobotPositionString());
             // telemetry.addData("distance", shooter.length);
 
             telemetry.update();
