@@ -50,6 +50,14 @@ public class Intake extends Mechanism {
         } else{ //If neither direction is chosen
             stop(); //Stop motor
         }
+
+        if(up){
+            servos.get(0).setPosition(0.5);
+            servos.get(1).setPosition(0.5);
+        } else if(down){
+            servos.get(0).setPosition(0);
+            servos.get(1).setPosition(0);
+        }
     }
 
     public void runIn() {
