@@ -79,14 +79,16 @@ public class Drivetrain extends Mechanism {
      * @param motorNumbers motor data
      * @param T declares a new instance of Telemetry
      */
-    public Drivetrain(@NonNull org.firstinspires.ftc.teamcode.Robot bot, @NonNull int[] motorNumbers, Telemetry T) {
+    public Drivetrain(@NonNull org.firstinspires.ftc.teamcode.Robot bot, @NonNull int[] motorNumbers, Telemetry T, Servo SDrive1, Servo SDrive2, Servo SDrive3) {
         DcMotorEx motorPlaceholder;
         robot = bot;
         motorIndices = motorNumbers;
         telemetry = T;
         //odo = bot.odometry;
 
-        getServos().add(servo);
+        getServos().add(SDrive1);
+        getServos().add(SDrive2);
+        getServos().add(SDrive3);
 
         for (int motNum : motorNumbers) {
             motorPlaceholder = robot.motors.get(motNum);
