@@ -39,6 +39,8 @@ public class DrivetrainTesting extends LinearOpMode{
         spinner = new Spinner(hardwareMap.get(CRServo.class, "spinner"), hardwareMap.get(Servo.class, "carouselB"));
        // cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
         robot.initMotors(motorNames);
+        intake.servos.get(0).setPosition(0.45);
+        intake.servos.get(1).setPosition(0.75);
         waitForStart();
         //establishes IMU parameters/variables
 //        BNO055IMU imu;
