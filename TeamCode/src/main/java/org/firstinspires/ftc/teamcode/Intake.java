@@ -38,6 +38,9 @@ public class Intake extends Mechanism {
             up = true;
         } else if (gp1.left_bumper){
             down = true;
+        } else{
+            up = false;
+            down = false;
         }
     }
 
@@ -52,20 +55,20 @@ public class Intake extends Mechanism {
         }
 
         if(up){
-            servos.get(0).setPosition(0.5);
-            servos.get(1).setPosition(0.5);
+            servos.get(0).setPosition(1);
+            servos.get(1).setPosition(0.8);
         } else if(down){
-            servos.get(0).setPosition(0);
-            servos.get(1).setPosition(0);
+            servos.get(0).setPosition(0.8);
+            servos.get(1).setPosition(1);
         }
     }
 
     public void runIn() {
-        motors.get(0).setPower(100);
+        motors.get(0).setPower(-100);
     }
 
     public void runOut() {
-        motors.get(0).setPower(-100);
+        motors.get(0).setPower(100);
     }
 
     public void stop() {

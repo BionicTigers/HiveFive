@@ -7,6 +7,7 @@ public class Output extends Mechanism {
 
     //This variable controls the position of the dropper
     public boolean drop;
+    public double transferDown;
 
     //Creates, declares, and assigns a servo to the servos array list
     public Output(Servo dropper) {
@@ -16,13 +17,17 @@ public class Output extends Mechanism {
 
     public void update(Gamepad gp1, Gamepad gp2) {
         drop = gp2.a;
+        transferDown = gp2.left_trigger;
     }
 
     public void write() {
         if (drop) { //If A is being pressed
-            servos.get(0).setPosition(0.2); //Move to dropping position
+            servos.get(0).setPosition(0.3); //Move to dropping position
         } else { //If A isn't being pressed
-            servos.get(0).setPosition(0.8); //Move to upright position
+            servos.get(0).setPosition(0.5); //Move to upright position
+        }
+        if(transferDown >= 0.15){
+            servos.get(0).setPosition(0.65);
         }
     }
 }
