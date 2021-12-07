@@ -22,7 +22,7 @@ public class DrivetrainTesting extends LinearOpMode{
     public Drivetrain drivetrain; //declares drivetrain
     public Robot robot; //declares robot
     public Intake intake;
-    public Transfer transfer;
+    public PositionalTransfer transfer;
     public Output output;
    // public Cap cap;
     public Spinner spinner;
@@ -34,7 +34,7 @@ public class DrivetrainTesting extends LinearOpMode{
         robot = new Robot(this);
         drivetrain = new Drivetrain(robot, motorNumbers, telemetry, hardwareMap.get(Servo.class, "SDrive1"), hardwareMap.get(Servo.class, "SDrive2"), hardwareMap.get(Servo.class, "SDrive3"));
         intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intakeLeft"), hardwareMap.get(Servo.class, "intakeRight"));
-        transfer = new Transfer((DcMotorEx) hardwareMap.get(DcMotor.class, "transfer"));
+        transfer = new PositionalTransfer((DcMotorEx) hardwareMap.get(DcMotorEx.class, "transfer"), telemetry);
         output = new Output(hardwareMap.get(Servo.class, "output"));
         spinner = new Spinner(hardwareMap.get(CRServo.class, "spinner"), hardwareMap.get(Servo.class, "carouselB"));
        // cap = new Cap(hardwareMap.get(Servo.class, "capServo"));

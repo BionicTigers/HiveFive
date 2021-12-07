@@ -1,15 +1,21 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class PositionalTransfer extends Mechanism{
     boolean up;
     boolean down;
+    public Telemetry telemetry;
 
-    public PositionalTransfer(DcMotorEx motor){
+    public PositionalTransfer(DcMotorEx motor, Telemetry T){
         super();
         motors.add(motor);
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        telemetry = T;
     }
 
     public void update(Gamepad gp1, Gamepad gp2){
@@ -21,12 +27,16 @@ public class PositionalTransfer extends Mechanism{
             up = false;
             down = false;
         }
+        telemetry.addData("position", motors.get(0).getCurrentPosition());
+        telemetry.update();
     }
 
     public void write(){
         if(up){
-            motors.get(0).setTargetPosition(500);
+            motors.get(0).setPower(30);
+            motors.get(0).setTargetPosition(-850);
         } else if(down){
+            motors.get(0).setPower(30);
             motors.get(0).setTargetPosition(0);
         }
     }
