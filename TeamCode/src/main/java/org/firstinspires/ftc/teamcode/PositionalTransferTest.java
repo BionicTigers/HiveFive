@@ -9,7 +9,7 @@ public class PositionalTransferTest extends LinearOpMode{
     public PositionalTransfer transfer;
 
     public void runOpMode(){
-        transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "motor"));
+        transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transferMotor"));
         waitForStart();
 
         while(opModeIsActive()){
