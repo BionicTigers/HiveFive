@@ -18,7 +18,7 @@ public class Spinner extends Mechanism{
     public void update(Gamepad gp1, Gamepad gp2) {
         spin = gp2.dpad_right;
         spinBack = gp2.dpad_left;
-        servoB = gp2.a;
+        servoB = gp2.b;
     }
 
     public void write() {
