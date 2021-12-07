@@ -79,7 +79,7 @@ public class Drivetrain extends Mechanism {
             servos.get(2).setPosition(0.31);
 
         } else if(driverPad.b){
-            servos.get(0).setPosition(0.25);
+            servos.get(0).setPosition(0.27);
             servos.get(1).setPosition(0.32);
             servos.get(2).setPosition(0.57);
         }
