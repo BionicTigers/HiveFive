@@ -14,6 +14,7 @@ public class PositionalTransfer extends Mechanism{
         super();
         motors.add(motor);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motors.get(0).setTargetPosition(0);
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         telemetry = T;
     }
