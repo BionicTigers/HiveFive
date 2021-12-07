@@ -36,9 +36,9 @@ public class Transfer extends Mechanism{
     @Override
     public void write() {
         if(up){
-            motors.get(0).setPower(30);
-        } else if(down){
             motors.get(0).setPower(-30);
+        } else if(down){
+            motors.get(0).setPower(30);
         } else{
             motors.get(0).setPower(0);
         }
