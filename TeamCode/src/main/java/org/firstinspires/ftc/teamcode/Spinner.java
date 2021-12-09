@@ -48,11 +48,11 @@ public class Spinner extends Mechanism{
      * @param time time carousel spins for
      */
     public void spin(Servo spinner, int time) {
-        ElapsedTime t = new ElapsedTime();
-        t.startTime();
         crServos.get(0).setPower(100);
-        while(t.seconds() < 3){
-            continue;
+        try {
+            wait(time*1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         crServos.get(0).setPower(0);
     }

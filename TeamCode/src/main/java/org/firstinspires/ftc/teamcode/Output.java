@@ -14,6 +14,20 @@ public class Output extends Mechanism {
         getServos().add(dropper);
     }
 
+    /**
+     * Deposits an object in the output
+     * @param dropper   servo that controls the output
+     */
+    public void deposit(Servo dropper){
+        dropper.setPosition(0.2);
+        try {
+            wait(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        dropper.setPosition(0.8);
+    }
+
     public void update(Gamepad gp1, Gamepad gp2) {
         drop = gp2.a;
     }
