@@ -12,7 +12,7 @@ public class Intake extends Mechanism {
 
     //Both of these variables control the position of the intake
     public boolean up;
-    public boolean down;
+    public boolean down = true;
 
     //Creates, declares, and assigns a motor to the motors array list
     public Intake(DcMotorEx intakeMotor, Servo intakeLeft, Servo intakeRight) {
@@ -33,7 +33,6 @@ public class Intake extends Mechanism {
             goingOut = false;
             //-----
         }
-
         if (gp1.right_bumper){
             up = true;
         } else if (gp1.left_bumper){
@@ -55,11 +54,11 @@ public class Intake extends Mechanism {
         }
 
         if(up){
-            servos.get(0).setPosition(0.9);
+            servos.get(0).setPosition(0.83);
             servos.get(1).setPosition(0.2);
         } else if(down){
-            servos.get(0).setPosition(0.45);
-            servos.get(1).setPosition(0.75);
+            servos.get(0).setPosition(0.46);
+            servos.get(1).setPosition(0.5);
         }
     }
 

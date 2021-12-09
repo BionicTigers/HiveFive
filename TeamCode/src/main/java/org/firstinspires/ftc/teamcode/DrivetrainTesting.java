@@ -34,13 +34,13 @@ public class DrivetrainTesting extends LinearOpMode{
         robot = new Robot(this);
         drivetrain = new Drivetrain(robot, motorNumbers, telemetry, hardwareMap.get(Servo.class, "SDrive1"), hardwareMap.get(Servo.class, "SDrive2"), hardwareMap.get(Servo.class, "SDrive3"));
         intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intakeLeft"), hardwareMap.get(Servo.class, "intakeRight"));
-        transfer = new PositionalTransfer((DcMotorEx) hardwareMap.get(DcMotorEx.class, "transfer"), telemetry);
+        transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry);
         output = new Output(hardwareMap.get(Servo.class, "output"));
         spinner = new Spinner(hardwareMap.get(CRServo.class, "spinner"), hardwareMap.get(Servo.class, "carouselB"));
        // cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
         robot.initMotors(motorNames);
-        intake.servos.get(0).setPosition(0.45);
-        intake.servos.get(1).setPosition(0.75);
+        intake.servos.get(0).setPosition(0.89);
+        intake.servos.get(1).setPosition(0.2);
         waitForStart();
         //establishes IMU parameters/variables
 //        BNO055IMU imu;
