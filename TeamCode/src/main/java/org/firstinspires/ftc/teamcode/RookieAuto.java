@@ -19,7 +19,7 @@ public class RookieAuto extends LinearOpMode{
         //Move spinner to correct position
         //Spin carousel
         //Move to
-        if (timer.time()<=20){
+        if (timer.seconds()<=20){
             //Warehouse
         } else{
             //Shipping unit
