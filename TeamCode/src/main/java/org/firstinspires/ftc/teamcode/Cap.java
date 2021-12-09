@@ -47,6 +47,7 @@ public class Cap extends Mechanism {
         return servos.get(0).getPosition();
     }
 
+
     /**
      * Updates every cycle
      */

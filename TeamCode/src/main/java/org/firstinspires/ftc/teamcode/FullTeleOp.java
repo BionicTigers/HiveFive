@@ -18,28 +18,34 @@ import java.util.ArrayList;
  */
 @TeleOp (name ="TeleOp")
 public class FullTeleOp extends LinearOpMode {
-    /**creates a new instance of Drivetrain*/
+    /**Creates a new instance of Drivetrain*/
     public Drivetrain drivetrain;
-    /**creates a new instance of Cap*/
+    /**Creates a new instance of Cap*/
     public Cap cap;
-    /**creates a new instance of Intake*/
+    /**Creates a new instance of Intake*/
     public Intake intake;
-    /**creates a new instance of Robot*/
+    /**Creates a new instance of Robot*/
     public Robot robot;
-    /**creates a new instance of Spinner*/
+    /**Creates a new instance of Spinner*/
     public Spinner spinner;
-    /**creates a new instance of Transfer*/
+    /**Creates a new instance of Transfer*/
     public Transfer transfer;
-    /**creates a new instance of Output*/
+    /**Creates a new instance of Output*/
     public Output output;
 
     //private FtcDashboard dashboard;
-    /**creates a new instance of Telemetry*/
+    /**Creates a new instance of Telemetry*/
     private Telemetry dashboardTelemetry;
 
-    private int wheels[] ={0, 1, 2, 3};
-    private int servos[] ={0, 1, 2, 3};
+    /**Declares an array of wheels*/
+    private int wheels[] = {0, 1, 2, 3};
+    /**declares an array of servos*/
+    private int servos[] = {0, 1, 2, 3};
 
+    /**
+     * Runs the OpMode, essentially a main method for the code.
+     * @throws InterruptedException
+     */
     @Override
     public void runOpMode() throws InterruptedException {
         Variables.mult= (float) .3;

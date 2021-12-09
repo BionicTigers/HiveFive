@@ -3,16 +3,58 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Spinner extends Mechanism{
-    
+
+    //Controller buttons
     public boolean spin;
     public boolean spinBack;
     public boolean servoB;
+
+    /**
+     * Used to declare new instances of Spinner
+     * @param spinner   servo that spins the carousel
+     * @param carouselB moves out the spinner arm
+     */
     public Spinner(CRServo spinner, Servo carouselB) {
         super();
         crServos.add(spinner);
         servos.add(carouselB);
+    }
+
+    //Carousel arm methods
+
+    /**
+     * Moves the carousel arm out
+     * @param carouselB servo that moves the spinner out
+     */
+    public void moveArmOut(Servo carouselB) {
+        carouselB.setPosition(1);
+    }
+
+    /**
+     * Moves the carousel arm back over the robot
+     * @param carouselB servo that moves the spinner out
+     */
+    public void moveArmBack(Servo carouselB){
+        carouselB.setPosition(0);
+    }
+
+    //Carousel spinner methods
+    /**
+     * Spins the carousel spinner for a set amount of time
+     * @param spinner servo that spins carousel
+     * @param time time carousel spins for
+     */
+    public void spin(Servo spinner, int time) {
+        ElapsedTime t = new ElapsedTime();
+        t.startTime();
+        crServos.get(0).setPower(100);
+        while(t.seconds() < 3){
+            continue;
+        }
+        crServos.get(0).setPower(0);
     }
 
     public void update(Gamepad gp1, Gamepad gp2) {
