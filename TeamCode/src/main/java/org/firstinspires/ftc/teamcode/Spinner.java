@@ -24,7 +24,6 @@ public class Spinner extends Mechanism{
     }
 
     //Carousel arm methods
-
     /**
      * Moves the carousel arm out
      * @param carouselB servo that moves the spinner out
