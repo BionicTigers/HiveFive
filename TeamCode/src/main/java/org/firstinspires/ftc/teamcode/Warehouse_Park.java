@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Location;
 
-@Autonomous(name="Starter Auto", group="Autonomous")
-public class StarterAuto extends LinearOpMode {
+@Autonomous(name="Warehouse Park", group="Autonomous")
+public class Warehouse_Park extends LinearOpMode {
     private Robot robot;
     private Intake intake;
     private Drivetrain drive;
@@ -32,6 +32,8 @@ public class StarterAuto extends LinearOpMode {
 
         robot.odometry.reset();
 
+        drive.odoUp();
+
 
         waitForStart();
 //        intake.inspin();
@@ -40,6 +42,16 @@ public class StarterAuto extends LinearOpMode {
 //        sleep(2000);
 //        intake.outspin();
 //        sleep(2000);
-        drive.actuallyMoveToPosition(Tester, 25, 25, 1, 2000);
+//        drive.actuallyMoveToPosition(Tester, 25, 25, 1, 2000);
+        drive.motors.get(0).setPower(1);
+        drive.motors.get(1).setPower(1);
+        drive.motors.get(2).setPower(1);
+        drive.motors.get(3).setPower(1);
+        sleep(750);
+        drive.motors.get(0).setPower(0);
+        drive.motors.get(1).setPower(0);
+        drive.motors.get(2).setPower(0);
+        drive.motors.get(3).setPower(0);
+
     }
 }

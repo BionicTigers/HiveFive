@@ -33,9 +33,6 @@ public  class Robot {
     public Odometry odometry;
 
 
-    public Odometry odometry;
-
-
     public String[] motorNames = {"frontRight","frontLeft","backLeft","backRight"};
 
     //Robot constructor class; creates robot object

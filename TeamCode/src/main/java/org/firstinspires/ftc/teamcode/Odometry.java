@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.*;
 
-import org.firstinspires.ftc.robotcore.internal.android.dex.EncodedValueReader;
 import org.openftc.revextensions2.ExpansionHubEx;
 import org.openftc.revextensions2.RevBulkData;
 
@@ -29,14 +28,12 @@ public class Odometry extends Mechanism {
     //Expansion hub data for the encoders
     /**Declares the first expansion hub*/
     private final ExpansionHubEx expansionHub;
-    /**Declares the second expansion hub*/
-    private final ExpansionHubEx expansionHub2;
     /**Declares an object that stores all of the static data*/
     private RevBulkData bulkData;
 
     //Current position fields
     /**Declares a new Location object to track position*/
-    private Location pos = new Location();
+    private Location position = new Location();
     /**Declares another new Location object to track position*/
     public Location pos2 = new Location();
     /**X position relative to starting location*/
@@ -53,6 +50,11 @@ public class Odometry extends Mechanism {
     /**Declares an array of encoder values*/
     public double[] encoderDeltamm = new double[3];
 
+
+    public Location realMaybe;
+
+
+
     /* *************************** ODOMETRY CONSTRUCTOR METHODS *************************** */
 
     /**
@@ -60,8 +62,7 @@ public class Odometry extends Mechanism {
      * @param hardwareMap
      */
     public Odometry(HardwareMap hardwareMap) {
-        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 173");
-        expansionHub2 = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 7");
+        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 1");
 
         reset();
 
@@ -73,8 +74,7 @@ public class Odometry extends Mechanism {
      * @param startPos Starting position of the robot
      */
     public Odometry(HardwareMap hardwareMap, Location startPos) {
-        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 173");
-        expansionHub2 = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 7");
+        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 1");
 
         reset(startPos);
     }
@@ -88,8 +88,7 @@ public class Odometry extends Mechanism {
      */
     //New odometry constructor for new robot! The distance and distance from center will be different
     public Odometry(HardwareMap hardwareMap, double distance, double centerDistance,Location startingLocation) {
-        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 173");
-        expansionHub2 = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 7");
+        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 1");
         reset(startingLocation);
         //ODO_DISTANCE_MM = 414.25;
         //ODO_DISTANCE_FROM_CENTER = -56.92; //-88.42
@@ -104,8 +103,7 @@ public class Odometry extends Mechanism {
      * @param centerDistance
      */
     public Odometry(HardwareMap hardwareMap, double distance, double centerDistance) {
-        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 173");
-        expansionHub2 = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 7");
+        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 1");
         reset();
         //ODO_DISTANCE_MM = 420.478;
         //ODO_DISTANCE_FROM_CENTER = -56.92; //-88.42
@@ -132,7 +130,7 @@ public class Odometry extends Mechanism {
             }
             rotOffset = 0;
             encoderPosition = new int[3];
-            pos.setLocation(0, 0, 0, 0);
+            position.setLocation(0, 0, 0, 0);
         } catch (NullPointerException e) {
 
         }
@@ -156,7 +154,7 @@ public class Odometry extends Mechanism {
             }
             Location resettiSpot = new Location(x, 0, z, rot);
             encoderPosition = new int[3];
-            pos = resettiSpot;
+            position = resettiSpot;
             rotOffset = resettiSpot.getLocation(3);
         } catch (NullPointerException e) {
 
@@ -180,7 +178,7 @@ public class Odometry extends Mechanism {
             encoderPosition = new int[3];
             // if you are running into issues with this method this may be the cause
             // I have to reset a little backwards because of the jank way the odo is switched for backawards compatability
-            pos = resetPos;
+            position = resetPos;
             pos2=new Location(resetPos.getLocation(2),0,resetPos.getLocation(0),resetPos.getLocation(3));
 
             rotOffset = resetPos.getLocation(3);
@@ -221,7 +219,7 @@ public class Odometry extends Mechanism {
             // pos.setRotation((float) Math.toDegrees(((ODO_CIRCUMFERENCE_MM/*circumference*/ * ((encoderPosition[0]) / ODO_ENCODER_TICKS)/*percentage of the wheel revolved*/ - (ODO_CIRCUMFERENCE_MM * ((encoderPosition[1]) / ODO_ENCODER_TICKS)))) / ODO_DISTANCE_MM));
             double angle = (float) Math.toDegrees((encoderPosition[1] - encoderPosition[0]) / (ODO_DISTANCE_MM * ENCODER_TICKS_PER_MM));
             angle=angle+rotOffset;
-            pos.setRotation(angle);
+            position.setRotation(angle);
             if (Math.abs(botRotDelta) > 0) {
                 double radiusOfMovement = (encoderDeltamm[0] + encoderDeltamm[1]) / (2 * botRotDelta); //Radius that robot moves around
                 double radiusOfStraif = relativeX / botRotDelta; //radius of the robot while also moving forward :O
@@ -231,8 +229,8 @@ public class Odometry extends Mechanism {
                 relativeX = radiusOfMovement * (1 - Math.cos(botRotDelta)) + (radiusOfStraif * Math.sin(botRotDelta));
                 addPublicTelemetry("relativex ", ""+relativeX);
             }
-            pos.translateLocal(relativeY, relativeX, 0);
-            pos2.setLocation(pos.getLocation(2), pos.getLocation(1), pos.getLocation(0), pos.getLocation(3));
+            position.translateLocal(relativeY, relativeX, 0);
+            pos2.setLocation(position.getLocation(2), position.getLocation(1), position.getLocation(0), position.getLocation(3));
         } catch (NullPointerException e) {
 
         }
@@ -250,8 +248,8 @@ public class Odometry extends Mechanism {
      * Gets the position
      * @return Location or pos
      */
-    public Location getPos() {
-        try {return pos;}
+    public Location getPosition() {
+        try {return position;}
         catch (NullPointerException e) {
             return new Location();
         }
@@ -267,7 +265,7 @@ public class Odometry extends Mechanism {
     /**
      * Converts the robot position to a string
      */
-    public String currentRobotPositionString() {return pos.getLocation(0) + ", " + pos.getLocation(2) + ", " + pos.getLocation(3);}
+    public String currentRobotPositionString() {return position.getLocation(0) + ", " + position.getLocation(2) + ", " + position.getLocation(3);}
 
     /* *************************** GETTER METHODS *************************** */
 

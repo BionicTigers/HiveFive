@@ -41,6 +41,7 @@ public class DrivetrainTesting extends LinearOpMode{
         robot.initMotors(motorNames);
         intake.servos.get(0).setPosition(0.83);
         intake.servos.get(1).setPosition(0.7);
+        output.servos.get(0).setPosition(1);
         waitForStart();
         //establishes IMU parameters/variables
 //        BNO055IMU imu;
