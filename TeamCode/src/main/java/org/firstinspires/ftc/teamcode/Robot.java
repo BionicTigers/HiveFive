@@ -32,6 +32,10 @@ public  class Robot {
     public HardwareMap hardwareMap;
     public Odometry odometry;
 
+
+    public Odometry odometry;
+
+
     public String[] motorNames = {"frontRight","frontLeft","backLeft","backRight"};
 
     //Robot constructor class; creates robot object
@@ -56,6 +60,9 @@ public  class Robot {
         telemetry = oop.telemetry;
 //        dt = new Drivetrain(this, new int[]{0, 1, 2, 3});
 //
+
+
+        odometry = new Odometry(hardwareMap);
     }
     public  Robot(LinearOpMode opMode) {
 
@@ -71,16 +78,23 @@ public  class Robot {
         motors.get(0).setDirection(DcMotorSimple.Direction.REVERSE);
         motors.get(3).setDirection(DcMotorSimple.Direction.REVERSE);
         time = new ElapsedTime();
-//
+
         gamepad1 = oop.gamepad1;
         gamepad2 = oop.gamepad2;
-//
+
         telemetry = oop.telemetry;
 //        dt = new Drivetrain(this, new int[]{0, 1, 2, 3});
-//
+
+
+
+        odometry = new Odometry(hardwareMap);
     }
 
     public Robot() {}
+
+    public Robot(FullTeleOp teleOp, Location transitionLocation) {
+
+    }
 
     public long getTimeMS(){
         return time.now(TimeUnit.MILLISECONDS);

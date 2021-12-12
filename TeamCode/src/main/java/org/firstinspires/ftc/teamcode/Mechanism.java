@@ -11,17 +11,19 @@ import java.util.ArrayList;
 public abstract class  Mechanism {
     public ArrayList<DcMotorEx> motors;
 
+    public ArrayList<Servo> servos;
+
     public ArrayList<Servo> getServos() {
         return servos;
     }
 
-    public ArrayList<Servo> servos;
+
+    protected ArrayList<CRServo> crServos;
 
     public ArrayList<CRServo> getCRServos() {
         return crServos;
     }
 
-    protected ArrayList<CRServo> crServos;
     protected ArrayList<DigitalChannel> sensors;
 
 

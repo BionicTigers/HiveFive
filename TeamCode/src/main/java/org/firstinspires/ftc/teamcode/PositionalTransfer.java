@@ -19,6 +19,28 @@ public class PositionalTransfer extends Mechanism{
         telemetry = T;
     }
 
+    /**
+     * Moves the arm to the bottom
+     * @param motor motor that controls transfer arm
+     */
+    public void moveToBottom(DcMotorEx motor){
+        motor.setTargetPosition(-250);
+    }
+    /**
+     * Moves the arm to the middle
+     * @param motor motor that controls transfer arm
+     */
+    public void moveToMiddle(DcMotorEx motor){
+        motor.setTargetPosition(-500);
+    }
+    /**
+     * Moves the arm to the top
+     * @param motor motor that controls transfer arm
+     */
+    public void moveToTop(DcMotorEx motor){
+        motor.setTargetPosition(-773);
+    }
+
     public void update(Gamepad gp1, Gamepad gp2){
         if(gp2.right_trigger >= 0.5){
             up = true;
@@ -35,7 +57,7 @@ public class PositionalTransfer extends Mechanism{
     public void write(){
         if(up){
             motors.get(0).setPower(30);
-            motors.get(0).setTargetPosition(-850);
+            motors.get(0).setTargetPosition(-773);
         } else if(down){
             motors.get(0).setPower(30);
             motors.get(0).setTargetPosition(0);
