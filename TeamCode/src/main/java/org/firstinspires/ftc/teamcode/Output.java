@@ -22,9 +22,7 @@ public class Output extends Mechanism {
 
     public void write() {
         if (drop) { //If A is being pressed
-            servos.get(0).setPosition(0); //Move to dropping position
-        } else if(transferDown >= 0.4){
-            servos.get(0).setPosition(0.7);
+            servos.get(0).setPosition(0.15); //Move to dropping position
         } else { //If A isn't being pressed
             servos.get(0).setPosition(1); //Move to upright position
         }

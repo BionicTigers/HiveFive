@@ -35,7 +35,7 @@ public class PositionalTransfer extends Mechanism{
     public void write(){
         if(up){
             motors.get(0).setPower(30);
-            motors.get(0).setTargetPosition(-773);
+            motors.get(0).setTargetPosition(-850);
         } else if(down){
             motors.get(0).setPower(30);
             motors.get(0).setTargetPosition(0);

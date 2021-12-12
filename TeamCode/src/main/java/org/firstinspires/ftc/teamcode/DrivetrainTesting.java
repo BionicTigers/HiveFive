@@ -40,7 +40,7 @@ public class DrivetrainTesting extends LinearOpMode{
        // cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
         robot.initMotors(motorNames);
         intake.servos.get(0).setPosition(0.83);
-        intake.servos.get(1).setPosition(0.2);
+        intake.servos.get(1).setPosition(0.7);
         waitForStart();
         //establishes IMU parameters/variables
 //        BNO055IMU imu;

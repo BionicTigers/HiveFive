@@ -55,18 +55,32 @@ public class Intake extends Mechanism {
 
         if (up) {
             servos.get(0).setPosition(0.83);
-            servos.get(1).setPosition(0.2);
+            servos.get(1).setPosition(0.7);
         } else if (down) {
-            servos.get(0).setPosition(0.5);
-            servos.get(1).setPosition(0.5);
+            servos.get(0).setPosition(0.46);
+            servos.get(1).setPosition(.94);
         }
     }
 
     public void run(float in, float out) {
         if (in > .25) {
-            motors.get(0).setPower(0-in);
+            if(in > .8)
+            {
+                motors.get(0).setPower(-1);
+            }
+            else{
+                motors.get(0).setPower(0-in);
+            }
+
+
         } else if (out > .25) {
-            motors.get(0).setPower(out);
+            if(out > .8)
+            {
+                motors.get(0).setPower(1);
+            }
+            else {
+                motors.get(0).setPower(out);
+            }
         } else {
             motors.get(0).setPower(0);
         }
