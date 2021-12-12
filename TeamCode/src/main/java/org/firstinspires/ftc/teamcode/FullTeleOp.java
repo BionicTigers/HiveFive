@@ -99,6 +99,6 @@ public class FullTeleOp extends LinearOpMode {
             telemetry.update();
             dashboardTelemetry.update();
         }
-        Variables.transitionLocation = robot.odometry.getPos();
+        Variables.transitionLocation = robot.odometry.getPosition();
     }
 }

@@ -32,7 +32,7 @@ public  class Robot {
     public HardwareMap hardwareMap;
 
 
-    public Odometry2 odometry;
+    public Odometry odometry;
 
 
     public String[] motorNames = {"frontRight","frontLeft","backLeft","backRight"};
@@ -61,7 +61,7 @@ public  class Robot {
 //
 
 
-        odometry = new Odometry2(hardwareMap);
+        odometry = new Odometry(hardwareMap);
     }
     public  Robot(LinearOpMode opMode) {
 
@@ -77,16 +77,16 @@ public  class Robot {
         motors.get(0).setDirection(DcMotorSimple.Direction.REVERSE);
         motors.get(3).setDirection(DcMotorSimple.Direction.REVERSE);
         time = new ElapsedTime();
-//
+
         gamepad1 = oop.gamepad1;
         gamepad2 = oop.gamepad2;
-//
+
         telemetry = oop.telemetry;
 //        dt = new Drivetrain(this, new int[]{0, 1, 2, 3});
-//
 
 
-        //odometry = new Odometry2(hardwareMap);
+
+        odometry = new Odometry(hardwareMap);
     }
 
     public Robot() {}

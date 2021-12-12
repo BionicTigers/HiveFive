@@ -33,7 +33,7 @@ public class Odometry extends Mechanism{
 
     //Expansion hub data we need for the encoders
     private final ExpansionHubEx expansionHub;
-    private final ExpansionHubEx expansionHub2;
+    //private final ExpansionHubEx expansionHub2;
     private RevBulkData bulkData;
 
 
@@ -42,23 +42,20 @@ public class Odometry extends Mechanism{
 
     /* *************************** CONSTRUCTOR METHODS *************************** */
     public Odometry(HardwareMap hardwareMap) {
-        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Control Hub");
-        expansionHub2 = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 7");
+        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 1");
 
         reset();
 
     }
     public Odometry(HardwareMap hardwareMap, Location startPos) {
-        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 173");
-        expansionHub2 = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 7");
+        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 1");
 
         reset(startPos);
     }
 
     //New odometry constructor for new robot! The distance and distance from center will be different
     public Odometry(HardwareMap hardwareMap, double distance, double centerDistance,Location startingLocation) {
-        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 173");
-        expansionHub2 = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 7");
+        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 1");
         reset(startingLocation);
         ODO_DISTANCE_MM = 414.25;
         ODO_DISTANCE_FROM_CENTER = -56.92; //-88.42
@@ -67,8 +64,7 @@ public class Odometry extends Mechanism{
     }
     //New odometry constructor for new robot! The distance and distance from center will be different
     public Odometry(HardwareMap hardwareMap, double distance, double centerDistance) {
-        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 173");
-        expansionHub2 = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 7");
+        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 1");
         reset();
         ODO_DISTANCE_MM = 420.478;
         ODO_DISTANCE_FROM_CENTER = -56.92; //-88.42
