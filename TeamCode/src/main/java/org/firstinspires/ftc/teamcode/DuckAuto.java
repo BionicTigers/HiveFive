@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
 
-@Autonomous (name = "rookieAuto", group = "autonomous")
+@Autonomous (name = "duckAuto", group = "autonomous")
 public class DuckAuto extends LinearOpMode{
     public Robot robot = new Robot();
     public PositionalTransfer transfer;
@@ -22,8 +22,9 @@ public class DuckAuto extends LinearOpMode{
     public Telemetry telemetry;
     //Position finding
     public Location location;
-    public Odometry2 odometry;
+    public Odometry odometry;
     public enum Level {BOTTOM, MIDDLE, TOP};
+    Level lev;
 
     //Array declarations
     /**Declares an array of wheels*/
@@ -36,7 +37,7 @@ public class DuckAuto extends LinearOpMode{
         //dashboard = FtcDashboard.getInstance();
         //dashboardTelemetry = dashboard.getTelemetry();
 
-        //Adds a motor to the transfer object
+        //Assigns a motor to the transfer object
         transfer = new PositionalTransfer((DcMotorEx) hardwareMap.get(DcMotor.class, "transfer"), telemetry);
         //Assigns a servo to the output object
         output = new Output(hardwareMap.get(Servo.class, "output"));
@@ -52,13 +53,16 @@ public class DuckAuto extends LinearOpMode{
         ElapsedTime timer = new ElapsedTime();
         timer.startTime();
         //Scan barcode
-        //(Use camera method) Level lev = vuforia.readBarcode();
+        //(Use camera method) lev = vuforia.readBarcode();
         //Pick up team shipping element
         cap.moveToIntakeHeight();
+        sleep(3000);
         cap.moveToStoringHeight();
+        sleep(1000);
         //Drive to shipping hub
         //location =...
         drivetrain.actuallyMoveToPosition(location, 0.1, 0.1, 0.1, 5); //Change info
+        sleep(5000);
         //Put crate on correct level
         /*
         switch (lev){
