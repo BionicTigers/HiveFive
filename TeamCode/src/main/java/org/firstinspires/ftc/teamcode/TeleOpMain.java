@@ -16,8 +16,8 @@ This class utilizes the drivetrain class in order to move the robot as well as u
 gyro to return information on the angle, velocity, and acceleration of each axis of the drivetrain
 */
 
-@TeleOp (name = "drivetrain_testing")
-public class DrivetrainTesting extends LinearOpMode{
+@TeleOp (name = "TeleOpMain")
+public class TeleOpMain extends LinearOpMode{
     public String[] motorNames = {"frontRight","frontLeft","backLeft","backRight"}; //establishes motor names
     public Drivetrain drivetrain; //declares drivetrain
     public Robot robot; //declares robot
@@ -37,11 +37,14 @@ public class DrivetrainTesting extends LinearOpMode{
         transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry);
         output = new Output(hardwareMap.get(Servo.class, "output"));
         spinner = new Spinner(hardwareMap.get(CRServo.class, "spinner"), hardwareMap.get(Servo.class, "carouselB"));
-       // cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
+//        cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
         robot.initMotors(motorNames);
+        //These lines set motors and servos to their default position once teleOp starts
         intake.servos.get(0).setPosition(0.83);
         intake.servos.get(1).setPosition(0.7);
         output.servos.get(0).setPosition(1);
+        drivetrain.odoUp();
+        //
         waitForStart();
         //establishes IMU parameters/variables
 //        BNO055IMU imu;
@@ -54,20 +57,19 @@ public class DrivetrainTesting extends LinearOpMode{
 //        imu = hardwareMap.get(BNO055IMU.class, "imu");
 //        imu.initialize(parameters);
 
+        Mechanism[] mechanisms = {intake, transfer, output, spinner, drivetrain, robot.odometry};
+
         //what runs constantly once play button is pressed
         while(opModeIsActive()) {
-            drivetrain.update(gamepad1, gamepad2);
-            intake.update(gamepad1, gamepad2);
-            transfer.update(gamepad1, gamepad2);
-            output.update(gamepad1, gamepad2);
-          //  cap.update(gamepad1, gamepad2);
-            spinner.update(gamepad1, gamepad2);
-            drivetrain.write();
-            intake.write();
-            transfer.write();
-            output.write();
-          //  cap.write();
-            spinner.write();
+
+            for (Mechanism mech : mechanisms) { //For each mechanism in the mechanism array
+                mech.update(gamepad1, gamepad2); //Run their respective update methods
+            }
+
+            for (Mechanism mech : mechanisms) { //For each mechanism in the mechanism array
+                mech.write(); //Run their respective write methods
+            }
+
             //Returns values of angles, velocity, and acceleration on each axis
 //            telemetry.addLine("IMU Data");
 //            telemetry.addData("orientation:", "Angle:x=%6.1f,y=%6.1f,z=%6.1f",

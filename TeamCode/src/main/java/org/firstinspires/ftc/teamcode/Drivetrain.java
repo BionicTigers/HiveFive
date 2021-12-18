@@ -172,7 +172,7 @@ public class Drivetrain extends Mechanism {
         error = findError(goalPos);
         double startTime = robot.getTimeMS();
         //While the op mode is active, max time has not been reached, and error is within the x tolerance, error is within the z tolerance, or error is within the rotation tolerance
-        while (robot.Linoop.opModeIsActive() && (robot.getTimeMS() - startTime < maxTime && (Math.abs(error.getLocation(0)) > xTolerance || Math.abs(error.getLocation(2)) > zTolerance || Math.abs(error.getLocation(3)) > rotTolerance))) {
+        while (robot.linoop.opModeIsActive() && (robot.getTimeMS() - startTime < maxTime && (Math.abs(error.getLocation(0)) > xTolerance || Math.abs(error.getLocation(2)) > zTolerance || Math.abs(error.getLocation(3)) > rotTolerance))) {
             //Finds the position error
             error = findError(goalPos);
 
@@ -188,14 +188,14 @@ public class Drivetrain extends Mechanism {
             telemetry.update();
 
             //Telemetry is updated with data for the x, y, and rotation errors
-            dashboardTelemetry.addData("x-error",error.getLocation(0) );
-            dashboardTelemetry.addData("y-error",error.getLocation(2) );
-            dashboardTelemetry.addData("r-error",error.getLocation(3) );
-            dashboardTelemetry.update();
+//            dashboardTelemetry.addData("x-error",error.getLocation(0) );
+//            dashboardTelemetry.addData("y-error",error.getLocation(2) );
+//            dashboardTelemetry.addData("r-error",error.getLocation(3) );
+//            dashboardTelemetry.update();
         }
         stopDrivetrain();
         //op is set to robot.oop
-        LinearOpMode op = (LinearOpMode) robot.oop;
+        LinearOpMode op = (LinearOpMode) robot.linoop;
         //op sleeps for 500 ms
         op.sleep(500);
     }
@@ -206,11 +206,7 @@ public class Drivetrain extends Mechanism {
      * @return the distance from the goalPos
      */
     public Location findError(Location goalPos) {
-        Location error = new Location(
-                goalPos.getLocation(0)-robot.odometry.getPosition().getLocation(0),
-                0,
-                goalPos.getLocation(2) - (robot.odometry.getPosition().getLocation(2)),
-                rotationError( goalPos.getLocation(3), robot.odometry.getPosition().getLocation(3)));
+        Location error = new Location(goalPos.getLocation(0)-robot.odometry.getPosition().getLocation(0),0,goalPos.getLocation(2) - (robot.odometry.getPosition().getLocation(2)), rotationError( goalPos.getLocation(3), robot.odometry.getPosition().getLocation(3)));
         //This is to change the global xy error into robot specific error
         double magnitude = Math.sqrt(Math.pow(error.getLocation(0),2)+ Math.pow(error.getLocation(2),2));
         double robotheading = robot.odometry.getPosition().getLocation(3)- Math.atan(error.getLocation(0)/error.getLocation(2));

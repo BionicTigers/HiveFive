@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public  class Robot {
-    public LinearOpMode Linoop;
+    public LinearOpMode linoop;
     public OpMode oop;
     public Gamepad gamepad1;
     public Gamepad gamepad2;
@@ -53,7 +53,6 @@ public  class Robot {
         gamepad1 = oop.gamepad1;
         gamepad2 = oop.gamepad2;
 //
-        hardwareMap = oop.hardwareMap;
         telemetry = oop.telemetry;
 //        dt = new Drivetrain(this, new int[]{0, 1, 2, 3});
 //
@@ -61,10 +60,10 @@ public  class Robot {
 
         odometry = new Odometry(hardwareMap);
     }
-    public  Robot(LinearOpMode opMode) {
+    public Robot(LinearOpMode opMode) {
 
-        oop=opMode;
-        hardwareMap = oop.hardwareMap;
+        linoop = opMode;
+        hardwareMap = linoop.hardwareMap;
 
         motors = new ArrayList<>();
         motors.add((DcMotorEx)hardwareMap.get(DcMotor.class,"frontLeft"));
@@ -76,10 +75,10 @@ public  class Robot {
         motors.get(3).setDirection(DcMotorSimple.Direction.REVERSE);
         time = new ElapsedTime();
 
-        gamepad1 = oop.gamepad1;
-        gamepad2 = oop.gamepad2;
+        gamepad1 = linoop.gamepad1;
+        gamepad2 = linoop.gamepad2;
 
-        telemetry = oop.telemetry;
+        telemetry = linoop.telemetry;
 //        dt = new Drivetrain(this, new int[]{0, 1, 2, 3});
 
 

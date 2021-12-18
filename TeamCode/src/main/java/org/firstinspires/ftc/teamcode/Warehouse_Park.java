@@ -21,7 +21,7 @@ public class Warehouse_Park extends LinearOpMode {
 
     private int[] wheels = {0, 1, 2, 3};
 
-    private final Location Tester = new Location(100, 0, 100, 100);
+    private final Location Tester = new Location(500f, 0, 350f, 100);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -42,16 +42,15 @@ public class Warehouse_Park extends LinearOpMode {
 //        sleep(2000);
 //        intake.outspin();
 //        sleep(2000);
-//        drive.actuallyMoveToPosition(Tester, 25, 25, 1, 2000);
-        drive.motors.get(0).setPower(1);
-        drive.motors.get(1).setPower(1);
-        drive.motors.get(2).setPower(1);
-        drive.motors.get(3).setPower(1);
-        sleep(750);
-        drive.motors.get(0).setPower(0);
-        drive.motors.get(1).setPower(0);
-        drive.motors.get(2).setPower(0);
-        drive.motors.get(3).setPower(0);
-
+//        drive.motors.get(0).setPower(1);
+//        drive.motors.get(1).setPower(1);
+//        drive.motors.get(2).setPower(1);
+//        drive.motors.get(3).setPower(1);
+//        sleep(750);
+//        drive.motors.get(0).setPower(0);
+//        drive.motors.get(1).setPower(0);
+//        drive.motors.get(2).setPower(0);
+//        drive.motors.get(3).setPower(0);
+        drive.actuallyMoveToPosition(Tester, 25, 25,15,2000);
     }
 }
