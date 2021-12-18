@@ -15,11 +15,12 @@ public class Intake extends Mechanism {
     public boolean down;
 
     //Creates, declares, and assigns a motor to the motors array list
-    public Intake(DcMotorEx intakeMotor, Servo intakeLeft, Servo intakeRight) {
+    public Intake(DcMotorEx intakeMotor, Servo intakeLeft, Servo intakeRight, Servo blocker) {
         super();
         motors.add(intakeMotor);
         servos.add(intakeLeft);
         servos.add(intakeRight);
+        servos.add(blocker);
     }
 
     public void update(Gamepad gp1, Gamepad gp2) {
@@ -43,7 +44,7 @@ public class Intake extends Mechanism {
 
 
     public void write() {
-        if (goingIn) { //If direction is set to in
+        if (goingIn) { //If direction is set to ino
             runIn(); //Set intake direction to in
         } else if (goingOut) { //If direction is set to out
             runOut(); //Set intake direction to out
@@ -54,9 +55,11 @@ public class Intake extends Mechanism {
         if(up){
             servos.get(0).setPosition(0.5);
             servos.get(1).setPosition(0.5);
+            servos.get(2).setPosition(.25);
         } else if(down){
             servos.get(0).setPosition(0);
             servos.get(1).setPosition(0);
+            servos.get(2).setPosition(.65);
         }
     }
 
