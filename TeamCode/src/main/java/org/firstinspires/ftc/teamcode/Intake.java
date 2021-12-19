@@ -14,13 +14,24 @@ public class Intake extends Mechanism {
     public boolean up;
     public boolean down = true;
     public boolean mid;
+    DcMotorEx intakeMotor;
+    Servo intakeLeft;
+    Servo intakeRight;
+
+    //Servos
+    public Servo blocker;
 
     //Creates, declares, and assigns a motor to the motors array list
-    public Intake(DcMotorEx intakeMotor, Servo intakeLeft, Servo intakeRight) {
+    public Intake(DcMotorEx intakeM, Servo intakeL, Servo intakeR, Servo block) {
         super();
-        motors.add(intakeMotor);
-        servos.add(intakeLeft);
-        servos.add(intakeRight);
+        motors.add(intakeM);
+        intakeMotor = intakeM;
+        servos.add(intakeL);
+        intakeLeft = intakeL;
+        servos.add(intakeR);
+        intakeRight = intakeR;
+        servos.add(block);
+        blocker = block;
     }
 
     public void update(Gamepad gp1, Gamepad gp2) {
@@ -58,14 +69,16 @@ public class Intake extends Mechanism {
 //        }
 
         if (up) {
+            servos.get(2).setPosition(0);
             servos.get(0).setPosition(0.83);
             servos.get(1).setPosition(0.7);
         } else if (mid) {
             servos.get(0).setPosition(0.645);
             servos.get(1).setPosition(0.82);
         } else if (down) {
-            servos.get(0).setPosition(0.46);
-            servos.get(1).setPosition(.94);
+            servos.get(2).setPosition(0.65);
+            servos.get(0).setPosition(0.47);
+            servos.get(1).setPosition(.93);
         }
     }
 

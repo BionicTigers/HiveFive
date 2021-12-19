@@ -77,4 +77,5 @@ public class Variables {
     public static double blocker1Down=.42;
     public static double blocker2Down=.65;
     public static float trim=0;
+    public static enum Level {BOTTOM, MIDDLE, TOP};
 }

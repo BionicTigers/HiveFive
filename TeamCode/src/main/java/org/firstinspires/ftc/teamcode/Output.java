@@ -5,27 +5,29 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Output extends Mechanism {
 
-    //This variable controls the position of the dropper
+    /**This variable controls the position of the dropper*/
     public boolean drop;
+    /***/
+    public Servo servo;
 
     //Creates, declares, and assigns a servo to the servos array list
-    public Output(Servo dropper) {
+    public Output(Servo d) {
         super();
-        getServos().add(dropper);
+        servo = d;
+        getServos().add(servo);
     }
 
     /**
      * Deposits an object in the output
-     * @param dropper   servo that controls the output
      */
-    public void deposit(Servo dropper){
-        dropper.setPosition(0.2);
+    public void deposit(){
+        servo.setPosition(0.2);
         try {
             wait(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        dropper.setPosition(0.8);
+        servo.setPosition(0.8);
     }
 
     public void update(Gamepad gp1, Gamepad gp2) {
@@ -34,10 +36,10 @@ public class Output extends Mechanism {
 
     public void write() {
         if (drop) { //If A is being pressed
-            servos.get(0).setPosition(0.15); //Move to dropping position
+            servo.setPosition(0.15); //Move to dropping position
         } else { //If A isn't being pressed
 
-            servos.get(0).setPosition(1); //Move to upright position
+            servo.setPosition(1); //Move to upright position
         }
     }
 }

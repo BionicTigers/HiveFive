@@ -14,6 +14,7 @@ public class Cap extends Mechanism {
     private final float armLength = 1;
     /**New instance of robot*/
     public Robot robot;
+    public Servo servo;
 
     /**
      * Cap constructor
@@ -22,6 +23,7 @@ public class Cap extends Mechanism {
      */
     public Cap(Servo capServo){
         super();
+        servo = capServo;
         getServos().add(capServo);
     }
 
@@ -30,21 +32,21 @@ public class Cap extends Mechanism {
      * Moves the arm to the intake height
      */
     public void moveToIntakeHeight(){
-        servos.get(0).setPosition(0.125);
+        servo.setPosition(0.125);
     }
 
     /**
      * Moves the arm to the scoring/scoring height
      */
     public void moveToStoringHeight(){
-        servos.get(0).setPosition(0.375);
+        servo.setPosition(0.375);
     }
 
     /**
      * Returns arm servo position
      */
     public double getArmHeight(){
-        return servos.get(0).getPosition();
+        return servo.getPosition();
     }
 
 

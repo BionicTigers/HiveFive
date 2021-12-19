@@ -23,12 +23,11 @@ public class DuckAuto extends LinearOpMode{
     //Position finding
     public Location location;
     public Odometry odometry;
-    public enum Level {BOTTOM, MIDDLE, TOP};
-    Level lev;
+    public Variables.Level lev;
 
-    //Array declarations
+    //Arrays
     /**Declares an array of wheels*/
-    private int wheels[] = {0, 1, 2, 3};
+    public static int wheels[] = {0, 1, 2, 3};
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -53,7 +52,7 @@ public class DuckAuto extends LinearOpMode{
         ElapsedTime timer = new ElapsedTime();
         timer.startTime();
         //Scan barcode
-        //(Use camera method) lev = vuforia.readBarcode();
+        lev = Variables.Level.MIDDLE;//(When camera works) lev = vision.readBarcode();
         //Pick up team shipping element
         cap.moveToIntakeHeight();
         sleep(3000);
@@ -63,39 +62,36 @@ public class DuckAuto extends LinearOpMode{
         //location =...
         drivetrain.actuallyMoveToPosition(location, 0.1, 0.1, 0.1, 5); //Change info
         sleep(5000);
-        //Put crate on correct level
-        /*
+        //Put freight on correct level
         switch (lev){
             case BOTTOM:
-                transfer.moveToBottom(TransferMotor);
+                transfer.moveToBottom();
                 break;
             case MIDDLE:
-                transfer.moveToMiddle(TransferMotor);
+                transfer.moveToMiddle();
                 break;
             case TOP:
-                transfer.moveToTop(TransferMotor);
+                transfer.moveToTop();
                 break;
         }
+        sleep(3000);
         output.deposit();
-        */
+        sleep(500);
         //Drive to carousel
         //location = ...
         drivetrain.actuallyMoveToPosition(location, 0.1, 0.1, 0.1, 5); //Change info
+        sleep(3000);
         //Move spinner to correct position
         spinner.moveArmOut(hardwareMap.get(Servo.class, "carouselB"));
+        sleep(500);
         //Spin carousel
         spinner.spin(hardwareMap.get(Servo.class, "spinner"), 3);
+        sleep(2000);
         //Move spinner back
         spinner.moveArmBack(hardwareMap.get(Servo.class, "carouselB"));
-        //Move to:
-        if (timer.seconds()<=20){
-            //Warehouse
-            //location = ...
-            drivetrain.actuallyMoveToPosition(location, 0.1, 0.1, 0.1, 5); //Change info
-        } else{
-            //Shipping unit
-            //location = ...
-            drivetrain.actuallyMoveToPosition(location, 0.1, 0.1, 0.1, 5); //Change info
-        }
+        //Move to storage unit?
+        //location = ...
+        drivetrain.actuallyMoveToPosition(location, 0.1, 0.1, 0.1, 5); //Change info
+        sleep(500);
     }
 }

@@ -9,9 +9,11 @@ public class PositionalTransfer extends Mechanism{
     boolean up;
     boolean down;
     public Telemetry telemetry;
+    public DcMotorEx motor;
 
-    public PositionalTransfer(DcMotorEx motor, Telemetry T){
+    public PositionalTransfer(DcMotorEx m, Telemetry T){
         super();
+        DcMotorEx motor = m;
         motors.add(motor);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motors.get(0).setTargetPosition(0);
@@ -21,23 +23,20 @@ public class PositionalTransfer extends Mechanism{
 
     /**
      * Moves the arm to the bottom
-     * @param motor motor that controls transfer arm
      */
-    public void moveToBottom(DcMotorEx motor){
+    public void moveToBottom(){
         motor.setTargetPosition(-250);
     }
     /**
      * Moves the arm to the middle
-     * @param motor motor that controls transfer arm
      */
-    public void moveToMiddle(DcMotorEx motor){
+    public void moveToMiddle(){
         motor.setTargetPosition(-500);
     }
     /**
      * Moves the arm to the top
-     * @param motor motor that controls transfer arm
      */
-    public void moveToTop(DcMotorEx motor){
+    public void moveToTop(){
         motor.setTargetPosition(-773);
     }
 

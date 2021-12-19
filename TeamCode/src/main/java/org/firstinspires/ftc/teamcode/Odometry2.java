@@ -207,6 +207,8 @@ public class Odometry2 extends Mechanism {
             addPublicTelemetry("",""+encoderDeltamm[1]);
             addPublicTelemetry("",""+encoderDeltamm[2]);
 
+            addPublicTelemetry("Position coordinates", ""+pos);
+
 
             double botRotDelta = (encoderDeltamm[0] - encoderDeltamm[1]) / ODO_DISTANCE_MM;  //finds change in robo rotation
             relativeX = encoderDeltamm[2] + (ODO_DISTANCE_FROM_CENTER * botRotDelta); //strafing distance

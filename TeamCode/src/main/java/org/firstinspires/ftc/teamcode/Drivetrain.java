@@ -22,6 +22,8 @@ public class Drivetrain extends Mechanism {
     public int[] motorIndices;
     /**declares a new instance of Telemetry*/
     public Telemetry telemetry;
+
+    //Locations
     /**declares an instance of Location to move the robot forward*/
     private Location forward = new Location (0, 0, 1000, 0);
     /**declares an instance of Location to move the robot backward*/
@@ -138,6 +140,7 @@ public class Drivetrain extends Mechanism {
         telemetry.addData("Front Left Power", motorPowers[1]);
         telemetry.addData("Back Right Power", motorPowers[2]);
         telemetry.addData("Back Left Power", motorPowers[3]);
+        telemetry.addData("Position", center);
         telemetry.update();
         determineMotorPowers(gp1); //Updates values in motorPowers array
 
@@ -219,9 +222,9 @@ public class Drivetrain extends Mechanism {
             integralValues[3]= integralValues[3]+error.getLocation(3);
         //fix
         //angle-robot
-        double forwardPow= Variables.kfP*error.getLocation(0) + Variables.kfI*integralValues[0] + Variables.kfD * (error.getLocation(0) - lastForwardError);
-        double sidePow= Variables.ksP*error.getLocation(2) + Variables.ksI*integralValues[2] + Variables.ksD * ( error.getLocation(2) - lastSidewaysError);
-        double rotPow= Variables.krp *error.getLocation(3) + Variables.krI*integralValues[3] + Variables.krD * ( error.getLocation(3) - lastRotationError);
+        double forwardPow = Variables.kfP*error.getLocation(0) + Variables.kfI*integralValues[0] + Variables.kfD * (error.getLocation(0) - lastForwardError);
+        double sidePow = Variables.ksP*error.getLocation(2) + Variables.ksI*integralValues[2] + Variables.ksD * ( error.getLocation(2) - lastSidewaysError);
+        double rotPow = Variables.krp *error.getLocation(3) + Variables.krI*integralValues[3] + Variables.krD * ( error.getLocation(3) - lastRotationError);
 
         lastForwardError = forwardPow;
         lastSidewaysError = sidePow;
