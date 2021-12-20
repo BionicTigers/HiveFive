@@ -40,11 +40,6 @@ public class TeleOpMain extends LinearOpMode{
 //        cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
         robot.initMotors(motorNames);
         //These lines set motors and servos to their default position once teleOp starts
-        intake.servos.get(0).setPosition(0.83);
-        intake.servos.get(1).setPosition(0.7);
-        output.servos.get(0).setPosition(1);
-        drivetrain.odoUp();
-        //
         waitForStart();
         //establishes IMU parameters/variables
 //        BNO055IMU imu;
@@ -56,6 +51,12 @@ public class TeleOpMain extends LinearOpMode{
 //        parameters.loggingTag = "IMU";
 //        imu = hardwareMap.get(BNO055IMU.class, "imu");
 //        imu.initialize(parameters);
+
+        intake.servos.get(0).setPosition(0.83);
+        intake.servos.get(1).setPosition(0.7);
+        intake.servos.get(2).setPosition(0.1);
+        output.servos.get(0).setPosition(1);
+        drivetrain.odoUp();
 
         Mechanism[] mechanisms = {intake, transfer, output, spinner, drivetrain, robot.odometry};
 

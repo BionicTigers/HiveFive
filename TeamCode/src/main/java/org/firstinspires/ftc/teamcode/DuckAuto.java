@@ -60,7 +60,7 @@ public class DuckAuto extends LinearOpMode{
         sleep(1000);
         //Drive to shipping hub
         //location =...
-        drivetrain.actuallyMoveToPosition(location, 0.1, 0.1, 0.1, 5); //Change info
+        drivetrain.moveToPosition(location, 0.1, 0.1, 0.1, 5); //Change info
         sleep(5000);
         //Put freight on correct level
         switch (lev){
@@ -79,7 +79,7 @@ public class DuckAuto extends LinearOpMode{
         sleep(500);
         //Drive to carousel
         //location = ...
-        drivetrain.actuallyMoveToPosition(location, 0.1, 0.1, 0.1, 5); //Change info
+        drivetrain.moveToPosition(location, 0.1, 0.1, 0.1, 5); //Change info
         sleep(3000);
         //Move spinner to correct position
         spinner.moveArmOut(hardwareMap.get(Servo.class, "carouselB"));
@@ -91,7 +91,7 @@ public class DuckAuto extends LinearOpMode{
         spinner.moveArmBack(hardwareMap.get(Servo.class, "carouselB"));
         //Move to storage unit?
         //location = ...
-        drivetrain.actuallyMoveToPosition(location, 0.1, 0.1, 0.1, 5); //Change info
+        drivetrain.moveToPosition(location, 0.1, 0.1, 0.1, 5); //Change info
         sleep(500);
     }
 }

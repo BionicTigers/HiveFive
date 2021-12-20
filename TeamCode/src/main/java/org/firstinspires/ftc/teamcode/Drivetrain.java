@@ -103,9 +103,15 @@ public class Drivetrain extends Mechanism {
      * @param driverPad gamepad used to control the robot
      */
     public void determineMotorPowers (Gamepad driverPad){
+        double dpadVal=0;
+        if (driverPad.dpad_right)
+            dpadVal=.2;
+        if (driverPad.dpad_left)
+            dpadVal=-.2;
+
         double P = Math.hypot(-driverPad.left_stick_x, -driverPad.left_stick_y);
         double robotAngle = Math.atan2(-driverPad.left_stick_y, -driverPad.left_stick_x);
-        double rightX = driverPad.right_stick_x;
+        double rightX = driverPad.right_stick_x+dpadVal;
 
         double sinRAngle = Math.sin(robotAngle);
         double cosRAngle = Math.cos(robotAngle);
@@ -149,6 +155,14 @@ public class Drivetrain extends Mechanism {
         } else if (gp1.a) {
             odoDown();
         }
+
+        if(gp1.dpad_up){ //precision movement forward, very slow
+            determineMotorPowers(0,0.2,0);
+        }
+
+        if(gp1.dpad_down){ //precision movement backward, very slow
+            determineMotorPowers(0,-0.2,0);
+        }
     }
 
     /**
@@ -170,7 +184,7 @@ public class Drivetrain extends Mechanism {
      * @param rotTolerance  tolerance for the rotation
      * @param maxTime   maximum amount of time that the robot can take
      */
-    public void actuallyMoveToPosition(Location goalPos, double xTolerance, double zTolerance, double rotTolerance, int maxTime) {
+    public void moveToPosition(Location goalPos, double xTolerance, double zTolerance, double rotTolerance, int maxTime) {
         integralValues = new double[4];
         error = findError(goalPos);
         double startTime = robot.getTimeMS();
@@ -215,10 +229,10 @@ public class Drivetrain extends Mechanism {
         double robotheading = robot.odometry.getPosition().getLocation(3)- Math.atan(error.getLocation(0)/error.getLocation(2));
 
         if(Math.abs(Variables.kfP*error.getLocation(0) + Variables.kfI*integralValues[0] + Variables.kfD * (error.getLocation(0) - lastForwardError))<1)
-            integralValues[0]= integralValues[0]+error.getLocation(0) ;
-        if(Math.abs(Variables.ksP*error.getLocation(2) + Variables.ksI*integralValues[2] + Variables.ksD * (error.getLocation(2) - lastForwardError))<1)
+            integralValues[0]= integralValues[0]+error.getLocation(0);
+        if(Math.abs(Variables.ksP*error.getLocation(2) + Variables.ksI*integralValues[2] + Variables.ksD * (error.getLocation(2) - lastSidewaysError))<1)
             integralValues[2]= integralValues[2]+error.getLocation(2);
-        if(Math.abs(Variables.krp*error.getLocation(3) + Variables.krI*integralValues[3] + Variables.krD * (error.getLocation(3) - lastForwardError))<1)
+        if(Math.abs(Variables.krp*error.getLocation(3) + Variables.krI*integralValues[3] + Variables.krD * (error.getLocation(3) - lastRotationError))<1)
             integralValues[3]= integralValues[3]+error.getLocation(3);
         //fix
         //angle-robot
@@ -235,7 +249,8 @@ public class Drivetrain extends Mechanism {
             forwardPow = forwardPow/hypot;
             sidePow = sidePow/hypot;
         }
-        fieldRelDetermineMotorPowers(sidePow,forwardPow,rotPow);
+//        fieldRelDetermineMotorPowers(sidePow,forwardPow,rotPow);
+        determineMotorPowers(sidePow,forwardPow,rotPow);
         return error;
     }
 

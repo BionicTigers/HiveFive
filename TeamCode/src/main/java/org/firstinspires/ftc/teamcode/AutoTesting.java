@@ -2,15 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Location;
-
-@Autonomous(name="Warehouse Park", group="Autonomous")
-public class Warehouse_Park extends LinearOpMode {
+@Autonomous(name="Auto Testing", group="Autonomous")
+public class AutoTesting extends LinearOpMode {
     private Robot robot;
     private Intake intake;
     private Drivetrain drive;
@@ -31,8 +26,10 @@ public class Warehouse_Park extends LinearOpMode {
 //        intake = new Intake((DcMotorEx) hardwareMap.get(DcMotor.class, "intake"));
 
         robot.odometry.reset();
-
-        drive.odoUp();
+        drive.odoDown();
+        intake.servos.get(0).setPosition(0.83);
+        intake.servos.get(1).setPosition(0.7);
+        intake.servos.get(2).setPosition(0.1);
 
 
         waitForStart();
@@ -51,6 +48,6 @@ public class Warehouse_Park extends LinearOpMode {
 //        drive.motors.get(1).setPower(0);
 //        drive.motors.get(2).setPower(0);
 //        drive.motors.get(3).setPower(0);
-        drive.actuallyMoveToPosition(Tester, 25, 25,15,2000);
+        drive.moveToPosition(Tester, 25, 25,15,2000);
     }
 }

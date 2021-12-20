@@ -88,10 +88,6 @@ public  class Robot {
 
     public Robot() {}
 
-    public Robot(FullTeleOp teleOp, Location transitionLocation) {
-
-    }
-
     public long getTimeMS(){
         return time.now(TimeUnit.MILLISECONDS);
     }
