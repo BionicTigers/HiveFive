@@ -24,7 +24,7 @@ public class TeleOpMain extends LinearOpMode{
     public Intake intake;
     public PositionalTransfer transfer;
     public Output output;
-   // public Cap cap;
+    public Cap cap;
     public Spinner spinner;
 
     public int[] motorNumbers = {0, 1, 2, 3}; //creates motor numbers array
@@ -37,7 +37,7 @@ public class TeleOpMain extends LinearOpMode{
         transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry);
         output = new Output(hardwareMap.get(Servo.class, "output"));
         spinner = new Spinner(hardwareMap.get(CRServo.class, "spinner"), hardwareMap.get(Servo.class, "carouselB"));
-//        cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
+        cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
         robot.initMotors(motorNames);
         //These lines set motors and servos to their default position once teleOp starts
         waitForStart();
@@ -58,7 +58,7 @@ public class TeleOpMain extends LinearOpMode{
         output.servos.get(0).setPosition(1);
         drivetrain.odoUp();
 
-        Mechanism[] mechanisms = {intake, transfer, output, spinner, drivetrain, robot.odometry};
+        Mechanism[] mechanisms = {intake, transfer, output, spinner, drivetrain, cap, robot.odometry};
 
         //what runs constantly once play button is pressed
         while(opModeIsActive()) {
