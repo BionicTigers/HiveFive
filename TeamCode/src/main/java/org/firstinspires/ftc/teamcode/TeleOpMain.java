@@ -27,7 +27,7 @@ public class TeleOpMain extends LinearOpMode{
    // public Cap cap;
     public Spinner spinner;
 
-    public int[] motorNumbers = {+0, 1, 2, 3}; //creates motor numbers array
+    public int[] motorNumbers = {0, 1, 2, 3}; //creates motor numbers array
 
 
     public void runOpMode() {

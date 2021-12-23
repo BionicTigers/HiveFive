@@ -34,11 +34,19 @@ public class Cap extends Mechanism {
     public void moveToIntakeHeight(){
         servo.setPosition(0.125);
     }
-
     /**
      * Moves the arm to the scoring/scoring height
      */
     public void moveToStoringHeight(){
+        servo.setPosition(0.375);
+    }
+    public void pickUpElement(){
+        servo.setPosition(0.125);
+        try {
+            wait(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         servo.setPosition(0.375);
     }
 
@@ -48,7 +56,6 @@ public class Cap extends Mechanism {
     public double getArmHeight(){
         return servo.getPosition();
     }
-
 
     /**
      * Updates every cycle

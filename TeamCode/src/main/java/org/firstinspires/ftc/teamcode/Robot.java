@@ -35,7 +35,9 @@ public  class Robot {
 
     public String[] motorNames = {"frontRight","frontLeft","backLeft","backRight"};
 
-    //Robot constructor class; creates robot object
+    /**
+     * Robot constructor class; creates robot object
+     */
     public Robot(OpMode opMode) {
         oop = opMode;
         hardwareMap = oop.hardwareMap;
@@ -60,6 +62,10 @@ public  class Robot {
 
         odometry = new Odometry(hardwareMap);
     }
+
+    /**
+     * Robot constructor class; creates robot object
+     */
     public Robot(LinearOpMode opMode) {
 
         linoop = opMode;
@@ -86,8 +92,12 @@ public  class Robot {
         odometry = new Odometry(hardwareMap);
     }
 
-    public Robot() {}
+    public Robot(){}
 
+    /**
+     * Returns the time
+     * @return time that the
+     */
     public long getTimeMS(){
         return time.now(TimeUnit.MILLISECONDS);
     }
