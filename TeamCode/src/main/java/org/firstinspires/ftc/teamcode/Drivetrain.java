@@ -140,14 +140,6 @@ public class Drivetrain extends Mechanism {
      * @param gp2 second gamepad
      */
     public void update (Gamepad gp1, Gamepad gp2){
-        //All telemetry commands implement telemetry to allow the driver to view motor powers while code is active
-        telemetry.addLine("Motor Powers");
-        telemetry.addData("Front Right Power", motorPowers[0]);
-        telemetry.addData("Front Left Power", motorPowers[1]);
-        telemetry.addData("Back Right Power", motorPowers[2]);
-        telemetry.addData("Back Left Power", motorPowers[3]);
-        telemetry.addData("Position", center);
-        telemetry.update();
         determineMotorPowers(gp1); //Updates values in motorPowers array
 
         if (gp1.b) {
@@ -209,7 +201,6 @@ public class Drivetrain extends Mechanism {
             //Telemetry is updated with general data
             telemetry.addData("Error", + error.getLocation(0) + ", " + error.getLocation(2) + ", " + error.getLocation(3));
             telemetry.addData("Location", robot.odometry.getPosition().getLocation(0) + " " + robot.odometry.getPosition().getLocation(2) + " " + robot.odometry.getPosition().getLocation(3));
-            telemetry.update();
 
             //Telemetry is updated with data for the x, y, and rotation errors
 //            dashboardTelemetry.addData("x-error",error.getLocation(0) );

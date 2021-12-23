@@ -14,18 +14,6 @@ public class Odometry extends Mechanism {
 
     //VERY IMPORTANT, LAST YEAR'S ROBOT STATS, CHANGE NEW ONE BELOW FOR NEW BOT
 
-    //Declares constants that relate to odometry wheels
-    //Diameter of the encoders
-    private static final double ODO_DIAMETER_MM = 44.45;
-    //Number of ticks on the encoders
-    private static final double ODO_ENCODER_TICKS = 8192;
-    //Distance between odometry encoders
-    private static final double ODO_DISTANCE_MM = 411.1625;
-    //Circumference of the encoder
-    //Distance from the center encoder to the center of the robot
-    private static final double ODO_DISTANCE_FROM_CENTER = 53.975;
-
-
 //    //Declares constants that relate to odometry wheels
 //    //Diameter of the encoders
 //    private static final double ODO_DIAMETER_MM = 44.45;
@@ -34,9 +22,26 @@ public class Odometry extends Mechanism {
 //    //Distance between odometry encoders
 //    private static final double ODO_DISTANCE_MM = 411.1625;
 //    //Circumference of the encoder
-    private static final double ODO_CIRCUMFERENCE_MM = ODO_DIAMETER_MM * Math.PI;
+//    //Distance from the center encoder to the center of the robot
+//    private static final double ODO_DISTANCE_FROM_CENTER = 53.975;
+
+    //This year's robot odometry stats
+
+    //Declares constants that relate to odometry wheels
+    //Diameter of the encoders
+    private static final double ODO_DIAMETER_MM = 35;
+    //Gear ratio of the odometry wheels
+    private static final double ODO_GEAR_RATIO = 2.6667;
+    //Effective diameter of the odo wheels based on the gear ratio
+    private static final double ODO_DIAMETER_EFFECTIVE_MM = ODO_DIAMETER_MM * ODO_GEAR_RATIO;
+    //Number of ticks on the encoders
+    private static final double ODO_ENCODER_TICKS = 8192;
+    //Distance between odometry encoders
+    private static final double ODO_DISTANCE_MM = 403.225;
+    //Circumference of the encoder
+    private static final double ODO_CIRCUMFERENCE_MM = ODO_DIAMETER_EFFECTIVE_MM * Math.PI;
     /**Distance from the center encoder to the center of the robot*/
-//    private static final double ODO_DISTANCE_FROM_CENTER = 38.1; //CHANGE!!!
+    private static final double ODO_DISTANCE_FROM_CENTER = 44.45;
     /**The number of encoder ticks per millimeter*/
     private static final double ENCODER_TICKS_PER_MM = ODO_ENCODER_TICKS / ODO_CIRCUMFERENCE_MM;
 
@@ -230,7 +235,7 @@ public class Odometry extends Mechanism {
             double botRotDelta = (encoderDeltamm[0] - encoderDeltamm[1]) / ODO_DISTANCE_MM;  //finds change in robo rotation
             relativeX = encoderDeltamm[2] + (ODO_DISTANCE_FROM_CENTER * botRotDelta); //strafing distance
             relativeY = (encoderDeltamm[0] + encoderDeltamm[1]) / 2; //how much moved forward/back
-            /*setting current robo rotation in Location object*/
+            //setting current robo rotation in Location object
             // pos.setRotation((float) Math.toDegrees(((ODO_CIRCUMFERENCE_MM/*circumference*/ * ((encoderPosition[0]) / ODO_ENCODER_TICKS)/*percentage of the wheel revolved*/ - (ODO_CIRCUMFERENCE_MM * ((encoderPosition[1]) / ODO_ENCODER_TICKS)))) / ODO_DISTANCE_MM));
             double angle = (float) Math.toDegrees((encoderPosition[1] - encoderPosition[0]) / (ODO_DISTANCE_MM * ENCODER_TICKS_PER_MM));
             angle=angle+rotOffset;

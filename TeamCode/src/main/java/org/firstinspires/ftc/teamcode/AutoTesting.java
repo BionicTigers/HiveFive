@@ -28,7 +28,7 @@ public class AutoTesting extends LinearOpMode {
 //        intake = new Intake((DcMotorEx) hardwareMap.get(DcMotor.class, "intake"));
 
         robot.odometry.reset();
-//        drive.odoDown();
+        drive.odoDown();
 //        intake.servos.get(0).setPosition(0.83);
 //        intake.servos.get(1).setPosition(0.7);
 //        intake.servos.get(2).setPosition(0.1);

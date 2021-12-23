@@ -50,7 +50,7 @@ public class PositionalTransfer extends Mechanism{
             down = false;
         }
         telemetry.addData("position", motors.get(0).getCurrentPosition());
-        telemetry.update();
+//        telemetry.update();
     }
 
     public void write(){
