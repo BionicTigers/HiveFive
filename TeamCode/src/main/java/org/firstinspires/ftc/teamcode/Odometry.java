@@ -42,7 +42,7 @@ public class Odometry extends Mechanism {
     private static final double ODO_CIRCUMFERENCE_MM = ODO_DIAMETER_EFFECTIVE_MM * Math.PI;
     //Distance from the center encoder to the center of the robot
     private static final double ODO_DISTANCE_FROM_CENTER = 44.45;
-    /**The number of encoder ticks per millimeter*/
+    //The number of encoder ticks per millimeter
     private static final double ENCODER_TICKS_PER_MM = ODO_ENCODER_TICKS / ODO_CIRCUMFERENCE_MM;
 
     //Expansion hub data for the encoders
