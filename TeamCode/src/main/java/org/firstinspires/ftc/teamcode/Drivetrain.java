@@ -56,9 +56,6 @@ public class Drivetrain extends Mechanism {
     /**boolean that shows if auto is finished*/
     public boolean autoIsDone = false;
 
-    /**declares a new instance of Telemetry*/
-    private Telemetry dashboardTelemetry;
-
     /**declares a new instance of location to store x y and z errors*/
     public Location error = new Location();
 
@@ -192,21 +189,15 @@ public class Drivetrain extends Mechanism {
             //Finds the position error
             error = findError(goalPos);
 
-            //Write is called
-            write();
+            //Telemetry is updated with general data
+            telemetry.addData("Error", + error.getLocation(0) + ", " + error.getLocation(2) + ", " + error.getLocation(3));
+            telemetry.addData("Location", robot.odometry.getPosition().getLocation(0) + " " + robot.odometry.getPosition().getLocation(2) + " " + robot.odometry.getPosition().getLocation(3));
 
             //Position is updated
             robot.odometry.updatePosition();
 
-            //Telemetry is updated with general datat
-            telemetry.addData("Error", + error.getLocation(0) + ", " + error.getLocation(2) + ", " + error.getLocation(3));
-            telemetry.addData("Location", robot.odometry.getPosition().getLocation(0) + " " + robot.odometry.getPosition().getLocation(2) + " " + robot.odometry.getPosition().getLocation(3));
-
-            //Telemetry is updated with data for the x, y, and rotation errors
-//            dashboardTelemetry.addData("x-error",error.getLocation(0) );
-//            dashboardTelemetry.addData("y-error",error.getLocation(2) );
-//            dashboardTelemetry.addData("r-error",error.getLocation(3) );
-//            dashboardTelemetry.update();
+            //Write is called
+            write();
         }
         stopDrivetrain();
         //op is set to robot.oop
