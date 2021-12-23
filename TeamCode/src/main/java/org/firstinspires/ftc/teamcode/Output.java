@@ -10,26 +10,28 @@ public class Output extends Mechanism {
     public boolean reset;
     /***/
     public Servo servo;
-
-    //Creates, declares, and assigns a servo to the servos array list
+    /**
+     * Creates, declares, and assigns a servo to the servos array list
+     */
     public Output(Servo d) {
         super();
         servo = d;
         getServos().add(servo);
     }
 
-//    /**
-//     * Deposits an object in the output
-//     */
-//    public void deposit(){
-//        servo.setPosition(0.2);
-//        try {
-//            wait(500);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        servo.setPosition(0.8);
-//    }
+    /**
+     * Deposits an object in the output and returns it to
+     */
+    public void deposit(){
+        //It looks ugly, but this is how wait works
+        servo.setPosition(0.8);
+        try {
+            wait(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        servo.setPosition(0.2);
+    }
 
     public void update(Gamepad gp1, Gamepad gp2) {
         drop = gp2.a;

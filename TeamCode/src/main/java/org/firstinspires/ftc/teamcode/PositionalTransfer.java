@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
 
 public class PositionalTransfer extends Mechanism{
     boolean up;
@@ -38,6 +39,23 @@ public class PositionalTransfer extends Mechanism{
      */
     public void moveToTop(){
         motor.setTargetPosition(-773);
+    }
+
+    /**
+     * Moves arm to the best height
+     */
+    public void moveToBest() {
+        switch (Variables.lev) {
+            case BOTTOM:
+                moveToBottom();
+                break;
+            case MIDDLE:
+                moveToMiddle();
+                break;
+            case TOP:
+                moveToTop();
+                break;
+        }
     }
 
     public void update(Gamepad gp1, Gamepad gp2){

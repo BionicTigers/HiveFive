@@ -206,7 +206,7 @@ public class Drivetrain extends Mechanism {
             //Position is updated
             robot.odometry.updatePosition();
 
-            //Telemetry is updated with general data
+            //Telemetry is updated with general datat
             telemetry.addData("Error", + error.getLocation(0) + ", " + error.getLocation(2) + ", " + error.getLocation(3));
             telemetry.addData("Location", robot.odometry.getPosition().getLocation(0) + " " + robot.odometry.getPosition().getLocation(2) + " " + robot.odometry.getPosition().getLocation(3));
             telemetry.update();

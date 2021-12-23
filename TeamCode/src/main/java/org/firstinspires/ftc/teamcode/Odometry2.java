@@ -15,15 +15,15 @@ import org.firstinspires.ftc.teamcode.AutoStuff.RevBulkData;
 public class Odometry2 extends Mechanism {
     //Declares constants that relate to odometry wheels
     /**Diameter of the encoders*/
-    private static final double ODO_DIAMETER_MM = 87.5;
+    private static final double ODO_DIAMETER_MM = 87.5; //87.5 for 2021 //50.8 for 2020
     /**Number of ticks on the encoders*/
     private static final double ODO_ENCODER_TICKS = 8192;
     /**Distance between odometry encoders*/
-    private static final double ODO_DISTANCE_MM = 402.085;
+    private static final double ODO_DISTANCE_MM = 402.085; //402.085 for 2021 //375.7 for 2020
     /**Circumference of the encoder*/
     private static final double ODO_CIRCUMFERENCE_MM = ODO_DIAMETER_MM * Math.PI;
     /**Distance from the center encoder to the center of the robot*/
-    private static final double ODO_DISTANCE_FROM_CENTER = 38.1; //CHANGE!!!
+    private static final double ODO_DISTANCE_FROM_CENTER = 125; //125 for 2021? //38.1 for 2020
     /**The number of encoder ticks per millimeter*/
     private static final double ENCODER_TICKS_PER_MM = ODO_ENCODER_TICKS / ODO_CIRCUMFERENCE_MM;
 
@@ -56,7 +56,6 @@ public class Odometry2 extends Mechanism {
 
     /**
      * Odometry Constructor
-     * @param hardwareMap
      */
     public Odometry2(HardwareMap hardwareMap) {
        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 1");
@@ -66,7 +65,6 @@ public class Odometry2 extends Mechanism {
 
     /**
      * Odometry Constructor
-     * @param hardwareMap
      * @param startPos Starting position of the robot
      */
     public Odometry2(HardwareMap hardwareMap, Location startPos) {
@@ -77,7 +75,6 @@ public class Odometry2 extends Mechanism {
 
     /**
      * Odometry constructor
-     * @param hardwareMap the hardware map of the robot
      * @param distance distance the robot hsa moved
      * @param centerDistance distance from the center
      * @param startingLocation starting location of the robot
@@ -94,7 +91,6 @@ public class Odometry2 extends Mechanism {
 
     /**
      * Odometry constructor
-     * @param hardwareMap the hardware map of the robot
      * @param distance distance the robot has moved
      * @param centerDistance distance from the center of the field
      */
