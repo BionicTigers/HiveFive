@@ -48,7 +48,7 @@ public class TeleOpMain extends LinearOpMode{
         output.servos.get(0).setPosition(1);
         drivetrain.odoUp();
 
-        Mechanism[] mechanisms = {intake, transfer, output, spinner, drivetrain, robot.odometry};
+        Mechanism[] mechanisms = {intake, transfer, output, spinner, drivetrain, cap, robot.odometry};
 
         //what runs constantly once play button is pressed
         while(opModeIsActive()) {
