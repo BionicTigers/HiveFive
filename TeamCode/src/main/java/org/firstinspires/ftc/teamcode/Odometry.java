@@ -11,17 +11,32 @@ import org.openftc.revextensions2.RevBulkData;
  *
  */
 public class Odometry extends Mechanism {
+
+    //VERY IMPORTANT, LAST YEAR'S ROBOT STATS, CHANGE NEW ONE BELOW FOR NEW BOT
+
     //Declares constants that relate to odometry wheels
-    /**Diameter of the encoders*/
-    private static final double ODO_DIAMETER_MM = 87.5;
-    /**Number of ticks on the encoders*/
+    //Diameter of the encoders
+    private static final double ODO_DIAMETER_MM = 44.45;
+    //Number of ticks on the encoders
     private static final double ODO_ENCODER_TICKS = 8192;
-    /**Distance between odometry encoders*/
-    private static final double ODO_DISTANCE_MM = 402.085;
-    /**Circumference of the encoder*/
+    //Distance between odometry encoders
+    private static final double ODO_DISTANCE_MM = 411.1625;
+    //Circumference of the encoder
+    //Distance from the center encoder to the center of the robot
+    private static final double ODO_DISTANCE_FROM_CENTER = 53.975;
+
+
+//    //Declares constants that relate to odometry wheels
+//    //Diameter of the encoders
+//    private static final double ODO_DIAMETER_MM = 44.45;
+//    //Number of ticks on the encoders
+//    private static final double ODO_ENCODER_TICKS = 8192;
+//    //Distance between odometry encoders
+//    private static final double ODO_DISTANCE_MM = 411.1625;
+//    //Circumference of the encoder
     private static final double ODO_CIRCUMFERENCE_MM = ODO_DIAMETER_MM * Math.PI;
     /**Distance from the center encoder to the center of the robot*/
-    private static final double ODO_DISTANCE_FROM_CENTER = 38.1; //CHANGE!!!
+//    private static final double ODO_DISTANCE_FROM_CENTER = 38.1; //CHANGE!!!
     /**The number of encoder ticks per millimeter*/
     private static final double ENCODER_TICKS_PER_MM = ODO_ENCODER_TICKS / ODO_CIRCUMFERENCE_MM;
 

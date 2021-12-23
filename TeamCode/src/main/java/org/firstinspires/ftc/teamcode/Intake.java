@@ -35,16 +35,8 @@ public class Intake extends Mechanism {
     }
 
     public void update(Gamepad gp1, Gamepad gp2) {
-//        if (gp1.right_trigger >= 0.5) { //If right trigger is pressed
-//            goingIn = true; //Set direction to in
-//        } else if (gp1.left_trigger >= 0.5) { //Otherwise if left trigger is pressed
-//            goingOut = gp1.left_trigger //Set direction to out
-//        } else { //If neither is pressed
-//            //Set direction to none
         goingIn = gp1.right_trigger;
         goingOut = gp1.left_trigger;
-        //-----
-        //  }
         if (gp1.right_bumper) {
             up = true;
         } else if (gp1.left_bumper) {
@@ -69,14 +61,14 @@ public class Intake extends Mechanism {
 //        }
 
         if (up) {
-            servos.get(2).setPosition(0.1);
+            servos.get(2).setPosition(0.5);
             servos.get(0).setPosition(0.83);
             servos.get(1).setPosition(0.7);
         } else if (mid) {
             servos.get(0).setPosition(0.645);
             servos.get(1).setPosition(0.82);
         } else if (down) {
-            servos.get(2).setPosition(0.65);
+            servos.get(2).setPosition(1);
             servos.get(0).setPosition(0.51);
             servos.get(1).setPosition(.89);
         }

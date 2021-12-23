@@ -11,18 +11,18 @@ public class Variables {
     public static float mult = .3f;
 
     public static double intakePower = .8; //Change!!!
-    // ?
-    public static double kfP=0.003;
-    public static double kfI=0.000005;
+    // PID loops for motors
+    public static double kfP = 0.003;
+    public static double kfI = 0.000005;
     public static double kfD = 0;
-    public static double ksP=0.0039;
-    public static double ksI=0.000005;
+    public static double ksP = 0.0039;
+    public static double ksI = 0.000005;
     public static double ksD = 0;
-    public static double krp =.045;
-    public static double krI=0.000035;
+    public static double krp = .045;
+    public static double krI = 0.000035;
+    public static double krD = 0.00;
     //Shooting position
     public static Location shootPos = new Location(1400.8153f,0f,-674f,352.1f);
-    public static double krD = 0.00;
 
     public static double setPointRotation = 0;
 
@@ -51,7 +51,11 @@ public class Variables {
     public static double rotTolerance = 0.25;
     public static Location transitionLocation = new Location();
 
+
+
     //2020-2021 code
+
+
     //Target variables
     public static double targetRot = 0;
     public static double targetz = 400;
@@ -77,5 +81,4 @@ public class Variables {
     public static double blocker1Down=.42;
     public static double blocker2Down=.65;
     public static float trim=0;
-    public static enum Level {BOTTOM, MIDDLE, TOP};
 }
