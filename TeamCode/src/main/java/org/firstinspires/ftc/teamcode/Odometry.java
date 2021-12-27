@@ -71,7 +71,7 @@ public class Odometry extends Mechanism {
     public double[] encoderDeltamm = new double[3];
 
 
-    public Location realMaybe;
+    public Location realMaybe = new Location();
 
 
 
