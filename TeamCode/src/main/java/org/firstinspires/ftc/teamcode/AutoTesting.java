@@ -35,7 +35,7 @@ public class AutoTesting extends LinearOpMode {
 
         while (!isStarted()) {
         robot.odometry.updatePosition();
-        telemetry.addData("Odometry ", robot.odometry.getPosition().getLocation(0) + ", " + robot.odometry.getPosition().getLocation(2) + ", " + robot.odometry.getPosition().getLocation(3));
+        telemetry.addData("Odometry", robot.odometry.getPosition().getLocation(0) + ", " + robot.odometry.getPosition().getLocation(2) + ", " + robot.odometry.getPosition().getLocation(3));
         telemetry.update();
         }
 
