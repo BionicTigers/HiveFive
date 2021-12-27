@@ -74,7 +74,7 @@ public class Location {
         position[3] = rot % 360;
     }
     public void setLocation(double x, double y, double z, double rot) {
-        position[0] = (float) x;
+        position[0] = (float)x;
         position[1] = (float)y;
         position[2] = (float)z;
         position[3] = (float)(rot % 360);

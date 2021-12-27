@@ -1,17 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
 //import com.acmerobotics.dashboard.FtcDashboard;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import org.firstinspires.ftc.teamcode.Odometry;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Location;
-import org.firstinspires.ftc.teamcode.PID;
 import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class PIDloops extends Drivetrain {
 
@@ -19,13 +13,13 @@ public class PIDloops extends Drivetrain {
     public PID dtPIDz;
     public PID dtPIDr;
     public PID[] dtPIDs = new PID[3];
-    private Location forth = new Location (0, 0, 100, 0);
-    private Location backth = new Location (0, 0, -500, 0);
-    private Location lefth = new Location (-500, 0, 0, 0);
-    private Location righth = new Location (500, 0, 0, 0);
-    private Location clockth = new Location (0, 0, 0, 90);
-    private Location counterth = new Location (0, 0, 0, 270);
-    private Location centerth = new Location (0, 0, 0, 0);
+    private Location forward = new Location (0, 0, 100, 0);
+    private Location backward = new Location (0, 0, -500, 0);
+    private Location left = new Location (-500, 0, 0, 0);
+    private Location right = new Location (500, 0, 0, 0);
+    private Location clockwise = new Location (0, 0, 0, 90);
+    private Location counterclockwise = new Location (0, 0, 0, 270);
+    private Location center = new Location (0, 0, 0, 0);
     private String cap;
 
     public PIDloops(Robot bot, int[] motorNumbers, Telemetry telem, Servo servo1, Servo servo2, Servo servo3, PID pidx, PID pidz, PID pidr){
@@ -62,23 +56,23 @@ public class PIDloops extends Drivetrain {
     @Override
     public void update(Gamepad gp1, Gamepad gp2) {
         if(gp1.dpad_up){ //precision movement forward, very slow
-            pidGo(forth);
+            pidGo(forward);
             //write();
             cap = "dUp";
         } else if(gp1.dpad_down){ //precision movement backward, very slow
-            pidGo(backth);
+            pidGo(backward);
             cap = "dDown";
         } else if(gp1.dpad_left) {
-            pidGo(lefth);
+            pidGo(left);
             cap = "dLeft";
         } else if(gp1.dpad_right) {
-            pidGo(righth);
+            pidGo(right);
             cap = "dRight";
         } else if (gp1.left_bumper) {
-            pidGo(counterth);
+            pidGo(counterclockwise);
             cap = "lBump";
         } else if (gp1.right_bumper) {
-            pidGo(clockth);
+            pidGo(clockwise);
             write();
             cap = "rBump";
         } else if (gp1.right_trigger > .5) {

@@ -207,11 +207,11 @@ public class Odometry extends Mechanism {
         }
     }
 
-    /**
-     * Update Position Method
-     * Updates position to where the robot currently is. Counter-clockwise rotation is negative.
-     * Loooooots of math exists here, we have to take into account the encoder positions and how
-     * they've changed since the previous read.
+    /*
+     Update Position Method
+     Updates position to where the robot currently is. Counter-clockwise rotation is negative.
+     Lots of math exists here, we have to take into account the encoder positions
+     and how they've changed since the previous read.
      */
     public void updatePosition() {
         try {

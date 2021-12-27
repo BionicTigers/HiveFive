@@ -23,6 +23,10 @@ public class Drivetrain extends Mechanism {
     /**declares a new instance of Telemetry*/
     public Telemetry telemetry;
 
+    public PIDloops loops;
+
+    public Location location;
+
     //Locations
     /**declares an instance of Location to move the robot forward*/
     private Location forward = new Location (0, 0, 1000, 0);
@@ -188,6 +192,8 @@ public class Drivetrain extends Mechanism {
         while (robot.linoop.opModeIsActive() && (robot.getTimeMS() - startTime < maxTime && (Math.abs(error.getLocation(0)) > xTolerance || Math.abs(error.getLocation(2)) > zTolerance || Math.abs(error.getLocation(3)) > rotTolerance))) {
             //Finds the position error
             error = findError(goalPos);
+
+            loops.determineError(error);
 
             //Telemetry is updated with general data
             telemetry.addData("Error", + error.getLocation(0) + ", " + error.getLocation(2) + ", " + error.getLocation(3));
