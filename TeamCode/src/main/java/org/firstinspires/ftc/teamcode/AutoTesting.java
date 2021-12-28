@@ -1,9 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
+import androidx.annotation.NonNull;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @Autonomous(name="Auto Testing", group="Autonomous")
 public class AutoTesting extends LinearOpMode {
@@ -32,12 +37,11 @@ public class AutoTesting extends LinearOpMode {
         intake.servos.get(1).setPosition(0.7);
         intake.servos.get(2).setPosition(0.5);
 
-        while (!isStarted()) {
+        while (!isStarted() && !isStopRequested()) {
         robot.odometry.updatePosition();
-        telemetry.addData("Odometry", robot.odometry.getPosition().getLocation(0) + ", " + robot.odometry.getPosition().getLocation(2) + ", " + robot.odometry.getPosition().getLocation(3));
-        telemetry.update();
+        drive.telemetree.addData("Odometry ", robot.odometry.realMaybe.getLocation(0) + ", " + robot.odometry.realMaybe.getLocation(2) + ", " + robot.odometry.realMaybe.getLocation(3));
+        drive.telemetree.update();
         }
-
         waitForStart();
 //        intake.inspin();
 //        sleep(2000);
@@ -54,6 +58,6 @@ public class AutoTesting extends LinearOpMode {
 //        drive.motors.get(1).setPower(0);
 //        drive.motors.get(2).setPower(0);
 //        drive.motors.get(3).setPower(0);
-        drive.moveToPosition(Tester, 25, 25,15,20000);
+        drive.actuallyMoveToPositionCorrect(Tester, 25, 25,15,20000);
     }
 }

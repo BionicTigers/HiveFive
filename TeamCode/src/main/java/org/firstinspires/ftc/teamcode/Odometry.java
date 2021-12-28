@@ -73,6 +73,8 @@ public class Odometry extends Mechanism {
 
     public Location realMaybe = new Location();
 
+    public Drivetrain drivetrain;
+
 
 
     /* *************************** ODOMETRY CONSTRUCTOR METHODS *************************** */
@@ -227,16 +229,12 @@ public class Odometry extends Mechanism {
                     encoderPosition[i] = bulkData.getMotorCurrentPosition(i) - encoderPositionoffset[i];
                 }
             }
-            addPublicTelemetry("",""+encoderDeltamm[0]);
-            addPublicTelemetry("",""+encoderDeltamm[1]);
-            addPublicTelemetry("",""+encoderDeltamm[2]);
-
 
             double botRotDelta = (encoderDeltamm[0] - encoderDeltamm[1]) / ODO_DISTANCE_MM;  //finds change in robo rotation
             relativeX = encoderDeltamm[2] + (ODO_DISTANCE_FROM_CENTER * botRotDelta); //strafing distance
             relativeY = (encoderDeltamm[0] + encoderDeltamm[1]) / 2; //how much moved forward/back
             //setting current robo rotation in Location object
-            // pos.setRotation((float) Math.toDegrees(((ODO_CIRCUMFERENCE_MM/*circumference*/ * ((encoderPosition[0]) / ODO_ENCODER_TICKS)/*percentage of the wheel revolved*/ - (ODO_CIRCUMFERENCE_MM * ((encoderPosition[1]) / ODO_ENCODER_TICKS)))) / ODO_DISTANCE_MM));
+//            position.setRotation((float) Math.toDegrees(((ODO_CIRCUMFERENCE_MM/*circumference*/ * ((encoderPosition[0]) / ODO_ENCODER_TICKS)/*percentage of the wheel revolved*/ - (ODO_CIRCUMFERENCE_MM * ((encoderPosition[1]) / ODO_ENCODER_TICKS)))) / ODO_DISTANCE_MM));
             double angle = (float) Math.toDegrees((encoderPosition[1] - encoderPosition[0]) / (ODO_DISTANCE_MM * ENCODER_TICKS_PER_MM));
             angle=angle+rotOffset;
             position.setRotation(angle);
@@ -252,8 +250,10 @@ public class Odometry extends Mechanism {
             position.translateLocal(relativeY, relativeX, 0);
             pos2.setLocation(position.getLocation(2), position.getLocation(1), position.getLocation(0), position.getLocation(3));
         } catch (NullPointerException e) {
-
         }
+        drivetrain.telemetree.addData("",""+encoderDeltamm[0]);
+        drivetrain.telemetree.addData("",""+encoderDeltamm[1]);
+        drivetrain.telemetree.addData("",""+encoderDeltamm[2]);
     }
 
     /* *************************** GETTER METHODS *************************** */
@@ -298,7 +298,7 @@ public class Odometry extends Mechanism {
     }
 
     /**
-     * Updates every cylcle
+     * Updates every cycle
      */
     @Override
     public void write() {
