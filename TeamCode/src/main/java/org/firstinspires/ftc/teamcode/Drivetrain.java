@@ -160,6 +160,7 @@ public class Drivetrain extends Mechanism {
             motor.setPower(motorPowers[i]);
             i++;
         }
+        //Sets all telemetry for the drivetrain
         telemetry.addLine("Motor Powers");
         telemetry.addData("Front Right Power", motorPowers[0]);
         telemetry.addData("Front Left Power", motorPowers[1]);
