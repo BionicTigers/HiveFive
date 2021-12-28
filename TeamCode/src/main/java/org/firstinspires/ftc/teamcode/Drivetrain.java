@@ -27,6 +27,9 @@ public class Drivetrain extends Mechanism {
 
     public Location location;
 
+    private double robotheading;
+    private double magnitude;
+
     //Locations
     /**declares an instance of Location to move the robot forward*/
     private Location forward = new Location (0, 0, 1000, 0);
@@ -160,6 +163,7 @@ public class Drivetrain extends Mechanism {
             motor.setPower(motorPowers[i]);
             i++;
         }
+        robot.odometry.updatePosition();
         //Sets all telemetry for the drivetrain
         telemetry.addLine("Motor Powers");
         telemetry.addData("Front Right Power", motorPowers[0]);
@@ -168,6 +172,10 @@ public class Drivetrain extends Mechanism {
         telemetry.addData("Back Left Power", motorPowers[3]);
         telemetry.addData("Error", + error.getLocation(0) + ", " + error.getLocation(2) + ", " + error.getLocation(3));
         telemetry.addData("Location", robot.odometry.getPosition().getLocation(0) + " " + robot.odometry.getPosition().getLocation(2) + " " + robot.odometry.getPosition().getLocation(3));
+        telemetry.addData("Odo wheel 1", error.getLocation(0));
+        telemetry.addData("Odo wheel 2", error.getLocation(2));
+        telemetry.addData("Odo wheel 3", error.getLocation(3));
+
         telemetry.update();
     }
 
@@ -209,33 +217,38 @@ public class Drivetrain extends Mechanism {
      * @return the distance from the goalPos
      */
     public Location findError(Location goalPos) {
-        Location error = new Location(goalPos.getLocation(0)-robot.odometry.getPosition().getLocation(0),0,goalPos.getLocation(2) - (robot.odometry.getPosition().getLocation(2)), rotationError( goalPos.getLocation(3), robot.odometry.getPosition().getLocation(3)));
-        //This is to change the global xy error into robot specific error
-        double magnitude = Math.sqrt(Math.pow(error.getLocation(0),2)+ Math.pow(error.getLocation(2),2));
-        double robotheading = robot.odometry.getPosition().getLocation(3)- Math.atan(error.getLocation(0)/error.getLocation(2));
+        Location error = new Location(
+                goalPos.getLocation(0)-robot.odometry.realMaybe.getLocation(0),
+                0,
+                goalPos.getLocation(2) - robot.odometry.realMaybe.getLocation(2),
+                rotationError( goalPos.getLocation(3), robot.odometry.realMaybe.getLocation(3)));
+        //this is to change the global xy error into robot specific error
+        magnitude = Math.hypot(-error.getLocation(0),error.getLocation(2));
+        robotheading = robot.odometry.getPosition().getLocation(3)- Math.atan2(error.getLocation(2),-error.getLocation(0));
+        robotheading = Math.atan2(error.getLocation(0),error.getLocation(2));
 
-        if(Math.abs(Variables.kfP*error.getLocation(0) + Variables.kfI*integralValues[0] + Variables.kfD * (error.getLocation(0) - lastForwardError))<1)
-            integralValues[0]= integralValues[0]+error.getLocation(0);
-        if(Math.abs(Variables.ksP*error.getLocation(2) + Variables.ksI*integralValues[2] + Variables.ksD * (error.getLocation(2) - lastSidewaysError))<1)
-            integralValues[2]= integralValues[2]+error.getLocation(2);
-        if(Math.abs(Variables.krp*error.getLocation(3) + Variables.krI*integralValues[3] + Variables.krD * (error.getLocation(3) - lastRotationError))<1)
+        double forwardError = Math.cos(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude;
+        double strafeError = Math.sin(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude;
+
+
+        if(Math.abs(Variables.kfP*forwardError + Variables.kfI*integralValues[0] + Variables.kfD * (forwardError- lastForwardError))<1)
+            integralValues[0]= integralValues[0]+forwardError ;
+        if(Math.abs(Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastForwardError))<1)
+            integralValues[2]= integralValues[2]+strafeError;
+        if(Math.abs(Variables.krP*error.getLocation(3) + Variables.krI*integralValues[3] + Variables.krD * (error.getLocation(3) - lastForwardError))<1)
             integralValues[3]= integralValues[3]+error.getLocation(3);
         //fix
         //angle-robot
-        double forwardPow = Variables.kfP*error.getLocation(0) + Variables.kfI*integralValues[0] + Variables.kfD * (error.getLocation(0) - lastForwardError);
-        double sidePow = Variables.ksP*error.getLocation(2) + Variables.ksI*integralValues[2] + Variables.ksD * ( error.getLocation(2) - lastSidewaysError);
-        double rotPow = Variables.krp *error.getLocation(3) + Variables.krI*integralValues[3] + Variables.krD * ( error.getLocation(3) - lastRotationError);
+        // fix the problem when magnitude is greater than 1
+        double forwardPow= Variables.kfP*forwardError+ Variables.kfI*integralValues[0] + Variables.kfD * (forwardError - lastForwardError);
+        double sidePow= Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError);
+        double rotPow= Variables.krP*error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - lastRotationError);
 
         lastForwardError = forwardPow;
         lastSidewaysError = sidePow;
         lastRotationError = rotPow;
 
-        double hypot = Math.sqrt(Math.pow(forwardPow,2)+Math.pow(sidePow,2));
-        if(hypot>=1){
-            forwardPow = forwardPow/hypot;
-            sidePow = sidePow/hypot;
-        }
-//        fieldRelDetermineMotorPowers(sidePow,forwardPow,rotPow);
+
         determineMotorPowers(sidePow,forwardPow,rotPow);
         return error;
     }

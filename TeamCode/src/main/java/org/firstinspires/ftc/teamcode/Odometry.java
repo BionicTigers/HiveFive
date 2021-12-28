@@ -49,7 +49,7 @@ public class Odometry extends Mechanism {
     /**Declares the first expansion hub*/
     private final ExpansionHubEx expansionHub;
     /**Declares an object that stores all of the static data*/
-    private RevBulkData bulkData;
+    public RevBulkData bulkData;
 
     //Current position fields
     /**Declares a new Location object to track position*/
