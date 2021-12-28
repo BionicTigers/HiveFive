@@ -16,7 +16,7 @@ public class Cap extends Mechanism {
     public Robot robot;
     public Servo servo;
 
-    /**
+    /*
      * Cap constructor
      * Makes a new instance of cap
      * @param capServo    servo used to control the cap arm
