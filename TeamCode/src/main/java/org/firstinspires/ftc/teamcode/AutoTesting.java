@@ -24,14 +24,13 @@ public class AutoTesting extends LinearOpMode {
 
         robot = new Robot (this);
         drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDrive1"), hardwareMap.get(Servo.class, "SDrive2"), hardwareMap.get(Servo.class, "SDrive3"));
-//        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intakeLeft"), hardwareMap.get(Servo.class, "intakeRight"), hardwareMap.get(Servo.class, "blocker"));
-//        intake = new Intake((DcMotorEx) hardwareMap.get(DcMotor.class, "intake"));
+        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intakeLeft"), hardwareMap.get(Servo.class, "intakeRight"), hardwareMap.get(Servo.class, "blocker"));
 
         robot.odometry.reset();
         drive.odoDown();
-//        intake.servos.get(0).setPosition(0.83);
-//        intake.servos.get(1).setPosition(0.7);
-//        intake.servos.get(2).setPosition(0.1);
+        intake.servos.get(0).setPosition(0.83);
+        intake.servos.get(1).setPosition(0.7);
+        intake.servos.get(2).setPosition(0.5);
 
         while (!isStarted()) {
         robot.odometry.updatePosition();

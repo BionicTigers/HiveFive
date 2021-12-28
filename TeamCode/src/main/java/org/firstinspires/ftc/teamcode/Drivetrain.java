@@ -129,13 +129,6 @@ public class Drivetrain extends Mechanism {
     }
 
     /**
-     * Uses values from motor powers array to move the robot
-     */
-    public void robotMovement () {
-
-    }
-
-    /**
      * Updates data for Telemetry, motor powers, and servo movements
      * @param gp1 first gamepad
      * @param gp2 second gamepad
@@ -172,7 +165,8 @@ public class Drivetrain extends Mechanism {
         telemetry.addData("Front Left Power", motorPowers[1]);
         telemetry.addData("Back Right Power", motorPowers[2]);
         telemetry.addData("Back Left Power", motorPowers[3]);
-        telemetry.addData("Position", center);
+        telemetry.addData("Error", + error.getLocation(0) + ", " + error.getLocation(2) + ", " + error.getLocation(3));
+        telemetry.addData("Location", robot.odometry.getPosition().getLocation(0) + " " + robot.odometry.getPosition().getLocation(2) + " " + robot.odometry.getPosition().getLocation(3));
         telemetry.update();
     }
 
@@ -193,9 +187,7 @@ public class Drivetrain extends Mechanism {
             //Finds the position error
             error = findError(goalPos);
 
-            //Telemetry is updated with general data
-            telemetry.addData("Error", + error.getLocation(0) + ", " + error.getLocation(2) + ", " + error.getLocation(3));
-            telemetry.addData("Location", robot.odometry.getPosition().getLocation(0) + " " + robot.odometry.getPosition().getLocation(2) + " " + robot.odometry.getPosition().getLocation(3));
+//            loops.determineError(error);
 
             //Position is updated
             robot.odometry.updatePosition();
