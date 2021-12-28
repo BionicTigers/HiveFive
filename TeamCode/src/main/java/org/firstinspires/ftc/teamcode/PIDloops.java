@@ -107,9 +107,9 @@ public class PIDloops extends Drivetrain {
 //        telemetree.addData("ze", String.valueOf(error.getLocation(2)));
 //        telemetree.addData("re", String.valueOf(error.getLocation(3)));
 //        telemetree.addLine("CURRENT POSITION");
-//        telemetree.addData("x", String.valueOf(robot.odometry.getPos().getLocation(0)));
-//        telemetree.addData("z", String.valueOf(robot.odometry.getPos().getLocation(2)));
-//        telemetree.addData("r", String.valueOf(robot.odometry.getPos().getLocation(3)));
+//        telemetree.addData("x", String.valueOf(robot.odometry.getPosition().getLocation(0)));
+//        telemetree.addData("z", String.valueOf(robot.odometry.getPosition().getLocation(2)));
+//        telemetree.addData("r", String.valueOf(robot.odometry.getPosition().getLocation(3)));
 //        telemetree.addLine("OTHER THINGS");
 //        telemetree.addData("xdeltaE", dtPIDx.deltaE);
 //        telemetree.addData("zdeltaE", dtPIDz.deltaE);
