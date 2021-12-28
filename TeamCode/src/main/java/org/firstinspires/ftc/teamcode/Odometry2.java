@@ -242,7 +242,7 @@ public class Odometry2 extends Mechanism {
      * Gets the position
      * @return Location or pos
      */
-    public Location getPos() {
+    public Location getPosition() {
         try {return pos;}
         catch (NullPointerException e) {
             return new Location();
