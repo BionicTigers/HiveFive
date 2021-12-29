@@ -17,7 +17,7 @@ public class AutoTesting extends LinearOpMode {
 
     private int[] wheels = {0, 1, 2, 3};
 
-    private final Location Tester = new Location(100f, 0, 0f, 100);
+    private final Location Tester = new Location(100f, 0, 0f, 0);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -34,8 +34,8 @@ public class AutoTesting extends LinearOpMode {
 
         while (!isStarted()) {
         robot.odometry.updatePosition();
-        telemetry.addData("Odometry", robot.odometry.getPosition().getLocation(0) + ", " + robot.odometry.getPosition().getLocation(2) + ", " + robot.odometry.getPosition().getLocation(3));
-        telemetry.update();
+        drive.telemetry.addData("Odometry", robot.odometry.getPosition().getLocation(0) + ", " + robot.odometry.getPosition().getLocation(2) + ", " + robot.odometry.getPosition().getLocation(3));
+        drive.telemetry.update();
         }
 
         waitForStart();
@@ -54,6 +54,6 @@ public class AutoTesting extends LinearOpMode {
 //        drive.motors.get(1).setPower(0);
 //        drive.motors.get(2).setPower(0);
 //        drive.motors.get(3).setPower(0);
-        drive.moveToPosition(Tester, 25, 25,15,20000);
+        drive.actuallyMoveToPosition(Tester, 25, 25,15,20000);
     }
 }

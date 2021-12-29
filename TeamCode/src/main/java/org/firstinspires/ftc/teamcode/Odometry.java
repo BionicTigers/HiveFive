@@ -55,7 +55,7 @@ public class Odometry extends Mechanism {
     /**Declares a new Location object to track position*/
     private Location position = new Location();
     /**Declares another new Location object to track position*/
-    public Location pos2 = new Location();
+    public Location realMaybe = new Location();
     /**X position relative to starting location*/
     public double relativeX;
     /**Y position relative to starting location*/
@@ -69,9 +69,6 @@ public class Odometry extends Mechanism {
 
     /**Declares an array of encoder values*/
     public double[] encoderDeltamm = new double[3];
-
-
-    public Location realMaybe = new Location();
 
 
 
@@ -199,7 +196,7 @@ public class Odometry extends Mechanism {
             // if you are running into issues with this method this may be the cause
             // I have to reset a little backwards because of the jank way the odo is switched for backawards compatability
             position = resetPos;
-            pos2=new Location(resetPos.getLocation(2),0,resetPos.getLocation(0),resetPos.getLocation(3));
+            realMaybe=new Location(resetPos.getLocation(2),0,resetPos.getLocation(0),resetPos.getLocation(3));
 
             rotOffset = resetPos.getLocation(3);
         } catch (NullPointerException e) {
@@ -250,7 +247,7 @@ public class Odometry extends Mechanism {
                 addPublicTelemetry("relativex ", ""+relativeX);
             }
             position.translateLocal(relativeY, relativeX, 0);
-            pos2.setLocation(position.getLocation(2), position.getLocation(1), position.getLocation(0), position.getLocation(3));
+            realMaybe.setLocation(position.getLocation(2), position.getLocation(1), position.getLocation(0), position.getLocation(3));
         } catch (NullPointerException e) {
 
         }
