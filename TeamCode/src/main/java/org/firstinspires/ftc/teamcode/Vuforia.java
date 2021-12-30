@@ -25,7 +25,7 @@ import java.util.List;
 
      }
 
-     /*
+     /**
       * @param input - input matrix
       * @param hue   - values for hue
       * @param sat   - values for saturation
@@ -43,7 +43,7 @@ import java.util.List;
          return hslThresholdOutput;
      }
 
-     /*
+     /**
       * I don't use this method
       */
      public double ratioJudge(double height, double width, double ratioWant) {
@@ -51,7 +51,7 @@ import java.util.List;
          return Math.abs(ratioWant - ratio);
      }
 
-     /*
+     /**
       * @param source0 this is the camera input
       *                This method find and draws the contours on the rings
       * @return
