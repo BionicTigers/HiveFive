@@ -35,7 +35,7 @@ public  class Robot {
 
     public String[] motorNames = {"frontRight","frontLeft","backLeft","backRight"};
 
-    /**
+    /*
      * Robot constructor class; creates robot object
      */
     public Robot(OpMode opMode) {
@@ -63,7 +63,7 @@ public  class Robot {
         odometry = new Odometry(hardwareMap);
     }
 
-    /**
+    /*
      * Robot constructor class; creates robot object
      */
     public Robot(LinearOpMode opMode) {
@@ -94,7 +94,7 @@ public  class Robot {
 
     public Robot(){}
 
-    /**
+    /*
      * Returns the time
      * @return time that the
      */
