@@ -21,7 +21,7 @@ public class Intake extends Mechanism {
     //Servos
     public Servo blocker;
 
-    /**
+    /*
      * Creates, declares, and assigns a motor to the motors array list
      */
     public Intake(DcMotorEx intakeM, Servo intakeL, Servo intakeR, Servo block) {
@@ -36,7 +36,7 @@ public class Intake extends Mechanism {
         blocker = block;
     }
 
-    /**
+    /*
      * Controls the robot during TeleOp and sends input to run
      * @param gp1 the first gamepad
      * @param gp2 the second gamepad
@@ -57,7 +57,7 @@ public class Intake extends Mechanism {
         }
     }
 
-    /**
+    /*
      * Controls the intake
      */
     public void write() {
@@ -77,7 +77,7 @@ public class Intake extends Mechanism {
         }
     }
 
-    /**
+    /*
      * Controls the intake during TeleOp using input from update
      * @param in
      * @param out

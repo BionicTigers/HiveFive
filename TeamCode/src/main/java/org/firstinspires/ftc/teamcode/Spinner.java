@@ -24,7 +24,7 @@ public class Spinner extends Mechanism{
     }
 
     //Carousel arm methods
-    /**
+    /*
      * Moves the carousel arm out
      * @param carouselB servo that moves the spinner out
      */
@@ -32,7 +32,7 @@ public class Spinner extends Mechanism{
         carouselB.setPosition(1);
     }
 
-    /**
+    /*
      * Moves the carousel arm back over the robot
      * @param carouselB servo that moves the spinner out
      */
@@ -41,7 +41,7 @@ public class Spinner extends Mechanism{
     }
 
     //Carousel spinner methods
-    /**
+    /*
      * Spins the carousel spinner for a set amount of time
      * @param spinner servo that spins carousel
      * @param time time carousel spins for

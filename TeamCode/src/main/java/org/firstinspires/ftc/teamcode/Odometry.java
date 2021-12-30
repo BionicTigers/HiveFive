@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.*;
 import org.openftc.revextensions2.ExpansionHubEx;
 import org.openftc.revextensions2.RevBulkData;
 
-/**
+/*
  * Tracks the position of the robot
  * @author Jack 2
  *
@@ -46,35 +46,35 @@ public class Odometry extends Mechanism {
     private static final double ENCODER_TICKS_PER_MM = ODO_ENCODER_TICKS / ODO_CIRCUMFERENCE_MM;
 
     //Expansion hub data for the encoders
-    /**Declares the first expansion hub*/
+    /*Declares the first expansion hub*/
     private final ExpansionHubEx expansionHub;
-    /**Declares an object that stores all of the static data*/
+    /*Declares an object that stores all of the static data*/
     public RevBulkData bulkData;
 
     //Current position fields
-    /**Declares a new Location object to track position*/
+    /*Declares a new Location object to track position*/
     private Location position = new Location();
-    /**Declares another new Location object to track position*/
+    /*Declares another new Location object to track position*/
     public Location realMaybe = new Location();
-    /**X position relative to starting location*/
+    /*X position relative to starting location*/
     public double relativeX;
-    /**Y position relative to starting location*/
+    /*Y position relative to starting location*/
     public double relativeY;
-    /**Offset of the rotation*/
+    /*Offset of the rotation*/
     private float rotOffset=0;
-    /**Declares an array of encoder positions*/
+    /*Declares an array of encoder positions*/
     private int[] encoderPosition = new int[3];
-    /**Declares an array of the offset for each encoder*/
+    /*Declares an array of the offset for each encoder*/
     private int[] encoderPositionoffset = new int[3];
 
-    /**Declares an array of encoder values*/
+    /*Declares an array of encoder values*/
     public double[] encoderDeltamm = new double[3];
 
 
 
     /* *************************** ODOMETRY CONSTRUCTOR METHODS *************************** */
 
-    /**
+    /*
      * Odometry Constructor
      * @param hardwareMap
      */
@@ -85,7 +85,7 @@ public class Odometry extends Mechanism {
 
     }
 
-    /**
+    /*
      * Odometry Constructor
      * @param hardwareMap
      * @param startPos Starting position of the robot
@@ -96,7 +96,7 @@ public class Odometry extends Mechanism {
         reset(startPos);
     }
 
-    /**
+    /*
      * Odometry constructor
      * @param hardwareMap
      * @param distance
@@ -113,7 +113,7 @@ public class Odometry extends Mechanism {
         //ENCODER_TICKS_PER_MM = ODO_ENCODER_TICKS / ODO_CIRCUMFERENCE_MM;
     }
 
-    /**
+    /*
      * Odometry constructor
      * @param hardwareMap
      * @param distance
@@ -130,7 +130,7 @@ public class Odometry extends Mechanism {
 
     /* *************************** RESET METHODS *************************** */
 
-    /**
+    /*
      * Resets methods and the robot's position, either to whatever argument
      * is/arguments are passed in, or, in the case of no arguments, to (0, 0, 0),
      * also resets the encoder positions.
@@ -154,7 +154,7 @@ public class Odometry extends Mechanism {
         }
     }
 
-    /**
+    /*
      * Resets methods and the robot's position, either to whatever argument is/arguments are passed
      * in, or, in the case of no arguments, to (0, 0, 0), also resets the encoder positions.
      * @param x The x coordinate for the robot to reset to
@@ -179,7 +179,7 @@ public class Odometry extends Mechanism {
         }
     }
 
-    /**
+    /*
      * Resets methods and the robot's position, either to whatever argument is/arguments are passed
      * in, or, in the case of no arguments, to (0, 0, 0), also resets the encoder positions.
      * @param resetPos  a  position for the robot to reset to
@@ -205,7 +205,7 @@ public class Odometry extends Mechanism {
         }
     }
 
-    /**
+    /*
      Update Position Method
      Updates position to where the robot currently is. Counter-clockwise rotation is negative.
      Lots of math exists here, we have to take into account the encoder positions
@@ -256,13 +256,13 @@ public class Odometry extends Mechanism {
 
     /* *************************** GETTER METHODS *************************** */
 
-    /**
+    /*
      * Get's the position of the encoder
      * @return encoderPosition  the position of the encoder
      */
     public int[] getEncoderPosition() {return encoderPosition;}
 
-    /**
+    /*
      * Gets the position
      * @return Location or pos
      */
@@ -275,19 +275,19 @@ public class Odometry extends Mechanism {
 
     /* *************************** TELEMETRY STRING METHODS *************************** */
 
-    /**
+    /*
      * Converts the encoder position to a string
      */
     public String currentEncoderPosString() {return encoderPosition[0] + ", " + encoderPosition[1] + ", " + encoderPosition[2];}
 
-    /**
+    /*
      * Converts the robot position to a string
      */
     public String currentRobotPositionString() {return position.getLocation(0) + ", " + position.getLocation(2) + ", " + position.getLocation(3);}
 
     /* *************************** GETTER METHODS *************************** */
 
-    /**
+    /*
      * Updates every cycle
      */
     @Override
@@ -295,8 +295,8 @@ public class Odometry extends Mechanism {
 
     }
 
-    /**
-     * Updates every cylcle
+    /*
+     * Updates every cycle
      */
     @Override
     public void write() {
