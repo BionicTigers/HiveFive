@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.*;
 
-/**
+/*
  * Picks up and scores the cap using an arm
  * @author Jack 2
  */
@@ -16,7 +16,7 @@ public class Cap extends Mechanism {
     public Robot robot;
     public Servo servo;
 
-    /**
+    /*
      * Cap constructor
      * Makes a new instance of cap
      * @param capServo    servo used to control the cap arm
@@ -28,13 +28,13 @@ public class Cap extends Mechanism {
     }
 
 
-    /**
+    /*
      * Moves the arm to the intake height
      */
     public void moveToIntakeHeight(){
         servo.setPosition(0);
     }
-    /**
+    /*
      * Moves the arm to the scoring/scoring height
      */
     public void moveToStoringHeight(){
@@ -50,14 +50,14 @@ public class Cap extends Mechanism {
         servo.setPosition(1);
     }
 
-    /**
+    /*
      * Returns arm servo position
      */
     public double getArmHeight(){
         return servo.getPosition();
     }
 
-    /**
+    /*
      * Updates every cycle
      */
     @Override
@@ -68,7 +68,7 @@ public class Cap extends Mechanism {
             moveToIntakeHeight();
     }
 
-    /**
+    /*
      * Updates every cycle
      */
     @Override
