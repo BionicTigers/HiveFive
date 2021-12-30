@@ -16,6 +16,11 @@ public class Gyro extends Mechanism implements BNO055IMU{
 
     @Override
     public boolean initialize(@NonNull Parameters parameters) {
+        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.calibrationDataFile = "BNO055IMUCalibration.json";
+        parameters.loggingEnabled = true;
+        parameters.loggingTag = "IMU";
         return false;
     }
 
