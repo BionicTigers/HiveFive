@@ -22,26 +22,26 @@ public class PositionalTransfer extends Mechanism{
         telemetry = T;
     }
 
-    /**
+    /*
      * Moves the arm to the bottom
      */
     public void moveToBottom(){
         motor.setTargetPosition(-250);
     }
-    /**
+    /*
      * Moves the arm to the middle
      */
     public void moveToMiddle(){
         motor.setTargetPosition(-500);
     }
-    /**
+    /*
      * Moves the arm to the top
      */
     public void moveToTop(){
         motor.setTargetPosition(-773);
     }
 
-    /**
+    /*
      * Moves arm to the best height
      */
     public void moveToBest() {
