@@ -16,7 +16,7 @@ public class Cap extends Mechanism {
     public Robot robot;
     public Servo servo;
 
-    /*
+    /**
      * Cap constructor
      * Makes a new instance of cap
      * @param capServo    servo used to control the cap arm
@@ -64,7 +64,7 @@ public class Cap extends Mechanism {
     public void update(Gamepad gp1, Gamepad gp2) {
         if(gp2.dpad_up)
             moveToStoringHeight();
-        if(gp2.dpad_down || gp2.dpad_up && gp2.left_bumper)
+        if(gp2.dpad_down)
             moveToIntakeHeight();
     }
 
