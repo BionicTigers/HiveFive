@@ -69,15 +69,15 @@ public class Drivetrain extends Mechanism {
     /**?*/
     public double[] integralValues=new double[4];
 
-    /**?*/
+    /*?*/
     public double sinrang = 0;
-    /**?*/
+    /*?*/
     public double cosrang = 0;
-    /**motor powers*/
+    /*motor powers*/
     public double pow = 0;
 
 
-    /**
+    /*
      * Constructs a drivetrain object
      * @param bot a new instance of Robot
      * @param motorNumbers motor data
@@ -102,7 +102,7 @@ public class Drivetrain extends Mechanism {
         motorPowers = new double[]{0, 0, 0, 0};
     }
 
-    /**
+    /*
      * Sets the motorNumbers array based on input from joysticks
      * @param driverPad gamepad used to control the robot
      */
@@ -131,7 +131,7 @@ public class Drivetrain extends Mechanism {
         motorPowers[3] = v4;
     }
 
-    /**
+    /*
      * Updates data for Telemetry, motor powers, and servo movements
      * @param gp1 first gamepad
      * @param gp2 second gamepad
@@ -154,7 +154,7 @@ public class Drivetrain extends Mechanism {
         }
     }
 
-    /**
+    /*
      * Sets the motor powers based on the determineMotorPowers() method that was run in the update() method
      */
     public void write () {
@@ -176,7 +176,7 @@ public class Drivetrain extends Mechanism {
         telemetry.update();
     }
 
-    /**
+    /*
      * Moves to robot to goalPos in maxTime
      * @param goalPos   the final position of the robot
      * @param xTolerance    the tolerance for the x coordinate
@@ -206,7 +206,7 @@ public class Drivetrain extends Mechanism {
         op.sleep(500);
     }
 
-    /**
+    /*
      * Finds location error
      * @param goalPos the final position of the robot
      * @return the distance from the goalPos
@@ -251,7 +251,7 @@ public class Drivetrain extends Mechanism {
         return error;
     }
 
-    /**
+    /*
      * Determines powers for each motor
      * @param x x coordinate
      * @param z z coordinate
@@ -282,7 +282,7 @@ public class Drivetrain extends Mechanism {
 
     }
 
-    /**
+    /*
      * Calculates the error for the rotation
      * @param goal  where we need to rotate to
      * @param current where we are
@@ -302,7 +302,7 @@ public class Drivetrain extends Mechanism {
         return (float) spinError;
     }
 
-    /**
+    /*
      * Stops the drivetrain
      */
     public void stopDrivetrain(){
@@ -310,7 +310,7 @@ public class Drivetrain extends Mechanism {
         this.write();
     }
 
-    /**
+    /*
      * Determines motor powers
      * @param x final x coordinate
      * @param z final z coordinate

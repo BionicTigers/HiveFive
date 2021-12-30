@@ -5,12 +5,12 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Output extends Mechanism {
 
-    /**This variable controls the position of the dropper*/
+    /*This variable controls the position of the dropper*/
     public boolean drop;
     public boolean reset;
-    /***/
+    /**/
     public Servo servo;
-    /**
+    /*
      * Creates, declares, and assigns a servo to the servos array list
      */
     public Output(Servo d) {
@@ -19,7 +19,7 @@ public class Output extends Mechanism {
         getServos().add(servo);
     }
 
-    /**
+    /*
      * Deposits an object in the output and returns it to
      */
     public void deposit(){
