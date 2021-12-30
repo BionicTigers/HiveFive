@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.hardware.*;
 
 /*
  * Picks up and scores the cap using an arm
- * @author Jack 2
  */
 public class Cap extends Mechanism {
     //Fields
@@ -17,9 +16,7 @@ public class Cap extends Mechanism {
     public Servo servo;
 
     /*
-     * Cap constructor
-     * Makes a new instance of cap
-     * @param capServo    servo used to control the cap arm
+     * Cap constructor; makes a new instance of cap
      */
     public Cap(Servo capServo){
         super();

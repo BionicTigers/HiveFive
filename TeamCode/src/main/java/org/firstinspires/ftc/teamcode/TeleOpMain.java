@@ -12,8 +12,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 /*
-This class utilizes the drivetrain class in order to move the robot as well as utilizing the
-gyro to return information on the angle, velocity, and acceleration of each axis of the drivetrain
+This class calls the different mechanisms on the robot so that they can all be used based on the
+controller input
 */
 
 @TeleOp (name = "TeleOpMain")
