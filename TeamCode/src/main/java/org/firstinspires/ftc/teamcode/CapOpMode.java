@@ -5,13 +5,13 @@
 //import com.qualcomm.robotcore.hardware.Servo;
 //
 //@TeleOp (name = "Yes Cap")
-///**OpMode for the Cap class*/
+///*OpMode for the Cap class*/
 //public class CapOpMode extends LinearOpMode {
 //
-//    /**Declares a new instance of Cap*/
+//    /*Declares a new instance of Cap*/
 //    public Cap nocap;
 //
-//    /**Runs the Cap op mode*/
+//    /*Runs the Cap op mode*/
 //    public void runOpMode() throws InterruptedException {
 //
 //        nocap = new Cap (hardwareMap.get(Servo.class,"capServo"));

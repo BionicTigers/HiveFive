@@ -26,7 +26,7 @@
 //    public Variables.Level lev;
 //
 //    //Arrays
-//    /**Declares an array of wheels*/
+//    /*Declares an array of wheels*/
 //    public static int wheels[] = {0, 1, 2, 3};
 //
 //    @Override

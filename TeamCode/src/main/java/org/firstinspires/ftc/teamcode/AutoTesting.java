@@ -54,6 +54,6 @@ public class AutoTesting extends LinearOpMode {
 //        drive.motors.get(1).setPower(0);
 //        drive.motors.get(2).setPower(0);
 //        drive.motors.get(3).setPower(0);
-        drive.actuallyMoveToPosition(Tester, 25, 25,15,20000);
+        drive.moveToPosition(Tester, 25, 25,15,20000);
     }
 }

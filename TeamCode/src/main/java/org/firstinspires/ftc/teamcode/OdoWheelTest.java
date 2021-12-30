@@ -24,7 +24,7 @@ public class OdoWheelTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         robot = new Robot(this);
         drivetrain = new Drivetrain(robot, motorNumbers, telemetry, hardwareMap.get(Servo.class, "SDrive1"), hardwareMap.get(Servo.class, "SDrive2"), hardwareMap.get(Servo.class, "SDrive3"));
-        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Expansion Hub 1");
+        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Control Hub");
         bulkdata = expansionHub.getBulkInputData();
         waitForStart();
 
