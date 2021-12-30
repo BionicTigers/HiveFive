@@ -21,6 +21,7 @@ public class Gyro extends Mechanism implements BNO055IMU{
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
         parameters.loggingEnabled = true;
         parameters.loggingTag = "IMU";
+        imu.initialize(parameters);
         return false;
     }
 
