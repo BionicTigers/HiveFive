@@ -38,8 +38,6 @@ public class Intake extends Mechanism {
 
     /*
      * Controls the robot during TeleOp and sends input to run
-     * @param gp1 the first gamepad
-     * @param gp2 the second gamepad
      */
     public void update(Gamepad gp1, Gamepad gp2) {
         goingIn = gp1.right_trigger;
@@ -57,9 +55,8 @@ public class Intake extends Mechanism {
         }
     }
 
-    /*
-     * Controls the intake
-     */
+
+     //Controls the intake
     public void write() {
         run(goingIn, goingOut);
 
@@ -77,11 +74,7 @@ public class Intake extends Mechanism {
         }
     }
 
-    /*
-     * Controls the intake during TeleOp using input from update
-     * @param in
-     * @param out
-     */
+     //Controls the intake during TeleOp using input from update
     public void run(float in, float out) {
         if (in > .25) {
             if(in > .8)

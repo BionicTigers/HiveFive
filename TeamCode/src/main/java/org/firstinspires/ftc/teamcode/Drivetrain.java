@@ -49,26 +49,17 @@ public class Drivetrain extends Mechanism {
     private double lastRotationError; //Most recent rotation error
     public boolean autoIsDone = false; //Boolean that indicates whether the autonomous is finished
 
-    /*declares a new instance of location to store x y and z errors*/
+    //Declares a new instance of location to store x y and z errors
     public Location error = new Location();
 
-    /*?*/
     public double[] integralValues=new double[4];
-
-    /*?*/
     public double sinrang = 0;
-    /*?*/
     public double cosrang = 0;
-    /*motor powers*/
     public double pow = 0;
 
 
-    /*
-     * Constructs a drivetrain object
-     * @param bot a new instance of Robot
-     * @param motorNumbers motor data
-     * @param T declares a new instance of Telemetry
-     */
+
+    //Constructs a drivetrain object with parameters of the robot, motor numbers, telemetry, and 3 servos
     public Drivetrain(@NonNull org.firstinspires.ftc.teamcode.Robot bot, @NonNull int[] motorNumbers, Telemetry T, Servo SDrive1, Servo SDrive2, Servo SDrive3) {
         DcMotorEx motorPlaceholder;
         robot = bot;
@@ -88,10 +79,8 @@ public class Drivetrain extends Mechanism {
         motorPowers = new double[]{0, 0, 0, 0};
     }
 
-    /*
-     * Sets the motorNumbers array based on input from joysticks
-     * @param driverPad gamepad used to control the robot
-     */
+
+    //Sets the motorNumbers array based on input from joysticks
     public void determineMotorPowers (Gamepad driverPad){
         double dpadVal=0;
         if (driverPad.dpad_right)
@@ -117,11 +106,7 @@ public class Drivetrain extends Mechanism {
         motorPowers[3] = v4;
     }
 
-    /*
-     * Updates data for Telemetry, motor powers, and servo movements
-     * @param gp1 first gamepad
-     * @param gp2 second gamepad
-     */
+    //Updates data for Telemetry, motor powers, and servo movements
     public void update (Gamepad gp1, Gamepad gp2){
         determineMotorPowers(gp1); //Updates values in motorPowers array
 
@@ -140,9 +125,8 @@ public class Drivetrain extends Mechanism {
         }
     }
 
-    /*
-     * Sets the motor powers based on the determineMotorPowers() method that was run in the update() method
-     */
+
+    //Sets the motor powers based on the determineMotorPowers() method that was run in the update() method
     public void write () {
         int i = 0;
         for (DcMotorEx motor : motors.subList(motorIndices[0], motorIndices[3] + 1)) {
@@ -162,14 +146,8 @@ public class Drivetrain extends Mechanism {
         telemetry.update();
     }
 
-    /*
-     * Moves to robot to goalPos in maxTime
-     * @param goalPos   the final position of the robot
-     * @param xTolerance    the tolerance for the x coordinate
-     * @param zTolerance    the tolerance for the z coordinate
-     * @param rotTolerance  tolerance for the rotation
-     * @param maxTime   maximum amount of time that the robot can take
-     */
+
+    //Moves to robot to the target position within a set amount of time
     public void moveToPosition(Location goalPos, double xTolerance, double zTolerance, double rotTolerance, int maxTime) {
         integralValues = new double[4];
         error = findError(goalPos);
@@ -192,11 +170,8 @@ public class Drivetrain extends Mechanism {
         op.sleep(500);
     }
 
-    /*
-     * Finds location error
-     * @param goalPos the final position of the robot
-     * @return the distance from the goalPos
-     */
+
+    //Finds location error
     public Location findError(Location goalPos) {
         Location error = new Location(
                 goalPos.getLocation(0)-robot.odometry.realMaybe.getLocation(0),
@@ -239,9 +214,6 @@ public class Drivetrain extends Mechanism {
 
     /*
      * Determines powers for each motor
-     * @param x x coordinate
-     * @param z z coordinate
-     * @param rot needed rotation
      */
     public void fieldRelDetermineMotorPowers(double x, double z, double rot) {
         //P is the power

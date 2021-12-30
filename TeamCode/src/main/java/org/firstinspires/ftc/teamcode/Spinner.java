@@ -12,11 +12,7 @@ public class Spinner extends Mechanism{
     public boolean spinBack;
     public boolean servoB;
 
-    /*
-     * Used to declare new instances of Spinner
-     * @param spinner   servo that spins the carousel
-     * @param carouselB moves out the spinner arm
-     */
+     //Used to declare new instances of Spinner
     public Spinner(CRServo spinner, Servo carouselB) {
         super();
         crServos.add(spinner);
@@ -24,28 +20,19 @@ public class Spinner extends Mechanism{
     }
 
     //Carousel arm methods
-    /*
-     * Moves the carousel arm out
-     * @param carouselB servo that moves the spinner out
-     */
+     //Moves the carousel arm out
     public void moveArmOut(Servo carouselB) {
         carouselB.setPosition(1);
     }
 
-    /*
-     * Moves the carousel arm back over the robot
-     * @param carouselB servo that moves the spinner out
-     */
+
+     //Moves the carousel arm back over the robot
     public void moveArmBack(Servo carouselB){
         carouselB.setPosition(0);
     }
 
     //Carousel spinner methods
-    /*
-     * Spins the carousel spinner for a set amount of time
-     * @param spinner servo that spins carousel
-     * @param time time carousel spins for
-     */
+     //Spins the carousel spinner for a set amount of time
     public void spin(Servo spinner, int time) {
         crServos.get(0).setPower(100);
         try {

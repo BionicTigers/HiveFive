@@ -7,8 +7,6 @@ import org.openftc.revextensions2.RevBulkData;
 
 /*
  * Tracks the position of the robot
- * @author Jack 2
- *
  */
 public class Odometry extends Mechanism {
 
@@ -76,7 +74,6 @@ public class Odometry extends Mechanism {
 
     /*
      * Odometry Constructor
-     * @param hardwareMap
      */
     public Odometry(HardwareMap hardwareMap) {
         expansionHub = hardwareMap.get(ExpansionHubEx.class, "Control Hub");
@@ -87,8 +84,6 @@ public class Odometry extends Mechanism {
 
     /*
      * Odometry Constructor
-     * @param hardwareMap
-     * @param startPos Starting position of the robot
      */
     public Odometry(HardwareMap hardwareMap, Location startPos) {
         expansionHub = hardwareMap.get(ExpansionHubEx.class, "Control Hub");
@@ -98,10 +93,6 @@ public class Odometry extends Mechanism {
 
     /*
      * Odometry constructor
-     * @param hardwareMap
-     * @param distance
-     * @param centerDistance
-     * @param startingLocation
      */
     //New odometry constructor for new robot! The distance and distance from center will be different
     public Odometry(HardwareMap hardwareMap, double distance, double centerDistance,Location startingLocation) {
@@ -115,9 +106,6 @@ public class Odometry extends Mechanism {
 
     /*
      * Odometry constructor
-     * @param hardwareMap
-     * @param distance
-     * @param centerDistance
      */
     public Odometry(HardwareMap hardwareMap, double distance, double centerDistance) {
         expansionHub = hardwareMap.get(ExpansionHubEx.class, "Control Hub");
@@ -157,9 +145,6 @@ public class Odometry extends Mechanism {
     /*
      * Resets methods and the robot's position, either to whatever argument is/arguments are passed
      * in, or, in the case of no arguments, to (0, 0, 0), also resets the encoder positions.
-     * @param x The x coordinate for the robot to reset to
-     * @param z The z coordinate that the robot needs to reset to
-     * @param rot   The rotation angle
      */
     public void reset(float x, float z, float rot) {
         try {
@@ -182,7 +167,6 @@ public class Odometry extends Mechanism {
     /*
      * Resets methods and the robot's position, either to whatever argument is/arguments are passed
      * in, or, in the case of no arguments, to (0, 0, 0), also resets the encoder positions.
-     * @param resetPos  a  position for the robot to reset to
      */
     public void reset(Location resetPos) {
         try {
@@ -206,7 +190,6 @@ public class Odometry extends Mechanism {
     }
 
     /*
-     Update Position Method
      Updates position to where the robot currently is. Counter-clockwise rotation is negative.
      Lots of math exists here, we have to take into account the encoder positions
      and how they've changed since the previous read.
@@ -256,16 +239,11 @@ public class Odometry extends Mechanism {
 
     /* *************************** GETTER METHODS *************************** */
 
-    /*
-     * Get's the position of the encoder
-     * @return encoderPosition  the position of the encoder
-     */
+
+    //Gets the position of the encoder
     public int[] getEncoderPosition() {return encoderPosition;}
 
-    /*
-     * Gets the position
-     * @return Location or pos
-     */
+    //Gets the position
     public Location getPosition() {
         try {return position;}
         catch (NullPointerException e) {
@@ -275,29 +253,25 @@ public class Odometry extends Mechanism {
 
     /* *************************** TELEMETRY STRING METHODS *************************** */
 
-    /*
-     * Converts the encoder position to a string
-     */
+
+     //Converts the encoder position to a string
     public String currentEncoderPosString() {return encoderPosition[0] + ", " + encoderPosition[1] + ", " + encoderPosition[2];}
 
-    /*
-     * Converts the robot position to a string
-     */
+
+     //Converts the robot position to a string
     public String currentRobotPositionString() {return position.getLocation(0) + ", " + position.getLocation(2) + ", " + position.getLocation(3);}
 
     /* *************************** GETTER METHODS *************************** */
 
-    /*
-     * Updates every cycle
-     */
+
+     //Updates every cycle
     @Override
     public void update(Gamepad gp1, Gamepad gp2) {
 
     }
 
-    /*
-     * Updates every cycle
-     */
+
+     //Updates every cycle
     @Override
     public void write() {
 
