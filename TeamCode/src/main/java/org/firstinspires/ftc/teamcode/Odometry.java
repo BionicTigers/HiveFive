@@ -15,11 +15,14 @@ public class Odometry extends Mechanism {
 //    //Declares constants that relate to odometry wheels
 //    //Diameter of the encoders
 //    private static final double ODO_DIAMETER_MM = 44.45;
+//    //Gear ratio of the odometry wheels
+//    private static final double ODO_GEAR_RATIO = 1;
+//    //Effective diameter of the odo wheels based on the gear ratio
+//    private static final double ODO_DIAMETER_EFFECTIVE_MM = ODO_DIAMETER_MM * ODO_GEAR_RATIO;
 //    //Number of ticks on the encoders
 //    private static final double ODO_ENCODER_TICKS = 8192;
 //    //Distance between odometry encoders
 //    private static final double ODO_DISTANCE_MM = 411.1625;
-//    //Circumference of the encoder
 //    //Distance from the center encoder to the center of the robot
 //    private static final double ODO_DISTANCE_FROM_CENTER = 53.975;
 
@@ -36,10 +39,12 @@ public class Odometry extends Mechanism {
     private static final double ODO_ENCODER_TICKS = 8192;
     //Distance between odometry encoders
     private static final double ODO_DISTANCE_MM = 403.225;
-    //Circumference of the encoder
-    private static final double ODO_CIRCUMFERENCE_MM = ODO_DIAMETER_EFFECTIVE_MM * Math.PI;
     //Distance from the center encoder to the center of the robot
     private static final double ODO_DISTANCE_FROM_CENTER = 44.45;
+
+
+    //Circumference of the encoder
+    private static final double ODO_CIRCUMFERENCE_MM = ODO_DIAMETER_EFFECTIVE_MM * Math.PI;
     //The number of encoder ticks per millimeter
     private static final double ENCODER_TICKS_PER_MM = ODO_ENCODER_TICKS / ODO_CIRCUMFERENCE_MM;
 

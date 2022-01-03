@@ -70,11 +70,10 @@ public  class Robot {
         hardwareMap = linoop.hardwareMap;
 
         motors = new ArrayList<>();
-        motors.add((DcMotorEx)hardwareMap.get(DcMotor.class,"frontLeft"));
         motors.add((DcMotorEx)hardwareMap.get(DcMotor.class,"frontRight"));
+        motors.add((DcMotorEx)hardwareMap.get(DcMotor.class,"frontLeft"));
         motors.add((DcMotorEx)hardwareMap.get(DcMotor.class,"backLeft"));
         motors.add((DcMotorEx)hardwareMap.get(DcMotor.class,"backRight"));
-        motors.get(1).setDirection(DcMotorSimple.Direction.REVERSE);
         motors.get(0).setDirection(DcMotorSimple.Direction.REVERSE);
         motors.get(3).setDirection(DcMotorSimple.Direction.REVERSE);
         time = new ElapsedTime();

@@ -2,10 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous(name="Auto Testing", group="Autonomous")
+@TeleOp(name="Auto Testing")
 public class AutoTesting extends LinearOpMode {
     private Robot robot;
     private Intake intake;
@@ -18,11 +19,13 @@ public class AutoTesting extends LinearOpMode {
     private int[] wheels = {0, 1, 2, 3};
 
     private final Location Tester = new Location(100f, 0, 0f, 0);
+    private final Location Origin = new Location(0,0,0,0);
+    private final Location Trun = new Location(0,0,0,90);
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        robot = new Robot (this);
+        robot = new Robot(this);
         drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDrive1"), hardwareMap.get(Servo.class, "SDrive2"), hardwareMap.get(Servo.class, "SDrive3"));
         intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intakeLeft"), hardwareMap.get(Servo.class, "intakeRight"), hardwareMap.get(Servo.class, "blocker"));
 
@@ -33,9 +36,9 @@ public class AutoTesting extends LinearOpMode {
         intake.servos.get(2).setPosition(0.5);
 
         while (!isStarted()) {
-        robot.odometry.updatePosition();
-        drive.telemetry.addData("Odometry", robot.odometry.getPosition().getLocation(0) + ", " + robot.odometry.getPosition().getLocation(2) + ", " + robot.odometry.getPosition().getLocation(3));
-        drive.telemetry.update();
+            robot.odometry.updatePosition();
+            drive.telemetry.addData("Odometry", robot.odometry.getPosition().getLocation(0) + ", " + robot.odometry.getPosition().getLocation(2) + ", " + robot.odometry.getPosition().getLocation(3));
+            drive.telemetry.update();
         }
 
         waitForStart();
@@ -54,6 +57,12 @@ public class AutoTesting extends LinearOpMode {
 //        drive.motors.get(1).setPower(0);
 //        drive.motors.get(2).setPower(0);
 //        drive.motors.get(3).setPower(0);
-        drive.moveToPosition(Tester, 25, 25,15,20000);
-    }
+        while (opModeIsActive()) {
+            while (!isStopRequested() && gamepad1.a) {
+                drive.moveToPosition(Trun,25,25,5);
+            }
+            robot.odometry.update(gamepad1, gamepad2);
+        }
+//        drive.moveToPosition(Tester, 25, 25,15,20000);
+        }
 }

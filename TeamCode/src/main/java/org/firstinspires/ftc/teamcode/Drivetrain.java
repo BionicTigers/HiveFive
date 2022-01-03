@@ -95,8 +95,8 @@ public class Drivetrain extends Mechanism {
         double sinRAngle = Math.sin(robotAngle);
         double cosRAngle = Math.cos(robotAngle);
 
-        final double v1 = (P * sinRAngle) - (P * cosRAngle) + rightX;  //frontRight
-        final double v2 = (P * sinRAngle) + (P * cosRAngle) - rightX;  //frontLeft
+        final double v1 = (P * sinRAngle) + (P * cosRAngle) - rightX;  //frontRight
+        final double v2 = (P * sinRAngle) - (P * cosRAngle) + rightX;  //frontLeft
         final double v3 = (P * sinRAngle) + (P * cosRAngle) + rightX;  //backRight
         final double v4 = (P * sinRAngle) - (P * cosRAngle) - rightX;  //backLeft
 
@@ -104,6 +104,28 @@ public class Drivetrain extends Mechanism {
         motorPowers[1] = v2;
         motorPowers[2] = v3;
         motorPowers[3] = v4;
+    }
+
+    public void determineMotorPowers(double x, double z, double rot) {
+        //Power
+        double P = Math.hypot(-x, z);
+        //The angle that the robot is in right now
+        double robotAngle = Math.atan2(z, -x);
+        //The value that figures out the rotation that you want to go to
+        double rightX = rot;
+
+        double sinRAngle = Math.sin(robotAngle);
+        double cosRAngle = Math.cos(robotAngle);
+        cosrang = cosRAngle;
+        sinrang = sinRAngle;
+        pow = P;
+
+        final double v1 = (P * sinRAngle) + (P * cosRAngle) - rightX;  //frontRight
+        final double v2 = (P * sinRAngle) - (P * cosRAngle) + rightX;  //frontLeft
+        final double v3 = (P * sinRAngle) + (P * cosRAngle) + rightX;  //backRight
+        final double v4 = (P * sinRAngle) - (P * cosRAngle) - rightX;  //backLeft
+
+        motorPowers[0] = v1; motorPowers[1] = v2; motorPowers[2] = v3; motorPowers[3] = v4;
     }
 
     //Updates data for Telemetry, motor powers, and servo movements
@@ -148,26 +170,35 @@ public class Drivetrain extends Mechanism {
 
 
     //Moves to robot to the target position within a set amount of time
-    public void moveToPosition(Location goalPos, double xTolerance, double zTolerance, double rotTolerance, int maxTime) {
+    public void moveToPosition(Location goalPos, double xTolerance, double zTolerance, double rotTolerance,int maxTime) {
         integralValues = new double[4];
         error = findError(goalPos);
         double startTime = robot.getTimeMS();
-        //While the op mode is active, max time has not been reached, and error is within the x tolerance, error is within the z tolerance, or error is within the rotation tolerance
-        while (robot.linoop.opModeIsActive() && (robot.getTimeMS() - startTime < maxTime && (Math.abs(error.getLocation(0)) > xTolerance || Math.abs(error.getLocation(2)) > zTolerance || Math.abs(error.getLocation(3)) > rotTolerance))) {
-            //Finds the position error
+        while ((robot.getTimeMS() - startTime < maxTime) &&robot.linoop.opModeIsActive()&&(Math.abs(error.getLocation(0)) > xTolerance || Math.abs(error.getLocation(2)) > zTolerance || Math.abs(error.getLocation(3)) > rotTolerance)) {
             error = findError(goalPos);
-
-            //Position is updated
-            robot.odometry.updatePosition();
-
-            //Write is called
             write();
+            robot.odometry.updatePosition();
+//            dashboardTelemetry.addData("x-error",error.getLocation(0) );
+//            dashboardTelemetry.addData("y-error",error.getLocation(2) );
+//            dashboardTelemetry.addData("r-error",error.getLocation(3) );
+            // dashboardTelemetry.update();
         }
         stopDrivetrain();
-        //op is set to robot.oop
-        LinearOpMode op = (LinearOpMode) robot.linoop;
-        //op sleeps for 500 ms
-        op.sleep(500);
+    }
+
+    public void moveToPosition(Location goalPos, double xTolerance, double zTolerance, double rotTolerance) {
+        integralValues = new double[4];
+        error = findError(goalPos);
+        while (robot.linoop.opModeIsActive()&&(Math.abs(error.getLocation(0)) > xTolerance || Math.abs(error.getLocation(2)) > zTolerance || Math.abs(error.getLocation(3)) > rotTolerance)) {
+            error = findError(goalPos);
+            write();
+            robot.odometry.updatePosition();
+//            dashboardTelemetry.addData("x-error",error.getLocation(0) );
+//            dashboardTelemetry.addData("y-error",error.getLocation(2) );
+//            dashboardTelemetry.addData("r-error",error.getLocation(3) );
+            // dashboardTelemetry.update();
+        }
+        stopDrivetrain();
     }
 
 
@@ -177,7 +208,7 @@ public class Drivetrain extends Mechanism {
                 goalPos.getLocation(0)-robot.odometry.realMaybe.getLocation(0),
                 0,
                 goalPos.getLocation(2) - robot.odometry.realMaybe.getLocation(2),
-                rotationError( goalPos.getLocation(3), robot.odometry.realMaybe.getLocation(3)));
+                rotationError(goalPos.getLocation(3), robot.odometry.realMaybe.getLocation(3)));
         //this is to change the global xy error into robot specific error
         magnitude = Math.hypot(-error.getLocation(0),error.getLocation(2));
         robotheading = robot.odometry.getPosition().getLocation(3)- Math.atan2(error.getLocation(2),-error.getLocation(0));
@@ -186,29 +217,22 @@ public class Drivetrain extends Mechanism {
         double forwardError = Math.cos(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude;
         double strafeError = Math.sin(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude;
 
-
         if(Math.abs(Variables.kfP*forwardError + Variables.kfI*integralValues[0] + Variables.kfD * (forwardError- lastForwardError))<1)
-            integralValues[0]= integralValues[0]+forwardError ;
-        if(Math.abs(Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastForwardError))<1)
+            integralValues[0]= integralValues[0]+forwardError;
+        if(Math.abs(Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError))<1)
             integralValues[2]= integralValues[2]+strafeError;
-        if(Math.abs(Variables.krP*error.getLocation(3) + Variables.krI*integralValues[3] + Variables.krD * (error.getLocation(3) - lastForwardError))<1)
+        if(Math.abs(Variables.krP*error.getLocation(3) + Variables.krI*integralValues[3] + Variables.krD * (error.getLocation(3) - lastRotationError))<1)
             integralValues[3]= integralValues[3]+error.getLocation(3);
-        //fix
-        //angle-robot
-        // fix the problem when magnitude is greater than 1
+
         double forwardPow= Variables.kfP*forwardError+ Variables.kfI*integralValues[0] + Variables.kfD * (forwardError - lastForwardError);
         double sidePow= Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError);
-        double rotPow= Variables.krP*error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - lastRotationError);
+        double rotPow= Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - lastRotationError);
 
         lastForwardError = forwardPow;
         lastSidewaysError = sidePow;
         lastRotationError = rotPow;
 
-        telemetry.addData("Forward Power", forwardPow);
-        telemetry.addData("Side Power", sidePow);
-        telemetry.addData("Rotation Power", rotPow);
-
-        determineMotorPowers(-sidePow,forwardPow,rotPow);
+        determineMotorPowers(sidePow,forwardPow,rotPow);
         return error;
     }
 
@@ -268,34 +292,6 @@ public class Drivetrain extends Mechanism {
         this.write();
     }
 
-    /*
-     * Determines motor powers
-     * @param x final x coordinate
-     * @param z final z coordinate
-     * @param rot final rotation
-     */
-    public void determineMotorPowers(double x, double z, double rot) {
-        //Power
-        double P = Math.hypot(-x, z);
-        //The angle that the robot is in right now
-        double robotAngle = Math.atan2(z, -x);
-        //The value that figures out the rotation that you want to go to
-        double rightX = rot;
-
-        double sinRAngle = Math.sin(robotAngle);
-        double cosRAngle = Math.cos(robotAngle);
-        cosrang = cosRAngle;
-        sinrang = sinRAngle;
-        pow = P;
-
-        final double v1 = (P * sinRAngle) - (P * cosRAngle) + rightX;  //frontRight
-        final double v2 = (P * sinRAngle) + (P * cosRAngle) - rightX;  //frontLeft
-        final double v3 = (P * sinRAngle) + (P * cosRAngle) + rightX;  //backRight
-        final double v4 = (P * sinRAngle) - (P * cosRAngle) - rightX;  //backLeft
-
-        motorPowers[0] = v1; motorPowers[1] = v2; motorPowers[2] = v3; motorPowers[3] = v4;
-    }
-
     public void odoUp () {
         servos.get(0).setPosition(0.27);
         servos.get(1).setPosition(0.32);
@@ -307,4 +303,11 @@ public class Drivetrain extends Mechanism {
         servos.get(1).setPosition(0.61);
         servos.get(2).setPosition(0.31);
     }
+
+    /*
+     * Determines motor powers
+     * @param x final x coordinate
+     * @param z final z coordinate
+     * @param rot final rotation
+     */
 }

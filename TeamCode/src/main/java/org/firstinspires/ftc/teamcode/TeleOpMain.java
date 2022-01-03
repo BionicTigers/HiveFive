@@ -39,7 +39,7 @@ public class TeleOpMain extends LinearOpMode{
         output = new Output(hardwareMap.get(Servo.class, "output"));
         spinner = new Spinner(hardwareMap.get(CRServo.class, "spinner"), hardwareMap.get(Servo.class, "carouselB"));
         cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
-        gyro = new Gyro(telemetry);
+//        gyro = new Gyro(telemetry);
         robot.initMotors(motorNames);
         //These lines set motors and servos to their default position once teleOp starts
         waitForStart();
@@ -50,7 +50,7 @@ public class TeleOpMain extends LinearOpMode{
         output.servos.get(0).setPosition(1);
         drivetrain.odoUp();
 
-        Mechanism[] mechanisms = {intake, transfer, output, spinner, drivetrain, cap, robot.odometry, gyro};
+        Mechanism[] mechanisms = {intake, transfer, output, spinner, drivetrain, cap, robot.odometry};
 
         //what runs constantly once play button is pressed
         while(opModeIsActive()) {
