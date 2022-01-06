@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -12,16 +13,15 @@ public class AutoTesting extends LinearOpMode {
     private Intake intake;
     private Drivetrain drive;
 
-
-    private Location position = new Location();
+    private Location
+            position = new Location();
 
 
     private int[] wheels = {0, 1, 2, 3};
 
     private final Location Tester = new Location(100f, 0, 0f, 0);
     private final Location Origin = new Location(0,0,0,0);
-    private final Location Trun = new Location(100,0,0,0);
-
+    private final Location Trun = new Location(00, 00,00,90);
 
     @Override
     public void runOpMode() throws InterruptedException {

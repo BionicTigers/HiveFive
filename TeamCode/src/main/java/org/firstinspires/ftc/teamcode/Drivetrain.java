@@ -21,12 +21,13 @@ public class Drivetrain extends Mechanism {
     public double[] motorPowers; //declares an array of motor powers
     public int[] motorIndices; //declares a new array of motor indices
     public Telemetry telemetry; //declares a new instance of Telemetry
+    public Telemetry dashboardtelemetry;
+    public PIDloops loops;
+    private FtcDashboard dashboard;
+    public Location location;
 
     private double robotheading;
     private double magnitude;
-
-    private Telemetry dashboardtelemetry;
-    private FtcDashboard dashboard;
 
     /*
     Declares instances of Location to move the robot forward, backward, left, right, clockwise,
@@ -57,6 +58,7 @@ public class Drivetrain extends Mechanism {
     public double pow = 0;
 
 
+
     //Constructs a drivetrain object with parameters of the robot, motor numbers, telemetry, and 3 servos
     public Drivetrain(@NonNull org.firstinspires.ftc.teamcode.Robot bot, @NonNull int[] motorNumbers, Telemetry T, Servo SDrive1, Servo SDrive2, Servo SDrive3) {
         DcMotorEx motorPlaceholder;
@@ -68,7 +70,8 @@ public class Drivetrain extends Mechanism {
         dashboardtelemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
         dashboard.updateConfig();
         //odo = bot.odometry;
-
+        dashboard = FtcDashboard.getInstance();
+        dashboardtelemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
         getServos().add(SDrive1);
         getServos().add(SDrive2);
         getServos().add(SDrive3);
@@ -229,9 +232,9 @@ public class Drivetrain extends Mechanism {
         if(Math.abs(Variables.krP*error.getLocation(3) + Variables.krI*integralValues[3] + Variables.krD * (error.getLocation(3) - lastRotationError))<1)
             integralValues[3]= integralValues[3]+error.getLocation(3);
 
-        double forwardPow= Variables.kfP*forwardError+ Variables.kfI*integralValues[0] + Variables.kfD * (forwardError - lastForwardError);
-        double sidePow= Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError);
-        double rotPow= Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - lastRotationError);
+        double forwardPow= -(Variables.kfP*forwardError+ Variables.kfI*integralValues[0] + Variables.kfD * (forwardError - lastForwardError));
+        double sidePow= -(Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError)) ;
+        double rotPow= -(Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - lastRotationError));
 
         lastForwardError = forwardPow;
         lastSidewaysError = sidePow;
