@@ -22,7 +22,6 @@ public class PositionalTransfer extends Mechanism{
         telemetry = T;
     }
 
-
      //Moves the arm to the bottom
     public void moveToBottom(){
         motor.setTargetPosition(-250);
@@ -35,21 +34,6 @@ public class PositionalTransfer extends Mechanism{
     //Moves the arm to the top
     public void moveToTop(){
         motor.setTargetPosition(-773);
-    }
-
-    //Moves arm to the best height
-    public void moveToBest() {
-        switch (Variables.lev) {
-            case BOTTOM:
-                moveToBottom();
-                break;
-            case MIDDLE:
-                moveToMiddle();
-                break;
-            case TOP:
-                moveToTop();
-                break;
-        }
     }
 
     public void update(Gamepad gp1, Gamepad gp2){

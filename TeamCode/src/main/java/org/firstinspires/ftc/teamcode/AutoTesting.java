@@ -20,7 +20,8 @@ public class AutoTesting extends LinearOpMode {
 
     private final Location Tester = new Location(100f, 0, 0f, 0);
     private final Location Origin = new Location(0,0,0,0);
-    private final Location Trun = new Location(0,0,0,90);
+    private final Location Trun = new Location(100,0,0,0);
+
 
     @Override
     public void runOpMode() throws InterruptedException {

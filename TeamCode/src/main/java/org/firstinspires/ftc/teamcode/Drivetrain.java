@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 import androidx.annotation.NonNull;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -20,12 +22,11 @@ public class Drivetrain extends Mechanism {
     public int[] motorIndices; //declares a new array of motor indices
     public Telemetry telemetry; //declares a new instance of Telemetry
 
-    public PIDloops loops;
-
-    public Location location;
-
     private double robotheading;
     private double magnitude;
+
+    private Telemetry dashboardtelemetry;
+    private FtcDashboard dashboard;
 
     /*
     Declares instances of Location to move the robot forward, backward, left, right, clockwise,
@@ -42,12 +43,10 @@ public class Drivetrain extends Mechanism {
     //Spin PID variables
     public double spinError;
     public double previousSpinError=20;
-    public double timeWhenLeave;
 
     private double lastForwardError; //Most recent forward error
     private double lastSidewaysError; //Most recent sideways error
     private double lastRotationError; //Most recent rotation error
-    public boolean autoIsDone = false; //Boolean that indicates whether the autonomous is finished
 
     //Declares a new instance of location to store x y and z errors
     public Location error = new Location();
@@ -58,13 +57,16 @@ public class Drivetrain extends Mechanism {
     public double pow = 0;
 
 
-
     //Constructs a drivetrain object with parameters of the robot, motor numbers, telemetry, and 3 servos
     public Drivetrain(@NonNull org.firstinspires.ftc.teamcode.Robot bot, @NonNull int[] motorNumbers, Telemetry T, Servo SDrive1, Servo SDrive2, Servo SDrive3) {
         DcMotorEx motorPlaceholder;
         robot = bot;
         motorIndices = motorNumbers;
         telemetry = T;
+
+        FtcDashboard dashboard = FtcDashboard.getInstance();
+        dashboardtelemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
+        dashboard.updateConfig();
         //odo = bot.odometry;
 
         getServos().add(SDrive1);
@@ -158,14 +160,17 @@ public class Drivetrain extends Mechanism {
         robot.odometry.updatePosition();
         //Sets all telemetry for the drivetrain
         telemetry.addLine("Motor Powers");
-        telemetry.addData("Front Right Power", motorPowers[0]);
-        telemetry.addData("Front Left Power", motorPowers[1]);
-        telemetry.addData("Back Right Power", motorPowers[2]);
-        telemetry.addData("Back Left Power", motorPowers[3]);
-        telemetry.addData("Error", + error.getLocation(0) + ", " + error.getLocation(2) + ", " + error.getLocation(3));
-        telemetry.addData("Location", robot.odometry.realMaybe.getLocation(0) + " " + robot.odometry.realMaybe.getLocation(2) + " " + robot.odometry.realMaybe.getLocation(3));
+        dashboardtelemetry.addData("Front Right Power", motorPowers[0]);
+        dashboardtelemetry.addData("Front Left Power", motorPowers[1]);
+        dashboardtelemetry.addData("Back Right Power", motorPowers[2]);
+        dashboardtelemetry.addData("Back Left Power", motorPowers[3]);
+        dashboardtelemetry.addData("ErrorX", + error.getLocation(0));
+        dashboardtelemetry.addData("ErrorZ", + error.getLocation(2));
+        dashboardtelemetry.addData("ErrorRotation", + error.getLocation(3));
+        dashboardtelemetry.addData("Location", robot.odometry.realMaybe.getLocation(0) + " " + robot.odometry.realMaybe.getLocation(2) + " " + robot.odometry.realMaybe.getLocation(3));
 
         telemetry.update();
+        dashboardtelemetry.update();
     }
 
 
