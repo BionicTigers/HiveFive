@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -9,8 +7,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
 
-@TeleOp(name="Auto Testing")
-public class AutoTesting extends LinearOpMode {
+@TeleOp(name="Auto Return")
+public class AutoReturn extends LinearOpMode {
     private Robot robot;
     private Intake intake;
     private Drivetrain drive;
@@ -21,9 +19,8 @@ public class AutoTesting extends LinearOpMode {
 
     private int[] wheels = {0, 1, 2, 3};
 
-    private final Location Tester = new Location(100f, 0, 0f, 0);
-    private final Location Origin = new Location(0,0,0,0);
-    private final Location Trun = new Location(variables.xTester, 0,variables.zTester,variables.rotationTester);
+    private final Location Away = new Location(0, 0, -700, 0);
+    private final Location Back = new Location(0,0,0,0);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -62,7 +59,11 @@ public class AutoTesting extends LinearOpMode {
 //        drive.motors.get(3).setPower(0);
         while (opModeIsActive()) {
             while (!isStopRequested() && gamepad1.a) {
-                drive.moveToPosition(Trun,5,5,2);
+                drive.moveToPosition(Away,5,5,0.5);
+            }
+
+            while (!isStopRequested() && gamepad1.b) {
+                drive.moveToPosition(Back,5,5,0.5);
             }
             robot.odometry.update(gamepad1, gamepad2);
         }

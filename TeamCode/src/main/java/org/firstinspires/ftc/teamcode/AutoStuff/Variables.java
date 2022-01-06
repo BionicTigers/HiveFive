@@ -4,17 +4,21 @@ import com.acmerobotics.dashboard.config.Config;
 
 @Config
 public class Variables {
-    public static double kfP = 0.003;
+    public static double kfP = 0.006;
     public static double kfI = 0.000005;
     public static double kfD = 0;
-    public static double ksP = 0.0039;
-    public static double ksI = 0.000005;
+    public static double ksP = 0.006;
+    public static double ksI = 0.000007;
     public static double ksD = 0;
     public static double krP = 0.025;
-    public static double krI = 0.000035;
-    public static double krD = 0.00;
+    public static double krI = 0.00004;
+    public static double krD = 0.05;
 
     public static double setPointRotation = 0;
+
+    public static double xTester = 0;
+    public static double zTester = 0;
+    public static double rotationTester = 0;
 
 //    public static double fp;
 //    public static double fi;
