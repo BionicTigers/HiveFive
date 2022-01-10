@@ -21,10 +21,9 @@ public class Spinner extends Mechanism{
 
     //Carousel arm methods
      //Moves the carousel arm out
-    public void moveArmOut(Servo carouselB) {
-        carouselB.setPosition(1);
+    public void moveArmOut() {
+        servos.get(0).setPosition(1);
     }
-
 
      //Moves the carousel arm back over the robot
     public void moveArmBack(Servo carouselB){
@@ -33,15 +32,15 @@ public class Spinner extends Mechanism{
 
     //Carousel spinner methods
      //Spins the carousel spinner for a set amount of time
-    public void spin(Servo spinner, int time) {
-        crServos.get(0).setPower(100);
-        try {
-            wait(time*1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        crServos.get(0).setPower(0);
-    }
+//    public void spin(int time) {
+//        crServos.get(0).setPower(100);
+//        try {
+//            wait(time*1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        crServos.get(0).setPower(0);
+//    }
 
     public void update(Gamepad gp1, Gamepad gp2) {
         spin = gp2.dpad_right;
