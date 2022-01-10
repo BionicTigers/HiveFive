@@ -22,7 +22,7 @@ public class Spinner extends Mechanism{
     //Carousel arm methods
      //Moves the carousel arm out
     public void moveArmOut() {
-        servos.get(0).setPosition(1);
+        servos.get(0).setPosition(0.3);
     }
 
      //Moves the carousel arm back over the robot

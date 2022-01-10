@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name = "Quick Duck")
 public class QuickDuck extends LinearOpMode {
@@ -13,6 +14,7 @@ public class QuickDuck extends LinearOpMode {
     private Intake intake;
     private Drivetrain drive;
     private Spinner spinner;
+    private ElapsedTime time;
 
     private Location position = new Location();
     private int[] wheels = {0, 1, 2, 3};
@@ -24,6 +26,7 @@ public class QuickDuck extends LinearOpMode {
         robot = new Robot(this);
         drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDrive1"), hardwareMap.get(Servo.class, "SDrive2"), hardwareMap.get(Servo.class, "SDrive3"));
         spinner = new Spinner(hardwareMap.get(CRServo.class,"spinner"), hardwareMap.get(Servo.class, "carouselB"));
+        time = new ElapsedTime();
 
         while (!isStarted()) {
             robot.odometry.updatePosition();
@@ -32,9 +35,10 @@ public class QuickDuck extends LinearOpMode {
         }
 
         waitForStart();
+        time.reset();
         spinner.moveArmOut();
-        spinner.crServos.get(0).setPower(1);
-        wait(2000);
+        while(time.seconds()<3) {
+            spinner.crServos.get(0).setPower(1);
+        }
         spinner.crServos.get(0).setPower(0);
-    }
-}
+}}
