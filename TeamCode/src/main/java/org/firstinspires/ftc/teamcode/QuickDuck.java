@@ -2,9 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -20,6 +18,8 @@ public class QuickDuck extends LinearOpMode {
     private int[] wheels = {0, 1, 2, 3};
 
     private final Location Carousel = new Location(50,0,0,0);
+    private final Location levelOneGrab = new Location(-41.3,0,-314.8,117.5);
+    private final Location levelOneDeposit = new Location (630, 0, -549.9, 92.2);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -41,4 +41,8 @@ public class QuickDuck extends LinearOpMode {
             spinner.crServos.get(0).setPower(1);
         }
         spinner.crServos.get(0).setPower(0);
-}}
+        drive.moveToPosition(levelOneGrab,5, 5,2);
+        wait(5000);
+        drive.moveToPosition(levelOneDeposit,5,5,2);
+    }
+}
