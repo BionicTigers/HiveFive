@@ -108,10 +108,12 @@ import java.util.List;
          Imgproc.GaussianBlur(source0, source0, new Size(9, 9), 0);
          Imgproc.findContours(hslThresholdOutput, contoursBlack, hiarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
 
-         List<MatOfPoint> Object = new ArrayList<>();
+         List<MatOfPoint> Teamplayer = new ArrayList<>();
 
   
          return source0;
 
      }
+     mode = Vuforia.getMode();
+
  }
