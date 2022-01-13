@@ -17,7 +17,7 @@ public class QuickDuck extends LinearOpMode {
     private Location position = new Location();
     private int[] wheels = {0, 1, 2, 3};
 
-    private final Location Carousel = new Location(50,0,0,0);
+    private final Location Carousel = new Location(0,0,0,0);
     private final Location levelOneGrab = new Location(-41.3,0,-314.8,117.5);
     private final Location levelOneDeposit = new Location (630, 0, -549.9, 92.2);
 
@@ -42,7 +42,7 @@ public class QuickDuck extends LinearOpMode {
         }
         spinner.crServos.get(0).setPower(0);
         drive.moveToPosition(levelOneGrab,5, 5,2);
-        wait(5000);
+        sleep(5000);
         drive.moveToPosition(levelOneDeposit,5,5,2);
     }
 }
