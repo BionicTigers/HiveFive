@@ -102,7 +102,7 @@ import java.util.List;
          double[] hslThresholdHueObject = {0, 58};
          double[] hslThresholdSaturationObject = {6,39};
          double[] hslThresholdLuminanceObject = {124,255};
-         //takes values for hue, saturation, and luminance and apply's them to what the camera sees
+         //takes values for hue, saturation, and luminance and applys them to what the camera sees
          //Object is for the team shipping element
          hslThreshold(source0, hslThresholdHueObject, hslThresholdSaturationObject, hslThresholdLuminanceObject, hslThresholdOutput);
          Imgproc.GaussianBlur(source0, source0, new Size(9, 9), 0);
@@ -110,10 +110,9 @@ import java.util.List;
 
          List<MatOfPoint> Teamplayer = new ArrayList<>();
 
-  
+
          return source0;
 
      }
      mode = Vuforia.getMode();
-
  }

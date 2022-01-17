@@ -50,7 +50,7 @@ public class VuforiaAutoTesting extends LinearOpMode{
     public void runOpMode() throws InterruptedException {
         robot = new Robot(this);
         drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDrive1"), hardwareMap.get(Servo.class, "SDrive2"), hardwareMap.get(Servo.class, "SDrive3"));
-        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intakeLeft"), hardwareMap.get(Servo.class, "intakeRight"), hardwareMap.get(Servo.class, "blocker"));
+        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"));
         robot.odometry.reset();
         drive.odoDown();
         intake.servos.get(0).setPosition(0.83);

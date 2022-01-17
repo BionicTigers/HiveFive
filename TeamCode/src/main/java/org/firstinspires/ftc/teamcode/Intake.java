@@ -18,22 +18,12 @@ public class Intake extends Mechanism {
     Servo intakeLeft;
     Servo intakeRight;
 
-    //Servos
-    public Servo blocker;
-
     /*
      * Creates, declares, and assigns a motor to the motors array list
      */
-    public Intake(DcMotorEx intakeM, Servo intakeL, Servo intakeR, Servo block) {
+    public Intake(DcMotorEx intake) {
         super();
-        motors.add(intakeM);
-        intakeMotor = intakeM;
-        servos.add(intakeL);
-        intakeLeft = intakeL;
-        servos.add(intakeR);
-        intakeRight = intakeR;
-        servos.add(block);
-        blocker = block;
+        motors.add(intake);
     }
 
     /*
@@ -59,19 +49,6 @@ public class Intake extends Mechanism {
      //Controls the intake
     public void write() {
         run(goingIn, goingOut);
-
-        if (up) {
-            servos.get(0).setPosition(0.83);
-            servos.get(1).setPosition(0.7);
-            servos.get(2).setPosition(0.5);
-        } else if (mid) {
-            servos.get(0).setPosition(0.645);
-            servos.get(1).setPosition(0.82);
-        } else if (down) {
-            servos.get(0).setPosition(0.54);
-            servos.get(1).setPosition(.86);
-            servos.get(2).setPosition(1);
-        }
     }
 
      //Controls the intake during TeleOp using input from update
