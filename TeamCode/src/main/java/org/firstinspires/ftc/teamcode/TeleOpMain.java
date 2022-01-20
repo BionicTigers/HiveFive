@@ -44,9 +44,6 @@ public class TeleOpMain extends LinearOpMode{
         //These lines set motors and servos to their default position once teleOp starts
         waitForStart();
 
-        intake.servos.get(0).setPosition(0.54);
-        intake.servos.get(1).setPosition(0.86);
-        intake.servos.get(2).setPosition(1);
         output.servos.get(0).setPosition(1);
         drivetrain.odoUp();
 

@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -34,9 +32,6 @@ public class AutoTesting extends LinearOpMode {
 
         robot.odometry.reset();
         drive.odoDown();
-        intake.servos.get(0).setPosition(0.83);
-        intake.servos.get(1).setPosition(0.7);
-        intake.servos.get(2).setPosition(0.5);
 
         while (!isStarted()) {
             robot.odometry.updatePosition();
