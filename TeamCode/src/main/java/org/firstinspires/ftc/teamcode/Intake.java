@@ -21,8 +21,8 @@ public class Intake extends Mechanism {
      * Controls the robot during TeleOp and sends input to run
      */
     public void update(Gamepad gp1, Gamepad gp2) {
-        goingIn = gp1.right_trigger;
-        goingOut = gp1.left_trigger;
+        goingIn = gp1.left_trigger;
+        goingOut = gp1.right_trigger;
     }
 
      //Controls the intake
