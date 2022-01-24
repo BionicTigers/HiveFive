@@ -19,7 +19,7 @@ public class QuickDuck extends LinearOpMode {
 
     private final Location Carousel = new Location(0,0,0,0);
     private final Location levelOneGrab = new Location(-41.3,0,-314.8,117.5);
-    private final Location levelOneDeposit = new Location (630, 0, -549.9, 92.2);
+    private final Location levelOneDeposit = new Location (640, 0, -549.9, 92.2);
 
     @Override
     public void runOpMode() throws InterruptedException {
