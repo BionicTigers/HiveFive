@@ -19,7 +19,7 @@ public class QuickDuck extends LinearOpMode {
 
     private final Location Carousel = new Location(0,0,0,0);
     private final Location levelOneGrab = new Location(-41.3,0,-314.8,117.5);
-    private final Location levelOneDeposit = new Location (630, 0, -549.9, 92.2);
+    private final Location levelOneDeposit = new Location (672, 0, -549.9, 92.2);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -40,9 +40,9 @@ public class QuickDuck extends LinearOpMode {
         while(time.seconds()<3) {
             spinner.crServos.get(0).setPower(1);
         }
-        spinner.crServos.get(0).setPower(0);
-        drive.moveToPosition(levelOneGrab,5, 5,2);
-        sleep(5000);
+//        spinner.crServos.get(0).setPower(0);
+//        drive.moveToPosition(levelOneGrab,5, 5,2);
+//        sleep(5000);
         drive.moveToPosition(levelOneDeposit,5,5,2);
     }
 }
