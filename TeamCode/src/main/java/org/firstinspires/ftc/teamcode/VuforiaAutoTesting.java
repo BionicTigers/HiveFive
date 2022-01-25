@@ -38,18 +38,19 @@ public class VuforiaAutoTesting extends LinearOpMode{
 
     private Location position = new Location();
     private int[] wheels = {0, 1, 2, 3};
+    private int mode;
 
     private final Location ZONE_A = new Location(-400, 0, 1850, 270);
     private final Location ZONE_B = new Location(-950, 0, 2500.92f, 270);
     private final Location ZONE_C = new Location(-450, 0, 3150, 270);
-    private int mode;
 
 
     @Override
     public void runOpMode() throws InterruptedException {
         robot = new Robot(this);
         drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDrive1"), hardwareMap.get(Servo.class, "SDrive2"), hardwareMap.get(Servo.class, "SDrive3"));
-        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intakeLeft"), hardwareMap.get(Servo.class, "intakeRight"), hardwareMap.get(Servo.class, "blocker"));
+        vuforia = new Vuforia();
+
         robot.odometry.reset();
         drive.odoDown();
         intake.servos.get(0).setPosition(0.83);
@@ -66,9 +67,7 @@ public class VuforiaAutoTesting extends LinearOpMode{
         while (!isStarted()) {
             robot.odometry.updatePosition();
             drive.telemetry.addData("Odometry", robot.odometry.getPosition().getLocation(0) + ", " + robot.odometry.getPosition().getLocation(2) + ", " + robot.odometry.getPosition().getLocation(3));
-            drive.telemetry.update();
-            mode = Vuforia.getMode();
-            telemetry.addData("Mode", mode);
+            mode = vuforia.getMode();
             telemetry.addData("Mode", mode);
             telemetry.addData("Area", vuforia.getArea());
             telemetry.update();
@@ -80,14 +79,13 @@ public class VuforiaAutoTesting extends LinearOpMode{
         switch(mode) {
 
             case 2:
-                drive.moveToPosition(ZONE_B, 25, 25, 1, 2500);
+//                drive.moveToPosition(ZONE_B, 25, 25, 1, 2500);
                 break;
             case 3:
-                drive.moveToPosition(new Location(-450, 0, ZONE_C.getLocation(2), robot.odometry.getPos().getLocation(3)), 25, 25, 1, 1000);
-                drive.moveToPosition(ZONE_C, 25, 25, 1, 2500);
+//                drive.moveToPosition(ZONE_C, 25, 25, 1, 2500);
                 break;
             default:
-                drive.moveToPosition(ZONE_A, 25, 25, 1, 2000);
+//                drive.moveToPosition(ZONE_A, 25, 25, 1, 2000);
                 break;
         }
 

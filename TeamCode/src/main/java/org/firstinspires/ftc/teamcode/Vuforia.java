@@ -12,12 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
  public class Vuforia extends OpenCvPipeline {
-
+     private static int mode=1; //
+     private static double area; //represents the area of the contours around the rings
      private Mat hslThresholdOutput = new Mat();
 
      private Mat one;
-     private static double area; //represents the area of the contours around the rings
-     private static int mode=1; //
 
      public Vuforia(OpenCvCamera cam) {
 
@@ -58,13 +57,9 @@ import java.util.List;
       *                This method find and draws the contours on the rings
       * @return
       */
-
+@Override
      public Mat processFrame(Mat source0) {
          Mat hiarchy = new Mat();
-         private Mat one;
-
-         private static int mode=1; //represents how many rings the camera sees
-         private static double area; //represents the area of the contours around the rings
 
          double[] hslThresholdHue = {5, 67};
          double[] hslThresholdSaturation = {0, 153};
@@ -80,6 +75,25 @@ import java.util.List;
          Imgproc.findContours(hslThresholdOutput, contoursBlack, hiarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
 
          List<MatOfPoint> Shipppingelement = new ArrayList<>();
+
+    for(MatOfPoint con :contoursBlack){
+        if(Imgproc.contourArea(con) >= 500){
+            Shipppingelement.add(con);
+        }
+    }
+
+    //uses the matrix from the last loop and draws the contours for the rings over what the camera sees
+    Imgproc.drawContours(source0, Shipppingelement, -1, new Scalar(250,0,250),1);
+
+    //gets the area of the contours around the rings
+    if(Shipppingelement.size() > 0){
+        area = Imgproc.contourArea(Shipppingelement.get(0));
+    }
+    else {
+        area = 0;
+    }
+
+    Elementlocation();
 //
 //         double[] hslThresholdHue2 = {24,152};
 //         double[] hslThresholdSaturation2 = {0,49};
@@ -126,7 +140,7 @@ import java.util.List;
      }
 
      //based of the area of the contours, this method finds the number of rings the camera is seeing (0, 1, 4)
-     public void getRingNumber(){
+     public void Elementlocation(){
          if(area <= 500 )
              mode = 1;
          else if(area > 1100)
