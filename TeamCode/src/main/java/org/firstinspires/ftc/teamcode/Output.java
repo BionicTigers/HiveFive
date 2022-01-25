@@ -39,7 +39,7 @@ public class Output extends Mechanism {
         if (drop) { //If A is being pressed
             servo.setPosition(0.3); //Move to dropping position
         } else if (reset) { //If left trigger is pressed down
-            servo.setPosition(.46); //Move to upright position
+            servo.setPosition(.7); //Move to upright position
         }
     }
 }

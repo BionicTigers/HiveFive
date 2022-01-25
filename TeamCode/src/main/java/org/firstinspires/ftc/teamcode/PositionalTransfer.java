@@ -41,7 +41,8 @@ public class PositionalTransfer extends Mechanism{
             up = true;
         } else if(gp2.left_trigger >= 0.5){
             down = true;
-        } else{
+        } else {
+            motors.get(0).setTargetPosition(-300);
             up = false;
             down = false;
         }
@@ -52,7 +53,7 @@ public class PositionalTransfer extends Mechanism{
     public void write(){
         if(up){
             motors.get(0).setPower(50);
-            motors.get(0).setTargetPosition(-1300);
+            motors.get(0).setTargetPosition(-1090);
         } else if(down){
             motors.get(0).setPower(50);
             motors.get(0).setTargetPosition(0);
