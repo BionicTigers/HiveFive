@@ -7,8 +7,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
 
 public class PositionalTransfer extends Mechanism{
-    boolean up;
-    boolean down;
+    public String position = "Mid";
     public Telemetry telemetry;
     public DcMotorEx motor;
 
@@ -38,23 +37,24 @@ public class PositionalTransfer extends Mechanism{
 
     public void update(Gamepad gp1, Gamepad gp2){
         if(gp2.right_trigger >= 0.5){
-            up = true;
+            position = "Up";
         } else if(gp2.left_trigger >= 0.5){
-            down = true;
-        } else {
-            motors.get(0).setTargetPosition(-300);
-            up = false;
-            down = false;
+            position =  "Mid";
         }
+
+
         telemetry.addData("position", motors.get(0).getCurrentPosition());
 //        telemetry.update();
     }
 
     public void write(){
-        if(up){
+        if(position == "Up"){
             motors.get(0).setPower(50);
             motors.get(0).setTargetPosition(-1090);
-        } else if(down){
+        } else if (position == "Mid") {
+            motors.get(0).setPower(50);
+            motors.get(0).setTargetPosition(-300);
+        } else if(position == "Down") {
             motors.get(0).setPower(50);
             motors.get(0).setTargetPosition(0);
         }

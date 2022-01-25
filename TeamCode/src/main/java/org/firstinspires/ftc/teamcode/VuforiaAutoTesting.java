@@ -53,9 +53,6 @@ public class VuforiaAutoTesting extends LinearOpMode{
 
         robot.odometry.reset();
         drive.odoDown();
-        intake.servos.get(0).setPosition(0.83);
-        intake.servos.get(1).setPosition(0.7);
-        intake.servos.get(2).setPosition(0.5);
         OpenCvCamera webcam;
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);

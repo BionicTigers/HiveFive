@@ -61,15 +61,16 @@ import java.util.List;
      public Mat processFrame(Mat source0) {
          Mat hiarchy = new Mat();
 
-         double[] hslThresholdHue = {5, 67};
-         double[] hslThresholdSaturation = {0, 153};
-         double[] hslThresholdLuminance = {105, 255};
+         double[] hslThresholdHue = {0, 360};
+         double[] hslThresholdSaturation = {0, 49};
+         double[] hslThresholdLuminance = {0, 255};
          //takes values for hue, saturation, and luminance and apply's them to what the camera sees
          hslThreshold(source0, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, hslThresholdOutput);
          List<MatOfPoint> contoursBlack = new ArrayList<>();
 
          //adds a blur to what the camera sees
-         Imgproc.GaussianBlur(source0, source0, new Size(9, 9), 0);
+
+
 
          //finds contours from what the camera sees
          Imgproc.findContours(hslThresholdOutput, contoursBlack, hiarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
@@ -141,11 +142,11 @@ import java.util.List;
 
      //based of the area of the contours, this method finds the number of rings the camera is seeing (0, 1, 4)
      public void Elementlocation(){
-         if(area <= 500 )
+         if(area <= 800 )
              mode = 1;
-         else if(area > 1100)
+         else if(area > 2000)
              mode = 3;
-         else
+         else if(area <= 2000)
              mode =2;
      }
 
