@@ -61,9 +61,9 @@ import java.util.List;
      public Mat processFrame(Mat source0) {
          Mat hiarchy = new Mat();
 
-         double[] hslThresholdHue = {0, 360};
-         double[] hslThresholdSaturation = {0, 49};
-         double[] hslThresholdLuminance = {0, 255};
+         double[] hslThresholdHue = {0, 62};
+         double[] hslThresholdSaturation = {147, 255};
+         double[] hslThresholdLuminance = {135, 255};
          //takes values for hue, saturation, and luminance and apply's them to what the camera sees
          hslThreshold(source0, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, hslThresholdOutput);
          List<MatOfPoint> contoursBlack = new ArrayList<>();

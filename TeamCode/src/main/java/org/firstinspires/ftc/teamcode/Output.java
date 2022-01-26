@@ -32,7 +32,7 @@ public class Output extends Mechanism {
 
     public void update(Gamepad gp1, Gamepad gp2) {
         drop = gp2.a;
-        reset = gp2.left_trigger >= 0.5;
+        reset = gp2.left_trigger >= 0.2 || gp1.right_trigger >= .2;
     }
 
     public void write() {

@@ -38,8 +38,11 @@ public class PositionalTransfer extends Mechanism{
     public void update(Gamepad gp1, Gamepad gp2){
         if(gp2.right_trigger >= 0.5){
             position = "Up";
-        } else if(gp2.left_trigger >= 0.5){
+        } else if(gp2.left_trigger >= 0.3){
             position =  "Mid";
+        }
+        else if(gp1.right_trigger >= .5){
+            position = "Down";
         }
 
 
@@ -50,13 +53,19 @@ public class PositionalTransfer extends Mechanism{
     public void write(){
         if(position == "Up"){
             motors.get(0).setPower(50);
-            motors.get(0).setTargetPosition(-1090);
-        } else if (position == "Mid") {
+            motors.get(0).setTargetPosition(-1300);
+        }
+        else if(position == "Down") {
+        motors.get(0).setPower(50);
+        motors.get(0).setTargetPosition(0);
+        }
+        else if (position == "Mid"){
             motors.get(0).setPower(50);
             motors.get(0).setTargetPosition(-300);
-        } else if(position == "Down") {
-            motors.get(0).setPower(50);
-            motors.get(0).setTargetPosition(0);
+        }
+        if(position == "Down")
+        {
+            position = "Mid";
         }
     }
 
