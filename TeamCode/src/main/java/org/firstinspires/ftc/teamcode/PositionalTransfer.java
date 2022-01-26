@@ -52,8 +52,8 @@ public class PositionalTransfer extends Mechanism{
 
     public void write(){
         if(position == "Up"){
-            motors.get(0).setPower(50);
-            motors.get(0).setTargetPosition(-1300);
+            motors.get(0).setPower(80);
+            motors.get(0).setTargetPosition(-2280);
         }
         else if(position == "Down") {
         motors.get(0).setPower(50);
@@ -61,7 +61,7 @@ public class PositionalTransfer extends Mechanism{
         }
         else if (position == "Mid"){
             motors.get(0).setPower(50);
-            motors.get(0).setTargetPosition(-300);
+            motors.get(0).setTargetPosition(-600);
         }
         if(position == "Down")
         {
