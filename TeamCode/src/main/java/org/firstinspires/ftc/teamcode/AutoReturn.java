@@ -31,9 +31,6 @@ public class AutoReturn extends LinearOpMode {
 
         robot.odometry.reset();
         drive.odoDown();
-        intake.servos.get(0).setPosition(0.83);
-        intake.servos.get(1).setPosition(0.7);
-        intake.servos.get(2).setPosition(0.5);
 
         while (!isStarted()) {
             robot.odometry.updatePosition();
