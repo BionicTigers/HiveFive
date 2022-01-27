@@ -56,17 +56,16 @@ public class PositionalTransfer extends Mechanism{
             motors.get(0).setTargetPosition(-2280);
         }
         else if(position == "Down") {
-        motors.get(0).setPower(50);
-        motors.get(0).setTargetPosition(0);
+            motors.get(0).setPower(50);
+            motors.get(0).setTargetPosition(0);
         }
         else if (position == "Mid"){
             motors.get(0).setPower(50);
             motors.get(0).setTargetPosition(-600);
         }
-        if(position == "Down")
+        if (position == "Down")
         {
             position = "Mid";
         }
     }
-
 }

@@ -20,25 +20,23 @@ public class Cap extends Mechanism {
      */
     public Cap(Servo capServo){
         super();
-        servo = capServo;
         getServos().add(capServo);
     }
-
 
     /*
      * Moves the arm to the intake height
      */
     public void moveToIntakeHeight(){
-        servo.setPosition(0);
+        servos.get(0).setPosition(1);
     }
     /*
      * Moves the arm to the scoring/scoring height
      */
     public void moveToStoringHeight(){
-        servo.setPosition(1);
+        servos.get(0).setPosition(0);
     }
     public void pickUpElement(){
-        servo.setPosition(0);
+        servos.get(0).setPosition(0);
         try {
             wait(3000);
         } catch (InterruptedException e) {
