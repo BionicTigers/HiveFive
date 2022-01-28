@@ -63,10 +63,12 @@ import java.util.List;
 
          double[] hslThresholdHue = {0, 62};
          double[] hslThresholdSaturation = {147, 255};
-         double[] hslThresholdLuminance = {135, 255};
+         double[] hslThresholdLuminance = {82 , 255};
          //takes values for hue, saturation, and luminance and apply's them to what the camera sees
          hslThreshold(source0, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, hslThresholdOutput);
          List<MatOfPoint> contoursBlack = new ArrayList<>();
+
+    Imgproc.GaussianBlur(source0, source0, new Size(9,9), 0);
 
          //adds a blur to what the camera sees
 
@@ -142,11 +144,11 @@ import java.util.List;
 
      //based of the area of the contours, this method finds the number of rings the camera is seeing (0, 1, 4)
      public void Elementlocation(){
-         if(area <= 800 )
+         if(area <= 3000 )
              mode = 1;
-         else if(area > 2000)
+         else if(area > 5000)
              mode = 3;
-         else if(area <= 2000)
+         else if(area <= 5000)
              mode =2;
      }
 

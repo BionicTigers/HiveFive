@@ -3,15 +3,16 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
 
-public class PositionalTransfer extends Mechanism{
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
+public class PositionalTransferFine extends Mechanism{
     public String position = "Mid";
     public Telemetry telemetry;
     public DcMotorEx motor;
+    public int x = 0;
 
-    public PositionalTransfer(DcMotorEx m, Telemetry T){
+    public PositionalTransferFine(DcMotorEx m, Telemetry T){
         super();
         DcMotorEx motor = m;
         motors.add(motor);
@@ -36,13 +37,13 @@ public class PositionalTransfer extends Mechanism{
     }
 
     public void update(Gamepad gp1, Gamepad gp2){
-        if(gp2.right_trigger >= 0.5){
-            position = "Up";
-        } else if(gp2.left_trigger >= 0.3){
-            position =  "Mid";
+        if(gp1.right_bumper){
+            x = x - 1;
+        } else if(gp1.left_bumper){
+            x = x + 1;
         }
-        else if(gp1.right_trigger >= .5){
-            position = "Down";
+        if (x > 0) {
+            x = 0;
         }
 
         telemetry.addData("position", motors.get(0).getCurrentPosition());
@@ -50,21 +51,7 @@ public class PositionalTransfer extends Mechanism{
     }
 
     public void write(){
-        if(position == "Up"){
-            motors.get(0).setPower(80);
-            motors.get(0).setTargetPosition(-2280);
-        }
-        else if(position == "Down") {
-            motors.get(0).setPower(50);
-            motors.get(0).setTargetPosition(0);
-        }
-        else if (position == "Mid"){
-            motors.get(0).setPower(50);
-            motors.get(0).setTargetPosition(-600);
-        }
-        if (position == "Down")
-        {
-            position = "Mid";
-        }
+        motors.get(0).setPower(50);
+        motors.get(0).setTargetPosition(x);
     }
 }

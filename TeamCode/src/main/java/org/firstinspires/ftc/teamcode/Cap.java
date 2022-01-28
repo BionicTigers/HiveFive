@@ -33,13 +33,13 @@ public class Cap extends Mechanism {
      * Moves the arm to the scoring/scoring height
      */
     public void moveToStoringHeight(){
-        servos.get(0).setPosition(0.1);
+        servos.get(0).setPosition(0.2);
     }
     public void moveToScoringHeight(){
-        servos.get(0).setPosition(0.4);
+        servos.get(0).setPosition(0.5);
     }
     public void moveToScoringHeight2(){
-        servos.get(0).setPosition(0.55);
+        servos.get(0).setPosition(0.7);
     }
     public void pickUpElement(){
         servos.get(0).setPosition(0);

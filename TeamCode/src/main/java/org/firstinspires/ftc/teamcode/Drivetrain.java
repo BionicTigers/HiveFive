@@ -210,6 +210,22 @@ public class Drivetrain extends Mechanism {
         stopDrivetrain();
     }
 
+    public void moveToPositionSlow(Location goalPos, double xTolerance, double zTolerance, double rotTolerance, int maxTime) {
+        integralValues = new double[4];
+        error = findError(goalPos);
+        double startTime = robot.getTimeMS();
+        while ((robot.getTimeMS() - startTime < maxTime) &&robot.linoop.opModeIsActive()&&(Math.abs(error.getLocation(0)) > xTolerance || Math.abs(error.getLocation(2)) > zTolerance || Math.abs(error.getLocation(3)) > rotTolerance)) {
+            error = findErrorSlow(goalPos);
+            write();
+            robot.odometry.updatePosition();
+//            dashboardTelemetry.addData("x-error",error.getLocation(0) );
+//            dashboardTelemetry.addData("y-error",error.getLocation(2) );
+//            dashboardTelemetry.addData("r-error",error.getLocation(3) );
+            // dashboardTelemetry.update();
+        }
+        stopDrivetrain();
+    }
+
     public void moveToPositionSlow(Location goalPos, double xTolerance, double zTolerance, double rotTolerance) {
         integralValues = new double[4];
         error = findError(goalPos);
