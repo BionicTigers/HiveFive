@@ -30,8 +30,10 @@ public class AutonomousMain extends LinearOpMode{
     private final Location ZONE_A = new Location(-400, 0, 1850, 270);
     private final Location ZONE_B = new Location(-950, 0, 2500.92f, 270);
     private final Location ZONE_C = new Location(-450, 0, 3150, 270);
-    private final Location levelOneGrab = new Location(24.97,0,345.29,358.16); // 50.92, 494.9, -7.97
-    private final Location levelOneDeposit = new Location (640, 0, 549.9, 92.2);
+    private final Location levelThreeGrab = new Location(24.97,0,345.29,358.16); // 50.92, 494.9, -7.97
+    private final Location levelThreeDeposit = new Location (640, 0, 549.9, 92.2);
+    private final Location levelTwoGrab = new Location (-234.75,0, 412.71, 356.56);
+    private final Location levelOneGrab = new Location (-532.583, 0, 331.488, 350.698);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -64,18 +66,7 @@ public class AutonomousMain extends LinearOpMode{
 
         }
         waitForStart();
-//        switch(mode) {
-//
-//            case 2:
-////                drive.moveToPosition(ZONE_B, 25, 25, 1, 2500);
-//                break;
-//            case 3:
-////                drive.moveToPosition(ZONE_C, 25, 25, 1, 2500);
-//                break;
-//            default:
-////                drive.moveToPosition(ZONE_A, 25, 25, 1, 2000);
-//                break;
-//        }
+
         cap.moveToIntakeHeight();
         time.reset();
         while(time.seconds()<3) {
@@ -83,12 +74,26 @@ public class AutonomousMain extends LinearOpMode{
             spinner.servos.get(0).setPosition(0.5);
         }
         spinner.crServos.get(0).setPower(0);
-        drive.moveToPositionSlow(levelOneGrab,5, 5,2);
+//                switch(mode) {
+//
+//            case 2:
+//                drive.moveToPositionSlow(levelTwoGrab, 5, 5, 2);
+//                break;
+//            case 3:
+//                drive.moveToPositionSlow(levelThreeGrab,5, 5,2);
+//                break;
+//            default:
+//                drive.moveToPositionSlow(levelOneGrab,5, 5,2  );
+//                break;
+//        }
+        drive.moveToPositionSlow(levelTwoGrab, 5, 5, 2);
         transfer.motors.get(0).setPower(50);
         transfer.motors.get(0).setTargetPosition(-600);
+
         sleep(500);
         cap.moveToStoringHeight();
         sleep(2000);
+
 //        drive.moveToPosition(levelOneDeposit,5,5,2);
 
     }
