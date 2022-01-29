@@ -28,15 +28,14 @@ public class AutonomousMain extends LinearOpMode{
     private int[] wheels = {0, 1, 2, 3};
     private int mode;
 
-    private final Location ZONE_A = new Location(-400, 0, 1850, 270);
-    private final Location ZONE_B = new Location(-950, 0, 2500.92f, 270);
-    private final Location ZONE_C = new Location(-450, 0, 3150, 270);
     private final Location levelOneGrab = new Location (-532.583, 0, 331.488, 350.698);
     private final Location levelOneDeposit = new Location (-238.56, 0, 807.51, 34.6);
+
     private final Location levelTwoGrab = new Location (-234.75,0, 412.71, 356.56);
     private final Location levelTwoDeposit = new Location (-276.59, 0, 747.14, 31.01);
-    private final Location levelThreeGrab = new Location(24.97,0,395.29,358.16);
-    private final Location levelThreeDeposit = new Location (302.45, 0, 619.27, 83.90);
+
+    private final Location levelThreeGrab = new Location(44.97,0,395.29,358.16);
+    private final Location levelThreeDeposit = new Location (494.02, 0, 416.16, 65.85);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -83,36 +82,35 @@ public class AutonomousMain extends LinearOpMode{
         spinner.crServos.get(0).setPower(0);
         switch(mode) {
             case 2:
-                drive.moveToPositionSlow(levelTwoGrab, 10, 10, 2, 3000);
+                drive.moveToPositionSlow(levelTwoGrab, 10, 10, 2, 1500);
                 sleep(500);
                 cap.moveToStoringHeight();
-                drive.moveToPositionSlow(levelTwoDeposit, 5, 5, 2, 3000);
+                drive.moveToPosition(levelTwoDeposit, 5, 5, 2, 3000);
                 transfer.motors.get(0).setTargetPosition(-1760);
-                transfer.motors.get(0).setPower(50);
+                transfer.motors.get(0).setPower(80);
                 break;
             case 3:
-                drive.moveToPositionSlow(levelThreeGrab,10, 10,2, 3000);
+                drive.moveToPositionSlow(levelThreeGrab,10, 10,2, 1500);
                 sleep(500);
                 cap.moveToStoringHeight();
-                drive.moveToPositionSlow(levelThreeDeposit, 5, 5, 2, 3000);
+                drive.moveToPosition(levelThreeDeposit, 5, 5, 2);
                 transfer.motors.get(0).setTargetPosition(-2280);
-                transfer.motors.get(0).setPower(50);
+                transfer.motors.get(0).setPower(80);
                 sleep(2000);
                 break;
             default:
-                drive.moveToPositionSlow(levelOneGrab,10, 10,2, 3000);
+                drive.moveToPositionSlow(levelOneGrab,10, 10,2, 1500);
                 sleep(500);
                 cap.moveToStoringHeight();
-                drive.moveToPositionSlow(levelOneDeposit, 5, 5, 2, 3000);
+                drive.moveToPosition(levelOneDeposit, 5, 5, 2, 3000);
                 transfer.motors.get(0).setTargetPosition(-1245);
-                transfer.motors.get(0).setPower(50);
+                transfer.motors.get(0).setPower(80);
                 break;
         }
         sleep(2000);
         output.servos.get(0).setPosition(0.3);
-        sleep(2000);
-
-//        drive.moveToPosition(levelOneDeposit,5,5,2);
-
+        sleep(1000);
+        output.servos.get(0).setPosition(0.7);
+        sleep(5000);
     }
 }

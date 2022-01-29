@@ -173,6 +173,8 @@ public class Drivetrain extends Mechanism {
         //Records Location as X, Z, rot
         dashboardtelemetry.addData("Location: X_", robot.odometry.realMaybe.getLocation(0) + ", Z_" + robot.odometry.realMaybe.getLocation(2) + ", Rotation_" + robot.odometry.realMaybe.getLocation(3));
         dashboardtelemetry.addData("Left encoder", robot.odometry.getEncoderPosition());
+        dashboardtelemetry.addData("encoder delta MM 0", robot.odometry.getEncoderPosition()[0]);
+        dashboardtelemetry.addData("encoder delta MM 1", robot.odometry.getEncoderPosition()[1]);
         telemetry.update();
         dashboardtelemetry.update();
     }

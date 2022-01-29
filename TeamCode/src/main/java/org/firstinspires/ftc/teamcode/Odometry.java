@@ -27,6 +27,7 @@ public class Odometry extends Mechanism {
 //    private static final double ODO_DISTANCE_FROM_CENTER = 53.975;
 
     //This year's robot odometry stats
+    //All measurements in millimeters (MM)
 
     //Declares constants that relate to odometry wheels
     //Diameter of the encoders
@@ -38,15 +39,15 @@ public class Odometry extends Mechanism {
     //Number of ticks on the encoders
     private static final double ODO_ENCODER_TICKS = 8192;
     //Distance between odometry encoders
-    private static final double ODO_DISTANCE_MM = 403.225;
+    private static final double ODO_DISTANCE_MM = 432.197;
     //Distance from the center encoder to the center of the robot
-    private static final double ODO_DISTANCE_FROM_CENTER = 44.45;
+    private static final double ODO_DISTANCE_FROM_CENTER = 117.475;
 
 
     //Circumference of the encoder
     private static final double ODO_CIRCUMFERENCE_MM = ODO_DIAMETER_EFFECTIVE_MM * Math.PI;
     //The number of encoder ticks per millimeter
-    private static final double ENCODER_TICKS_PER_MM = ODO_ENCODER_TICKS / ODO_CIRCUMFERENCE_MM;
+    private static final double     ENCODER_TICKS_PER_MM = ODO_ENCODER_TICKS / ODO_CIRCUMFERENCE_MM;
 
     //Expansion hub data for the encoders
     /*Declares the first expansion hub*/
@@ -204,7 +205,7 @@ public class Odometry extends Mechanism {
             bulkData = expansionHub.getBulkInputData();
             for (int i = 0; i < 3; i++) {//updates the array encoderDeltamm for each odo wheel to see how much they've moved in mm
                 //if and else for the different expansion hubs... also because the two wheels facing forward need to have negative bulk data reads
-                if (i == 2 || (i == 1 && ODO_DISTANCE_MM != 375.1)) {
+                if (i == 2 || (i == 1 )) {
                     encoderDeltamm[i] = -ODO_CIRCUMFERENCE_MM * ((bulkData.getMotorCurrentPosition(i) - encoderPositionoffset[i] + encoderPosition[i]) / ODO_ENCODER_TICKS);
                     encoderPosition[i] = -bulkData.getMotorCurrentPosition(i) + encoderPositionoffset[i];
                 } else {
