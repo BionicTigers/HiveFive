@@ -27,7 +27,6 @@ public class TeleOpMain extends LinearOpMode{
     public Cap cap;
     public Spinner spinner;
     //public BNO055IMU gyro;
-    private final Location levelThreeDeposit = new Location (494.02, 0, 416.16, 65.85);
 
     public int[] motorNumbers = {0, 1, 2, 3}; //creates motor numbers array
 
@@ -63,9 +62,7 @@ public class TeleOpMain extends LinearOpMode{
             for (Mechanism mech : mechanisms) { //For each mechanism in the mechanism array
                 mech.write(); //Run their respective write methods
             }
-            if (gamepad1.b) {
-                drivetrain.moveToPosition(levelThreeDeposit, 5, 5, 2, 3000);
-            }
+
         }
     }
 }

@@ -27,7 +27,7 @@ public class Cap extends Mechanism {
      * Moves the arm to the intake height
      */
     public void moveToIntakeHeight(){
-        servos.get(0).setPosition(.96);
+        servos.get(0).setPosition(.93);
     }
     /*
      * Moves the arm to the scoring/scoring height

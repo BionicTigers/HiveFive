@@ -144,7 +144,7 @@ import java.util.List;
 
      //based of the area of the contours, this method finds the number of rings the camera is seeing (0, 1, 4)
      public void Elementlocation(){
-         if(area <= 3000 )
+         if(area <= 2000 )
              mode = 1;
          else if(area > 5000)
              mode = 3;

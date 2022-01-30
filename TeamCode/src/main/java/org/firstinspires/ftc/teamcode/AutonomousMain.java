@@ -11,6 +11,9 @@ import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
+
+import java.util.logging.Level;
+
 @Autonomous(name="Autonomous")
 public class AutonomousMain extends LinearOpMode{
     private Robot robot;
@@ -28,15 +31,20 @@ public class AutonomousMain extends LinearOpMode{
     private int[] wheels = {0, 1, 2, 3};
     private int mode;
 
-    private final Location levelOneGrab = new Location (-532.583, 0, 331.488, 350.698);
-    private final Location levelOneDeposit = new Location (-238.56, 0, 807.51, 34.6);
+    private final Location levelOnepreGrab = new Location (-490, 0, 180, 0);
+    private final Location levelOneGrab = new Location (-490, 0, 470, 0);
+    private final Location levelOneDeposit = new Location (-1000, 0, -10, 0);
+    private final Location levelOneDeposit2 = new Location (-1000, 0, 165, 0);
+    private final Location LevelOneMid = new Location(-500, 0, 70, 0);
 
-    private final Location levelTwoGrab = new Location (-234.75,0, 412.71, 356.56);
-    private final Location levelTwoDeposit = new Location (-276.59, 0, 747.14, 31.01);
-
-    private final Location levelThreeGrab = new Location(44.97,0,395.29,358.16);
-    private final Location levelThreeDeposit = new Location (494.02, 0, 416.16, 65.85);
-
+    private final Location levelTwopreGrab = new Location (-270,0, 200.71, 0);
+    private final Location levelTwoGrab = new Location (-270,0, 450, 0);
+    private final Location levelTwoDeposit = new Location (-1100, 0,120 , 0);
+    private final Location LevelTwoMid = new Location(-500, 0, 100, 0);
+    private final Location levelThreeGrab = new Location(50,0,425,0);
+    private final Location LevelThreeMid = new Location(-200, 0, 125, 0);
+    private final Location levelThreeDeposit = new Location (-1000, 0, 75, 0);
+    private final Location SpecialBoyTurn = new Location (0, 0, 0, 270);
     @Override
     public void runOpMode() throws InterruptedException {
         robot = new Robot(this);
@@ -72,7 +80,6 @@ public class AutonomousMain extends LinearOpMode{
             }
         }
         waitForStart();
-
         cap.moveToIntakeHeight();
         time.reset();
         while(time.seconds()<3) {
@@ -82,35 +89,55 @@ public class AutonomousMain extends LinearOpMode{
         spinner.crServos.get(0).setPower(0);
         switch(mode) {
             case 2:
+                drive.moveToPositionSlow(levelTwopreGrab, 10, 10, 2, 1000);
                 drive.moveToPositionSlow(levelTwoGrab, 10, 10, 2, 1500);
                 sleep(500);
                 cap.moveToStoringHeight();
-                drive.moveToPosition(levelTwoDeposit, 5, 5, 2, 3000);
-                transfer.motors.get(0).setTargetPosition(-1760);
+                drive.moveToPosition(LevelTwoMid, 5, 5, 2, 500);
+                drive.moveToPositionSlow(levelTwoDeposit, 5, 5, 2, 3000);
+                transfer.motors.get(0).setTargetPosition(-1700);
                 transfer.motors.get(0).setPower(80);
                 break;
             case 3:
                 drive.moveToPositionSlow(levelThreeGrab,10, 10,2, 1500);
                 sleep(500);
                 cap.moveToStoringHeight();
-                drive.moveToPosition(levelThreeDeposit, 5, 5, 2);
+                drive.moveToPosition(LevelThreeMid, 5, 5, 2, 500);
+                drive.moveToPositionSlow(levelThreeDeposit, 5, 5, 2, 3000);
                 transfer.motors.get(0).setTargetPosition(-2280);
                 transfer.motors.get(0).setPower(80);
                 sleep(2000);
                 break;
-            default:
+            case 1:
+                drive.moveToPositionSlow(levelOnepreGrab,10, 10,2, 1000);
                 drive.moveToPositionSlow(levelOneGrab,10, 10,2, 1500);
                 sleep(500);
                 cap.moveToStoringHeight();
-                drive.moveToPosition(levelOneDeposit, 5, 5, 2, 3000);
-                transfer.motors.get(0).setTargetPosition(-1245);
+                drive.moveToPositionSlow(LevelOneMid, 5, 5, 2, 500);
+                drive.moveToPositionSlow(levelOneDeposit, 5, 5, 2, 2000);
+                drive.moveToPosition(levelOneDeposit2, 5, 5, 2, 3000);
+                transfer.motors.get(0).setTargetPosition(-1300);
                 transfer.motors.get(0).setPower(80);
                 break;
         }
-        sleep(2000);
+        sleep(500);
         output.servos.get(0).setPosition(0.3);
-        sleep(1000);
+        sleep(500);
         output.servos.get(0).setPosition(0.7);
-        sleep(5000);
+        robot.odometry.reset();
+        transfer.motors.get(0).setTargetPosition(-600);
+        sleep(1000);
+        drive.moveToPositionSlow(SpecialBoyTurn, 5, 5, 2, 1500);
+        drive.odoUp();
+        sleep(500);
+        drive.motors.get(0).setPower(1);
+        drive.motors.get(1).setPower(1);
+        drive.motors.get(2).setPower(1);
+        drive.motors.get(3).setPower(1);
+        sleep(1000);
+        drive.motors.get(0).setPower(0);
+        drive.motors.get(1).setPower(0);
+        drive.motors.get(2).setPower(0);
+        drive.motors.get(3).setPower(0);
     }
 }
