@@ -22,7 +22,7 @@ public class Intake extends Mechanism {
      */
     public void update(Gamepad gp1, Gamepad gp2) {
         goingIn = gp1.left_trigger >= .3;
-        goingOut = gp1.right_trigger >= .3;
+        goingOut = gp1.right_trigger >= .3 || gp1.x;
     }
 
      //Controls the intake

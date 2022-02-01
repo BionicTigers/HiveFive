@@ -10,6 +10,7 @@ public class PositionalTransfer extends Mechanism{
     public String position = "Mid";
     public Telemetry telemetry;
     public DcMotorEx motor;
+    public int trim = 0;
 
     public PositionalTransfer(DcMotorEx m, Telemetry T){
         super();
@@ -39,10 +40,19 @@ public class PositionalTransfer extends Mechanism{
         if(gp2.right_trigger >= 0.5){
             position = "Up";
         } else if(gp2.left_trigger >= 0.3){
-            position =  "Mid";
-        }
-        else if(gp1.right_trigger >= .5){
+            position = "Mid";
+        } else if((gp1.right_trigger >= .5  && position != "Up" )|| gp2.dpad_down){
             position = "Down";
+        }
+
+        if (gp2.right_bumper) {
+            trim = trim - 1;
+        } else if (gp2.left_bumper) {
+            trim = trim + 1;
+        }
+
+        if (gp2.right_stick_button) {
+            trim = trim + 3;
         }
 
         telemetry.addData("position", motors.get(0).getCurrentPosition());
@@ -51,16 +61,16 @@ public class PositionalTransfer extends Mechanism{
 
     public void write(){
         if(position == "Up"){
-            motors.get(0).setPower(80);
-            motors.get(0).setTargetPosition(-2280);
+            motors.get(0).setPower(100);
+            motors.get(0).setTargetPosition(-2240 + trim);
         }
         else if(position == "Down") {
-            motors.get(0).setPower(50);
+            motors.get(0).setPower(100);
             motors.get(0).setTargetPosition(0);
         }
         else if (position == "Mid"){
-            motors.get(0).setPower(50);
-            motors.get(0).setTargetPosition(-600);
+            motors.get(0).setPower(100);
+            motors.get(0).setTargetPosition(-600 + trim);
         }
         if (position == "Down")
         {

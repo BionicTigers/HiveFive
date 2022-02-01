@@ -88,10 +88,6 @@ public class Drivetrain extends Mechanism {
     //Sets the motorNumbers array based on input from joysticks
     public void determineMotorPowers (Gamepad driverPad){
         double dpadVal=0;
-        if (driverPad.dpad_right)
-            dpadVal=.2;
-        if (driverPad.dpad_left)
-            dpadVal=-.2;
 
         double P = Math.hypot(-driverPad.left_stick_x, -driverPad.left_stick_y);
         double robotAngle = Math.atan2(-driverPad.left_stick_y, -driverPad.left_stick_x);
@@ -144,11 +140,25 @@ public class Drivetrain extends Mechanism {
         }
 
         if(gp1.dpad_up){ //precision movement forward, very slow
-            determineMotorPowers(0,0.2,0);
+            determineMotorPowers(0,0.35,0);
         }
 
         if(gp1.dpad_down){ //precision movement backward, very slow
-            determineMotorPowers(0,-0.2,0);
+            determineMotorPowers(0,-0.35,0);
+        }
+
+        if(gp1.dpad_left) {
+            determineMotorPowers(0,0,-0.3);
+        }
+
+        if(gp1.dpad_right) {
+            determineMotorPowers(0,0,0.3);
+        }
+        if(gp1.right_bumper){
+            determineMotorPowers(.55, 0,0);
+        }
+        if(gp1.left_bumper){
+            determineMotorPowers(-.55,0,0);
         }
     }
 
