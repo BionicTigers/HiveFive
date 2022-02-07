@@ -43,8 +43,7 @@ public class Spinner extends Mechanism{
 //    }
 
     public void update(Gamepad gp1, Gamepad gp2) {
-        spin = gp2.dpad_right;
-        spinBack = gp2.dpad_left;
+        spinBack = gp2.a;
         servoB = gp2.b;
     }
 
@@ -54,10 +53,10 @@ public class Spinner extends Mechanism{
             servos.get(0).setPosition(0.5);
         } else if (spinBack){
             crServos.get(0).setPower(-100);
-            servos.get(0).setPosition(.5);
+            servos.get(0).setPosition(.2);
         } else if (servoB){
             crServos.get(0).setPower(0);
-            servos.get(0).setPosition(0);
+            servos.get(0).setPosition(.48);
         } else{
             crServos.get(0).setPower(0);
         }

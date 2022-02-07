@@ -3,6 +3,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -32,19 +33,19 @@ public class AutonomousMain extends LinearOpMode{
     private int mode;
 
     private final Location levelOnepreGrab = new Location (-490, 0, 180, 0);
-    private final Location levelOneGrab = new Location (-490, 0, 470, 0);
+    private final Location levelOneGrab = new Location (-490, 0, 440, 0);
     private final Location levelOneDeposit = new Location (-1000, 0, 200, 0);
-    private final Location levelOneDeposit2 = new Location (-1000, 0, 530, 0);
+    private final Location levelOneDeposit2 = new Location (-1000, 0, 485, 0);
     private final Location LevelOneMid = new Location(-500, 0, 70, 0);
 
     private final Location levelTwopreGrab = new Location (-270,0, 200.71, 0);
     private final Location levelTwoGrab = new Location (-270,0, 450, 0);
-    private final Location levelTwoDeposit = new Location (-1100, 0,500 , 0);
+    private final Location levelTwoDeposit = new Location (-1100, 0,430 , 0);
     private final Location LevelTwoMid = new Location(-500, 0, 100, 0);
 
     private final Location levelThreeGrab = new Location(45,0,425,0);
     private final Location LevelThreeMid = new Location(-200, 0, 125, 0);
-    private final Location levelThreeDeposit = new Location (-1100, 0, 420, 0);
+    private final Location levelThreeDeposit = new Location (-1100, 0, 450, 0);
 
     private final Location SpecialBoyTurn = new Location (0, 0, -40, 280);
     @Override
@@ -52,11 +53,12 @@ public class AutonomousMain extends LinearOpMode{
         robot = new Robot(this);
         drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDrive1"), hardwareMap.get(Servo.class, "SDrive2"), hardwareMap.get(Servo.class, "SDrive3"));
         spinner = new Spinner(hardwareMap.get(CRServo.class,"spinner"), hardwareMap.get(Servo.class, "carouselB"));
-        transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry);
+        transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry, hardwareMap.get(DigitalChannel.class, "channel"));
         cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
         output = new Output(hardwareMap.get(Servo.class, "output"));
         vuforia = new Vuforia();
         time = new ElapsedTime();
+        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"));
 
         robot.odometry.reset();
         drive.odoDown();
@@ -80,7 +82,7 @@ public class AutonomousMain extends LinearOpMode{
             if (gamepad1.a) {
                 robot.odometry.reset();
             }
-            transfer.motors.get(0).setTargetPosition(-600);
+            transfer.motors.get(0).setTargetPosition(600);
             transfer.motors.get(0).setPower(50);
             cap.servos.get(0).setPosition(0.05);
         }
@@ -102,8 +104,9 @@ public class AutonomousMain extends LinearOpMode{
 //                sleep(500);
 //                cap.moveToStoringHeight();
 //                drive.moveToPosition(LevelTwoMid, 5, 5, 2, 500);
+
                 drive.moveToPositionSlow(levelTwoDeposit, 5, 5, 2, 3000);
-                transfer.motors.get(0).setTargetPosition(-1750);
+                transfer.motors.get(0).setTargetPosition(1700);
                 transfer.motors.get(0).setPower(80);
                 sleep(1000);
                 break;
@@ -112,8 +115,9 @@ public class AutonomousMain extends LinearOpMode{
 //                sleep(500);
 //                cap.moveToStoringHeight();
 //                drive.moveToPosition(LevelThreeMid, 5, 5, 2, 500);
+
                 drive.moveToPositionSlow(levelThreeDeposit, 5, 5, 2,3000);
-                transfer.motors.get(0).setTargetPosition(-2240);
+                transfer.motors.get(0).setTargetPosition(2240);
                 transfer.motors.get(0).setPower(80);
                 sleep(1000);
                 break;
@@ -122,21 +126,21 @@ public class AutonomousMain extends LinearOpMode{
 //                drive.moveToPositionSlow(levelOneGrab,10, 10,2, 1500);
 //                sleep(500);
 //                cap.moveToStoringHeight();
-//                drive.moveToPositionSlow(LevelOneMid, 5, 5, 2, 500);
 
-                drive.moveToPosition(levelOneDeposit2, 5, 5, 2, 3000);
-                transfer.motors.get(0).setTargetPosition(-1550);
+                drive.moveToPositionSlow(LevelOneMid, 5, 5, 2, 500);
+                drive.moveToPosition(levelOneDeposit2, 5, 5, 2, 4000);
+                transfer.motors.get(0).setTargetPosition(1400);
                 transfer.motors.get(0).setPower(80);
                 sleep(1000);
                 break;
         }
         sleep(500);
         output.servos.get(0).setPosition(1);
-        sleep(500);
-        output.servos.get(0).setPosition(0.7);
+        sleep(1000);
         drive.moveToPositionSlow(levelOneDeposit, 5, 5, 2, 1000);
+        output.servos.get(0).setPosition(0.7);
         robot.odometry.reset();
-        transfer.motors.get(0).setTargetPosition(-600);
+        transfer.motors.get(0).setTargetPosition(600);
         sleep(1500);
 
         drive.moveToPositionSlow(SpecialBoyTurn, 5, 5, 2, 1500);
@@ -154,16 +158,12 @@ public class AutonomousMain extends LinearOpMode{
         transfer.motors.get(0).setTargetPosition(0);
         sleep(1000);
         intake.motors.get(0).setPower(1);
-        drive.motors.get(0).setPower(.3);
-        drive.motors.get(1).setPower(.3);
-        drive.motors.get(2).setPower(0);
-        drive.motors.get(3).setPower(0);
-        sleep(500);
-        drive.motors.get(0).setPower(0);
+        drive.motors.get(0).setPower(.7);
         drive.motors.get(1).setPower(0);
-        drive.motors.get(2).setPower(.3);
-        drive.motors.get(3).setPower(.3);
+        drive.motors.get(2).setPower(.7);
+        drive.motors.get(3).setPower(0);
         sleep(1000);
-
+        drive.determineMotorPowers(0,0,0);
+        sleep(2000);
     }
 }

@@ -9,8 +9,6 @@ public class Cap extends Mechanism {
     //Fields
     //FtcDashboard dashboard;
     //Telemetry dashboardTelemetry;
-    /*Length of the cap arm*/
-    private final float armLength = 1;
     /*New instance of robot*/
     public Robot robot;
     public Servo servo;
@@ -27,19 +25,19 @@ public class Cap extends Mechanism {
      * Moves the arm to the intake height
      */
     public void moveToIntakeHeight(){
-        servos.get(0).setPosition(.88);
+        servos.get(0).setPosition(1);
     }
     /*
      * Moves the arm to the scoring/scoring height
      */
     public void moveToStoringHeight(){
-        servos.get(0).setPosition(0);
+        servos.get(0).setPosition(0.05);
     }
     public void moveToScoringHeight(){
-        servos.get(0).setPosition(0.5);
+        servos.get(0).setPosition(0.61);
     }
     public void moveToScoringHeight2(){
-        servos.get(0).setPosition(0.7);
+        servos.get(0).setPosition(0.75);
     }
     public void pickUpElement(){
         servos.get(0).setPosition(0);

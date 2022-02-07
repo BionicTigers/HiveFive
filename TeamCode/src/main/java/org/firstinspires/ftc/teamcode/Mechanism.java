@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.hardware.Sensor;
+
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
@@ -35,8 +37,8 @@ public abstract class  Mechanism {
     public Mechanism(){
         motors = new ArrayList<DcMotorEx>();
         servos = new ArrayList<Servo>();
-
         crServos = new ArrayList<CRServo>();
+        sensors = new ArrayList<DigitalChannel>();
     }
 
     public abstract void update(Gamepad gp1, Gamepad gp2);
