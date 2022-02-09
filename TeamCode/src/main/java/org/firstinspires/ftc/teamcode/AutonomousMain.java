@@ -35,7 +35,7 @@ public class AutonomousMain extends LinearOpMode{
     private final Location levelOnepreGrab = new Location (-490, 0, 180, 0);
     private final Location levelOneGrab = new Location (-490, 0, 440, 0);
     private final Location levelOneDeposit = new Location (-1000, 0, 200, 0);
-    private final Location levelOneDeposit2 = new Location (-1000, 0, 485, 0);
+    private final Location levelOneDeposit2 = new Location (-1000, 0, 500, 0);
     private final Location LevelOneMid = new Location(-500, 0, 70, 0);
 
     private final Location levelTwopreGrab = new Location (-270,0, 200.71, 0);
@@ -91,10 +91,10 @@ public class AutonomousMain extends LinearOpMode{
         time.reset();
         while(time.seconds()<3) {
             spinner.crServos.get(0).setPower(-60);
-            spinner.servos.get(0).setPosition(0.5);
+            spinner.servos.get(0).setPosition(.25);
         }
         spinner.crServos.get(0).setPower(0);
-        spinner.servos.get(0).setPosition(0);
+        spinner.servos.get(0).setPosition(.5);
 //        transfer.motors.get(0).setTargetPosition(0);
         switch(mode) {
             case 2:

@@ -135,7 +135,7 @@ public class Drivetrain extends Mechanism {
 
         if (gp1.b) {
             odoUp();
-        } else if (gp1.a) {
+        } else if (false) {
             odoDown();
         }
 

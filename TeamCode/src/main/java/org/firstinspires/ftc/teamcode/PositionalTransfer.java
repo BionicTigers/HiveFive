@@ -18,7 +18,7 @@ public class PositionalTransfer extends Mechanism{
     public boolean currentlyPressed = false;
     private DigitalChannel channel;
     private HardwareMap hardwareMap;
-
+    private boolean reset = false;
 
     public PositionalTransfer(DcMotorEx m, Telemetry T, DigitalChannel channel){
         super();
@@ -52,13 +52,11 @@ public class PositionalTransfer extends Mechanism{
             position = "Up";
         } else if(gp2.left_trigger >= 0.3){
             position = "Mid";
-        } else if((gp1.right_trigger >= .5  && position != "Up" )){
+        } else if((gp1.right_trigger >= .2  && position != "Up" )){
             position = "Down";
         }
 
-        if (gp2.right_bumper) {
-            trim = trim - 1;
-        } else if (gp2.left_bumper) {
+         else if (gp2.left_bumper) {
             trim = trim + 1;
         }
 
@@ -71,7 +69,10 @@ public class PositionalTransfer extends Mechanism{
         telemetry.addData("position", motors.get(0).getCurrentPosition());
         telemetry.addData("Amps", motors.get(0).getCurrent(CurrentUnit.AMPS));
         telemetry.addData("Is pressed? ", sensors.get(0).getState());
-
+        reset = gp1.right_stick_button || gp2.left_bumper;
+        if(gp2.dpad_down){
+            position = "intake";
+        }
 //        telemetry.update();
     }
 
@@ -86,11 +87,17 @@ public class PositionalTransfer extends Mechanism{
         else if(position == "Down" && sensors.get(0).getState()) {
             motors.get(0).setPower(100);
             motors.get(0).setTargetPosition(0 - trim2);
-            trim2 = trim2 + 20;
+            if(reset) {
+                trim2 = trim2 + 20;
+            }
         }
         else if (position == "Mid"){
             motors.get(0).setPower(100);
             motors.get(0).setTargetPosition(600);
+        }
+        else if (position == "intake")
+        {
+            motors.get(0).setTargetPosition(400);
         }
         if (position == "Down")
         {

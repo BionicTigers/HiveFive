@@ -10,6 +10,7 @@ public class Output extends Mechanism {
     public boolean reset;
     public Servo servo;
     public boolean drop2;
+    public boolean mid;
 
      //Creates, declares, and assigns a servo to the servos array list
     public Output(Servo d) {
@@ -34,14 +35,19 @@ public class Output extends Mechanism {
     public void update(Gamepad gp1, Gamepad gp2) {
         drop = gp2.dpad_right;
         drop2 = gp2.dpad_left;
-        reset = gp2.left_trigger >= 0.2 || gp1.right_trigger >= .2;
+        reset = gp2.left_trigger >= 0.2 || gp1.right_trigger >= .2 || gp2.dpad_down;
+        if(gp2.left_trigger >= 0.2 || gp1.right_trigger >= .2 || gp2.dpad_down){
+            mid = true;
+        } else if(gp2.right_trigger>=0.2){
+            mid = false;
+        }
     }
 
     public void write() {
-        if (drop) { //If A is being pressed
+        if (drop && !mid) { //If A is being pressed
             servo.setPosition(1); //Move to dropping position
         }
-        else if (drop2){
+        else if (drop2 && !mid){
             servo.setPosition(.4);
         }
         else if (reset) { //If left trigger is pressed down

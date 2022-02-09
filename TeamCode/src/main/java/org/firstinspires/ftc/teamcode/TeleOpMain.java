@@ -47,7 +47,7 @@ public class TeleOpMain extends LinearOpMode{
 //        gyro.initialize(parameters);
         //These lines set motors and servos to their default position once teleOp starts
         waitForStart();
-
+        spinner.servos.get(0).setPosition(.5);
         output.servos.get(0).setPosition(.7);
         drivetrain.odoUp();
         cap.moveToStoringHeight();
