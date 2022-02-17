@@ -77,27 +77,27 @@ public class PositionalTransfer extends Mechanism{
     }
 
     public void write(){
-        if(motors.get(0).getCurrent(CurrentUnit.AMPS) >= 5 && position.equals("Up") && motors.get(0).getCurrentPosition() > 2000){
-            trim = 2465 - motors.get(0).getCurrentPosition();
+        if(motors.get(0).getCurrent(CurrentUnit.AMPS) >= 5 && position.equals("Up") && motors.get(0).getCurrentPosition() > 2000 * 223/312){
+            trim = 2465* 223/312 - motors.get(0).getCurrentPosition();
         }
         if(position == "Up"){
             motors.get(0).setPower(100);
-            motors.get(0).setTargetPosition(2460 - trim);
+            motors.get(0).setTargetPosition(2460* 223/312 - trim);
         }
         else if(position == "Down" && sensors.get(0).getState()) {
-            motors.get(0).setPower(100);
-            motors.get(0).setTargetPosition(0 - trim2);
+            motors.get(0).setPower(60);
+            motors.get(0).setTargetPosition(-trim2);
             if(reset) {
-                trim2 = trim2 + 20;
+                trim2 = trim2 + 10;
             }
         }
         else if (position == "Mid"){
-            motors.get(0).setPower(100);
-            motors.get(0).setTargetPosition(600);
+            motors.get(0).setPower(30);
+            motors.get(0).setTargetPosition(600* 223/312);
         }
         else if (position == "intake")
         {
-            motors.get(0).setTargetPosition(400);
+            motors.get(0).setTargetPosition(400* 223/312);
         }
         if (position == "Down")
         {

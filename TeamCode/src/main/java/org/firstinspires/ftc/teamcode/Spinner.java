@@ -50,7 +50,7 @@ public class Spinner extends Mechanism{
     public void write() {
         if (spin) {
             crServos.get(0).setPower(100);
-            servos.get(0).setPosition(0.5);
+            servos.get(0).setPosition(0.48);
         } else if (spinBack){
             crServos.get(0).setPower(-100);
             servos.get(0).setPosition(.2);

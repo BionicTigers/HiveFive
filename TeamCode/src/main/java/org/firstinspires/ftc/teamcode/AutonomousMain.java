@@ -35,7 +35,7 @@ public class AutonomousMain extends LinearOpMode{
     private final Location levelOnepreGrab = new Location (-490, 0, 180, 0);
     private final Location levelOneGrab = new Location (-490, 0, 440, 0);
     private final Location levelOneDeposit = new Location (-1000, 0, 200, 0);
-    private final Location levelOneDeposit2 = new Location (-1000, 0, 500, 0);
+    private final Location levelOneDeposit2 = new Location (-1000, 0, 505, 0);
     private final Location LevelOneMid = new Location(-500, 0, 70, 0);
 
     private final Location levelTwopreGrab = new Location (-270,0, 200.71, 0);
@@ -82,7 +82,7 @@ public class AutonomousMain extends LinearOpMode{
             if (gamepad1.a) {
                 robot.odometry.reset();
             }
-            transfer.motors.get(0).setTargetPosition(600);
+            transfer.motors.get(0).setTargetPosition(600* 312/435);
             transfer.motors.get(0).setPower(50);
             cap.servos.get(0).setPosition(0.05);
         }
@@ -106,7 +106,7 @@ public class AutonomousMain extends LinearOpMode{
 //                drive.moveToPosition(LevelTwoMid, 5, 5, 2, 500);
 
                 drive.moveToPositionSlow(levelTwoDeposit, 5, 5, 2, 3000);
-                transfer.motors.get(0).setTargetPosition(1700);
+                transfer.motors.get(0).setTargetPosition(1700* 312/435);
                 transfer.motors.get(0).setPower(80);
                 sleep(1000);
                 break;
@@ -117,7 +117,7 @@ public class AutonomousMain extends LinearOpMode{
 //                drive.moveToPosition(LevelThreeMid, 5, 5, 2, 500);
 
                 drive.moveToPositionSlow(levelThreeDeposit, 5, 5, 2,3000);
-                transfer.motors.get(0).setTargetPosition(2240);
+                transfer.motors.get(0).setTargetPosition(2460* 312/435);
                 transfer.motors.get(0).setPower(80);
                 sleep(1000);
                 break;
@@ -129,7 +129,7 @@ public class AutonomousMain extends LinearOpMode{
 
                 drive.moveToPositionSlow(LevelOneMid, 5, 5, 2, 500);
                 drive.moveToPosition(levelOneDeposit2, 5, 5, 2, 4000);
-                transfer.motors.get(0).setTargetPosition(1400);
+                transfer.motors.get(0).setTargetPosition(1300 * 312/435);
                 transfer.motors.get(0).setPower(80);
                 sleep(1000);
                 break;
@@ -140,7 +140,7 @@ public class AutonomousMain extends LinearOpMode{
         drive.moveToPositionSlow(levelOneDeposit, 5, 5, 2, 1000);
         output.servos.get(0).setPosition(0.7);
         robot.odometry.reset();
-        transfer.motors.get(0).setTargetPosition(600);
+        transfer.motors.get(0).setTargetPosition(600 * 312 / 435);
         sleep(1500);
 
         drive.moveToPositionSlow(SpecialBoyTurn, 5, 5, 2, 1500);
