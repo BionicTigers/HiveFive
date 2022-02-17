@@ -33,15 +33,15 @@ public class Odometry extends Mechanism {
     //Diameter of the encoders
     private static final double ODO_DIAMETER_MM = 35;
     //Gear ratio of the odometry wheels
-    private static final double ODO_GEAR_RATIO = 2.6667;
+    private static final double ODO_GEAR_RATIO = 2.5;
     //Effective diameter of the odo wheels based on the gear ratio
     private static final double ODO_DIAMETER_EFFECTIVE_MM = ODO_DIAMETER_MM * ODO_GEAR_RATIO;
     //Number of ticks on the encoders
     private static final double ODO_ENCODER_TICKS = 8192;
     //Distance between odometry encoders
-    private static final double ODO_DISTANCE_MM = 432.197;
+    private static final double ODO_DISTANCE_MM = 390.2;
     //Distance from the center encoder to the center of the robot
-    private static final double ODO_DISTANCE_FROM_CENTER = 117.475;
+    private static final double ODO_DISTANCE_FROM_CENTER = 113.875;
 
 
     //Circumference of the encoder
@@ -83,9 +83,7 @@ public class Odometry extends Mechanism {
      */
     public Odometry(HardwareMap hardwareMap) {
         expansionHub = hardwareMap.get(ExpansionHubEx.class, "Control Hub");
-
         reset();
-
     }
 
     /*
