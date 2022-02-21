@@ -34,7 +34,6 @@ public class Intake extends Mechanism {
     public void run(boolean in, boolean out) {
         if (in) {
             motors.get(0).setPower(-1);
-
         } else if (out) {
             motors.get(0).setPower(1);
         } else {

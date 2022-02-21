@@ -19,7 +19,7 @@ public class AutoReturn extends LinearOpMode {
 
     private int[] wheels = {0, 1, 2, 3};
 
-    private final Location Away = new Location(0, 0, 700, 900);
+    private final Location Away = new Location(0, 0, 700, 90);
     private final Location Back = new Location(0,0,0,0);
 
     @Override

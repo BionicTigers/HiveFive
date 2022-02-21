@@ -240,6 +240,22 @@ public class Drivetrain extends Mechanism {
         stopDrivetrain();
     }
 
+    public void moveToPositionSuperSlow(Location goalPos, double xTolerance, double zTolerance, double rotTolerance, int maxTime) {
+        integralValues = new double[4];
+        error = findError(goalPos);
+        double startTime = robot.getTimeMS();
+        while ((robot.getTimeMS() - startTime < maxTime) &&robot.linoop.opModeIsActive()&&(Math.abs(error.getLocation(0)) > xTolerance || Math.abs(error.getLocation(2)) > zTolerance || Math.abs(error.getLocation(3)) > rotTolerance)) {
+            error = findErrorSuperSlow(goalPos);
+            write();
+            robot.odometry.updatePosition();
+//            dashboardTelemetry.addData("x-error",error.getLocation(0) );
+//            dashboardTelemetry.addData("y-error",error.getLocation(2) );
+//            dashboardTelemetry.addData("r-error",error.getLocation(3) );
+            // dashboardTelemetry.update();
+        }
+        stopDrivetrain();
+    }
+
     public void moveToPositionSlow(Location goalPos, double xTolerance, double zTolerance, double rotTolerance) {
         integralValues = new double[4];
         error = findError(goalPos);
@@ -301,8 +317,8 @@ public class Drivetrain extends Mechanism {
         robotheading = robot.odometry.getPosition().getLocation(3)- Math.atan2(error.getLocation(2),-error.getLocation(0));
         robotheading = Math.atan2(error.getLocation(0),error.getLocation(2));
 
-        double forwardError = -(Math.cos(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude);
-        double strafeError = -(Math.sin(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude);
+        double forwardError = Math.cos(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude;
+        double strafeError = Math.sin(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude;
 
         if(Math.abs(Variables.kfP*forwardError + Variables.kfI*integralValues[0] + Variables.kfD * (forwardError- lastForwardError))<1)
             integralValues[0]= integralValues[0]+forwardError;
@@ -313,7 +329,40 @@ public class Drivetrain extends Mechanism {
 
         double forwardPow = 0.35*((Variables.kfP*forwardError+ Variables.kfI*integralValues[0] + Variables.kfD * (forwardError - lastForwardError)));
         double sidePow = 0.35*((Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError)));
-        double rotPow = -0.35*((Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - lastRotationError)));
+        double rotPow = (Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - lastRotationError));
+
+        lastForwardError = forwardPow;
+        lastSidewaysError = sidePow;
+        lastRotationError = rotPow;
+
+        determineMotorPowers(sidePow,forwardPow,rotPow);
+        return error;
+    }
+
+    public Location findErrorSuperSlow(Location goalPos) {
+        Location error = new Location(
+                goalPos.getLocation(0)-robot.odometry.realMaybe.getLocation(0),
+                0,
+                goalPos.getLocation(2) - robot.odometry.realMaybe.getLocation(2),
+                rotationError(goalPos.getLocation(3), robot.odometry.realMaybe.getLocation(3)));
+        //this is to change the global xy error into robot specific error
+        magnitude = Math.hypot(-error.getLocation(0),error.getLocation(2));
+        robotheading = robot.odometry.getPosition().getLocation(3)- Math.atan2(error.getLocation(2),-error.getLocation(0));
+        robotheading = Math.atan2(error.getLocation(0),error.getLocation(2));
+
+        double forwardError = Math.cos(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude;
+        double strafeError = Math.sin(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude;
+
+        if(Math.abs(Variables.kfP*forwardError + Variables.kfI*integralValues[0] + Variables.kfD * (forwardError- lastForwardError))<1)
+            integralValues[0]= integralValues[0]+forwardError;
+        if(Math.abs(Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError))<1)
+            integralValues[2]= integralValues[2]+strafeError;
+        if(Math.abs(Variables.krP*error.getLocation(3) + Variables.krI*integralValues[3] + Variables.krD * (error.getLocation(3) - lastRotationError))<1)
+            integralValues[3]= integralValues[3]+error.getLocation(3);
+
+        double forwardPow = 0.15*((Variables.kfP*forwardError+ Variables.kfI*integralValues[0] + Variables.kfD * (forwardError - lastForwardError)));
+        double sidePow = 0.15*((Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError)));
+        double rotPow = ((Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - lastRotationError)));
 
         lastForwardError = forwardPow;
         lastSidewaysError = sidePow;
