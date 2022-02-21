@@ -8,7 +8,7 @@ public class Variables {
     public static double kfI = 0.000005;
     public static double kfD = 0;
     public static double ksP = 0.006;
-    public static double ksI = 0.000007;
+    public static double ksI = 0.00007;
     public static double ksD = 0;
     public static double krP = 0.025;
     public static double krI = 0.00004;

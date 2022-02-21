@@ -31,7 +31,7 @@ public class Odometry extends Mechanism {
 
     //Declares constants that relate to odometry wheels
     //Diameter of the encoders
-    private static final double ODO_DIAMETER_MM = 35;
+    private static final double ODO_DIAMETER_MM = 35.28670491;
     //Gear ratio of the odometry wheels
     private static final double ODO_GEAR_RATIO = 2.5;
     //Effective diameter of the odo wheels based on the gear ratio
@@ -39,10 +39,13 @@ public class Odometry extends Mechanism {
     //Number of ticks on the encoders
     private static final double ODO_ENCODER_TICKS = 8192;
     //Distance between odometry encoders
-    private static final double ODO_DISTANCE_MM = 390.2;
+    private static final double ODO_DISTANCE_MM = 409.3973989;
     //Distance from the center encoder to the center of the robot
     private static final double ODO_DISTANCE_FROM_CENTER = 113.875;
+//795.3-->266.3
 
+//497.10236
+//503.48
 
     //Circumference of the encoder
     private static final double ODO_CIRCUMFERENCE_MM = ODO_DIAMETER_EFFECTIVE_MM * Math.PI;
@@ -203,7 +206,7 @@ public class Odometry extends Mechanism {
             bulkData = expansionHub.getBulkInputData();
             for (int i = 0; i < 3; i++) {//updates the array encoderDeltamm for each odo wheel to see how much they've moved in mm
                 //if and else for the different expansion hubs... also because the two wheels facing forward need to have negative bulk data reads
-                if (i == 2 || (i == 1 )) {
+                if ((i == 0 )) {
                     encoderDeltamm[i] = -ODO_CIRCUMFERENCE_MM * ((bulkData.getMotorCurrentPosition(i) - encoderPositionoffset[i] + encoderPosition[i]) / ODO_ENCODER_TICKS);
                     encoderPosition[i] = -bulkData.getMotorCurrentPosition(i) + encoderPositionoffset[i];
                 } else {
@@ -234,6 +237,7 @@ public class Odometry extends Mechanism {
                 relativeX = radiusOfMovement * (1 - Math.cos(botRotDelta)) + (radiusOfStraif * Math.sin(botRotDelta));
                 addPublicTelemetry("relativex ", ""+relativeX);
             }
+
             position.translateLocal(relativeY, relativeX, 0);
             realMaybe.setLocation(position.getLocation(2), position.getLocation(1), position.getLocation(0), position.getLocation(3));
         } catch (NullPointerException e) {
@@ -261,8 +265,9 @@ public class Odometry extends Mechanism {
      //Converts the encoder position to a string
     public String currentEncoderPosString() {return encoderPosition[0] + ", " + encoderPosition[1] + ", " + encoderPosition[2];}
 
+    public String currentEncoderMMPosString() {return encoderPosition[0] / ENCODER_TICKS_PER_MM + ", " + encoderPosition[1]/ ENCODER_TICKS_PER_MM + ", " + encoderPosition[2]/ ENCODER_TICKS_PER_MM;}
 
-     //Converts the robot position to a string
+    //Converts the robot position to a string
     public String currentRobotPositionString() {return position.getLocation(0) + ", " + position.getLocation(2) + ", " + position.getLocation(3);}
 
     /* *************************** GETTER METHODS *************************** */

@@ -93,7 +93,7 @@ public class PositionalTransfer extends Mechanism{
         }
         else if (position == "Mid"){
             motors.get(0).setPower(30);
-            motors.get(0).setTargetPosition(600* 223/312);
+            motors.get(0).setTargetPosition(600);//* 223/312);
         }
         else if (position == "intake")
         {

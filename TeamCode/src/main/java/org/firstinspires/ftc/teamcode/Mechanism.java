@@ -57,7 +57,7 @@ public abstract class  Mechanism {
         telemetryDatas = new ArrayList<String>();
     }
 
-    public ArrayList<String> getTelemetryDatas() {
+    public ArrayList<String> getTelemetryData() {
         return telemetryDatas;
     }
     public ArrayList<String> getTelemetryCaptions() {

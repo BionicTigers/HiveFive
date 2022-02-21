@@ -130,12 +130,14 @@ public class Drivetrain extends Mechanism {
     }
 
     //Updates data for Telemetry, motor powers, and servo movements
-    public void update (Gamepad gp1, Gamepad gp2){
+    public void update (Gamepad gp1, Gamepad gp2) {
         determineMotorPowers(gp1); //Updates values in motorPowers array
 
         if (gp1.b) {
             odoUp();
-        } else if (false) {
+        } else if (gp1.back && gp1.start) {
+            robot.odometry.reset();
+        } else if (gp1.back) {
             odoDown();
         }
 
@@ -183,8 +185,8 @@ public class Drivetrain extends Mechanism {
         //Records Location as X, Z, rot
         dashboardtelemetry.addData("Location: X_", robot.odometry.realMaybe.getLocation(0) + ", Z_" + robot.odometry.realMaybe.getLocation(2) + ", Rotation_" + robot.odometry.realMaybe.getLocation(3));
         dashboardtelemetry.addData("Left encoder", robot.odometry.getEncoderPosition());
-        dashboardtelemetry.addData("encoder delta MM 0", robot.odometry.getEncoderPosition()[0]);
-        dashboardtelemetry.addData("encoder delta MM 1", robot.odometry.getEncoderPosition()[1]);
+//        dashboardtelemetry.addData("encoder delta MM 0", robot.odometry.getEncoderPosition()[0]);
+        dashboardtelemetry.addData("encoder delta MM 0, 1, 2:", robot.odometry.currentEncoderMMPosString());
         telemetry.update();
         dashboardtelemetry.update();
     }
@@ -266,8 +268,8 @@ public class Drivetrain extends Mechanism {
         robotheading = robot.odometry.getPosition().getLocation(3)- Math.atan2(error.getLocation(2),-error.getLocation(0));
         robotheading = Math.atan2(error.getLocation(0),error.getLocation(2));
 
-        double forwardError = -(Math.cos(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude);
-        double strafeError = -(Math.sin(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude);
+        double forwardError = (Math.cos(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude);
+        double strafeError = (Math.sin(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude);
 
         if(Math.abs(Variables.kfP*forwardError + Variables.kfI*integralValues[0] + Variables.kfD * (forwardError- lastForwardError))<1)
             integralValues[0]= integralValues[0]+forwardError;
@@ -278,7 +280,7 @@ public class Drivetrain extends Mechanism {
 
         double forwardPow = (Variables.kfP*forwardError+ Variables.kfI*integralValues[0] + Variables.kfD * (forwardError - lastForwardError));
         double sidePow = (Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError)) ;
-        double rotPow = -(Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - lastRotationError));
+        double rotPow = (Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - lastRotationError));
 
         lastForwardError = forwardPow;
         lastSidewaysError = sidePow;
@@ -379,13 +381,13 @@ public class Drivetrain extends Mechanism {
 
     public void odoUp () {
         servos.get(0).setPosition(0.27);
-        servos.get(1).setPosition(0.32);
+        servos.get(1).setPosition(0.27);
         servos.get(2).setPosition(0.57);
     }
 
     public void odoDown () {
         servos.get(0).setPosition(0.46);
-        servos.get(1).setPosition(0.6);
+        servos.get(1).setPosition(0.55);
         servos.get(2).setPosition(0.31);
     }
 
