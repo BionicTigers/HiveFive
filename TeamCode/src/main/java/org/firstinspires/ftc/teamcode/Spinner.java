@@ -18,6 +18,7 @@ public class Spinner extends Mechanism{
     public Spinner(DcMotorEx spinner, Servo carouselB) {
         super();
         motors.add(spinner);
+        motors.get(0).setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         servos.add(carouselB);
     }
 
@@ -33,7 +34,7 @@ public class Spinner extends Mechanism{
     }
 
     public void update(Gamepad gp1, Gamepad gp2) {
-        if (gp2.a && !aIsPressed) {
+        if (gp2.a && !aIsPressed && !deployed) {
             aIsPressed = true;
             deployed = true;
         }
@@ -41,8 +42,8 @@ public class Spinner extends Mechanism{
             aIsPressed = false;
         }
         if (deployed && !aIsPressed && gp2.a) {
-            aIsPressed = true;
             autoSpin();
+            aIsPressed = true;
         }
         if (gp2.b) {
             deployed = false;
@@ -50,18 +51,24 @@ public class Spinner extends Mechanism{
     }
 
     public void write() {
-        if (spinning && motors.get(0).getCurrentPosition() >= 500) {
-            motors.get(0).setPower(0.8);
+        if (deployed) {
+            servos.get(0).setPosition(0.2);
+        } else {
+            servos.get(0).setPosition(0.48);
         }
-        if (spinning && motors.get(0).getCurrentPosition() >= 1000) {
+        if (spinning && motors.get(0).getCurrentPosition() >= 1115) {
+            motors.get(0).setPower(1);
+        }
+        if (motors.get(0).getCurrentPosition() >= 2200) {
             motors.get(0).setPower(0);
             motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         }
     }
 
     public void autoSpin() {
-        motors.get(0).setTargetPosition(1000);
-        motors.get(0).setPower(.5);
+        motors.get(0).setTargetPosition(2200);
+        motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motors.get(0).setPower(0.7);
         spinning = true;
     }
 }

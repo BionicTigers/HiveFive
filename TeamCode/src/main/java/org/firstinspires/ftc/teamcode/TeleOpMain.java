@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -35,6 +36,8 @@ public class TeleOpMain extends LinearOpMode{
     RevBlinkinLedDriver.BlinkinPattern pattern2;
     public ElapsedTime timer;
     public int currentPattern = 1;
+    public DistanceSensor frontDistance;
+    public DistanceSensor leftDistance;
 
     public int[] motorNumbers = {0, 1, 2, 3}; //creates motor numbers array
 
@@ -63,6 +66,8 @@ public class TeleOpMain extends LinearOpMode{
         parameters.loggingTag = "IMU";
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
+        frontDistance = new DistanceSensor(hardwareMap.get(AnalogInput.class, "frontDistance"), telemetry, "Front");
+        leftDistance = new DistanceSensor(hardwareMap.get(AnalogInput.class, "leftDistance"), telemetry, "Left");
 
         //These lines set motors and servos to their default position once teleOp starts
         waitForStart();
@@ -70,7 +75,7 @@ public class TeleOpMain extends LinearOpMode{
         output.servos.get(0).setPosition(.7);
         drivetrain.odoUp();
         cap.moveToStoringHeight();
-        Mechanism[] mechanisms = {intake, transfer, output, spinner, drivetrain, cap, robot.odometry};
+        Mechanism[] mechanisms = {intake, transfer, output, spinner, drivetrain, cap, robot.odometry, frontDistance, leftDistance};
 
         //what runs constantly once play button is pressed
         while(opModeIsActive()) {
@@ -78,12 +83,16 @@ public class TeleOpMain extends LinearOpMode{
             drivetrain.dashboardtelemetry.addData("red", color.red()/55.0);
             drivetrain.dashboardtelemetry.addData("green", color.green()/55.0);
             drivetrain.dashboardtelemetry.addData("blue", color.blue()/55.0);
-            if(color.green()/55.0 > 40.0 && currentPattern == 1)        //green when nothing = 8.4
+            drivetrain.dashboardtelemetry.addData("Spinner Position", spinner.motors.get(0).getCurrentPosition());
+            drivetrain.dashboardtelemetry.addData("Spinner Speed", spinner.motors.get(0).getPower());
+            drivetrain.dashboardtelemetry.addData("Spinning?", spinner.spinning);
+            drivetrain.dashboardtelemetry.addData("deployed?", spinner.deployed);
+            if(color.green()/55.0 > 37.0 && currentPattern == 1)        //green when nothing = 8.4
             {
                 blinkinLedDriver.setPattern(pattern2);
                 currentPattern = 2;
             }
-            else if(currentPattern == 2 && !(color.green()/55.0 > 40.0))
+            else if(currentPattern == 2 && !(color.green()/55.0 > 37.0))
             {
                 blinkinLedDriver.setPattern(pattern);
                 currentPattern = 1;
