@@ -33,9 +33,11 @@ public class AutonomousState extends LinearOpMode{
 //still need location for deposit level 2 and 3, drop duck off at 3 btw
     private final Location postDropMove = new Location(-260,0,-350,0);
     private final Location preCarousel = new Location(-1057.30,0,-188.99,38.03);
-    private final Location carousel = new Location(-1425.81,0,-264.90,37.49);
+    private final Location carousel = new Location(-1425.81,0,-230.70,37.49);
     private final Location preDuck = new Location(-1534.05,0,-598.11,90);
     private final Location duck = new Location(-915.22,0,-598.11,90);
+    private final Location preTurn = new Location(-302.02, 0, -328.28, 356.67);
+    private final Location finalTurn = new Location(-302.02, 0, -328.28, 446.67);
 
     private final Location levelOneDeposit = new Location (-259.58,0,-551.44,355.04);
 
@@ -128,6 +130,22 @@ public class AutonomousState extends LinearOpMode{
             output.servos.get(0).setPosition(1);
             sleep(500);
             output.servos.get(0).setPosition(0.7);
+            sleep(1000);
+            transfer.motors.get(0).setTargetPosition(600 * 223/312);
+            drive.moveToPositionSlow(preTurn, 5, 5, 2, 2000);
+            drive.moveToPositionSlow(finalTurn, 5, 5, 2, 2000);
+            drive.odoUp();
+            sleep(500);
+            drive.motors.get(0).setPower(1);
+            drive.motors.get(1).setPower(1);
+            drive.motors.get(2).setPower(1);
+            drive.motors.get(3).setPower(1);
+            sleep(1000);
+            drive.motors.get(0).setPower(0);
+            drive.motors.get(1).setPower(0);
+            drive.motors.get(2).setPower(0);
+            drive.motors.get(3).setPower(0);
+            transfer.motors.get(0).setTargetPosition(0);
             sleep(1000);
         }
     }
