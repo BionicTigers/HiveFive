@@ -38,7 +38,7 @@ public class TeleOpMain extends LinearOpMode{
         intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"));
         transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry, hardwareMap.get(DigitalChannel.class, "channel"));
         output = new Output(hardwareMap.get(Servo.class, "output"));
-        spinner = new Spinner(hardwareMap.get(CRServo.class, "spinner"), hardwareMap.get(Servo.class, "carouselB"));
+        spinner = new Spinner(hardwareMap.get(DcMotorEx.class, "spinner"), hardwareMap.get(Servo.class, "carouselB"));
         cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
         robot.initMotors(motorNames);
 //        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();

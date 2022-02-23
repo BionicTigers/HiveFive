@@ -46,7 +46,7 @@ public class AutonomousState extends LinearOpMode{
     public void runOpMode() throws InterruptedException {
         robot = new Robot(this);
         drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDrive1"), hardwareMap.get(Servo.class, "SDrive2"), hardwareMap.get(Servo.class, "SDrive3"));
-        spinner = new Spinner(hardwareMap.get(CRServo.class,"spinner"), hardwareMap.get(Servo.class, "carouselB"));
+        spinner = new Spinner(hardwareMap.get(DcMotorEx.class,"spinner"), hardwareMap.get(Servo.class, "carouselB"));
         transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry, hardwareMap.get(DigitalChannel.class, "channel"));
         cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
         output = new Output(hardwareMap.get(Servo.class, "output"));

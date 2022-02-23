@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -8,14 +10,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class Spinner extends Mechanism{
 
     //Controller buttons
-    public boolean spin;
-    public boolean spinBack;
-    public boolean servoB;
+    public boolean deployed;
+    public boolean aIsPressed;
+    public boolean spinning;
 
      //Used to declare new instances of Spinner
-    public Spinner(CRServo spinner, Servo carouselB) {
+    public Spinner(DcMotorEx spinner, Servo carouselB) {
         super();
-        crServos.add(spinner);
+        motors.add(spinner);
         servos.add(carouselB);
     }
 
@@ -30,36 +32,37 @@ public class Spinner extends Mechanism{
         carouselB.setPosition(0);
     }
 
-    //Carousel spinner methods
-     //Spins the carousel spinner for a set amount of time
-//    public void spin(int time) {
-//        crServos.get(0).setPower(100);
-//        try {
-//            wait(time*1000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        crServos.get(0).setPower(0);
-//    }
-
     public void update(Gamepad gp1, Gamepad gp2) {
-        spinBack = gp2.a;
-        servoB = gp2.b;
+        if (gp2.a && !aIsPressed) {
+            aIsPressed = true;
+            deployed = true;
+        }
+        if (!gp2.a && aIsPressed) {
+            aIsPressed = false;
+        }
+        if (deployed && !aIsPressed && gp2.a) {
+            aIsPressed = true;
+            autoSpin();
+        }
+        if (gp2.b) {
+            deployed = false;
+        }
     }
 
     public void write() {
-        if (spin) {
-            crServos.get(0).setPower(100);
-            servos.get(0).setPosition(0.48);
-        } else if (spinBack){
-            crServos.get(0).setPower(-100);
-            servos.get(0).setPosition(.2);
-        } else if (servoB){
-            crServos.get(0).setPower(0);
-            servos.get(0).setPosition(.48);
-        } else{
-            crServos.get(0).setPower(0);
+        if (spinning && motors.get(0).getCurrentPosition() >= 500) {
+            motors.get(0).setPower(0.8);
         }
+        if (spinning && motors.get(0).getCurrentPosition() >= 1000) {
+            motors.get(0).setPower(0);
+            motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        }
+    }
+
+    public void autoSpin() {
+        motors.get(0).setTargetPosition(1000);
+        motors.get(0).setPower(.5);
+        spinning = true;
     }
 }
 
