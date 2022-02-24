@@ -39,6 +39,16 @@ public class DistanceSensor extends Mechanism{
         telemetry.addData("B", b);
         telemetry.addData("C", c);
     }
-
-    public double averageDistance;
+    public void getDistance(){
+        if (c != distanceI.getVoltage() * 1764.642713 - 1329.143288) {
+            a = b;
+            b = c;
+            c = distanceI.getVoltage() * 1764.642713 - 1329.143288;
+            average = ((a + b + c) / 3.0);
+        }
+    }
+    public double getAverage()
+    {
+        return average;
+    }
 }
