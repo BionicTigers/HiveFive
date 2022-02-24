@@ -59,16 +59,16 @@ public class Spinner extends Mechanism{
         if (spinning && motors.get(0).getCurrentPosition() >= 1115) {
             motors.get(0).setPower(1);
         }
-        if (motors.get(0).getCurrentPosition() >= 2200) {
+        if (motors.get(0).getCurrentPosition() >= 2100) {
             motors.get(0).setPower(0);
             motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         }
     }
 
     public void autoSpin() {
-        motors.get(0).setTargetPosition(2200);
+        motors.get(0).setTargetPosition(2100);
         motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motors.get(0).setPower(0.7);
+        motors.get(0).setPower(0.32275);
         spinning = true;
     }
 }
