@@ -29,6 +29,10 @@ public class Drivetrain extends Mechanism {
     private double robotheading;
     private double magnitude;
 
+    private double DMPX = 0;
+    private double DMPZ = 0;
+    private double DMPROT = 0;
+
     /*
     Declares instances of Location to move the robot forward, backward, left, right, clockwise,
     counterclockwise, and to the center of the field
@@ -131,8 +135,6 @@ public class Drivetrain extends Mechanism {
 
     //Updates data for Telemetry, motor powers, and servo movements
     public void update (Gamepad gp1, Gamepad gp2) {
-        determineMotorPowers(gp1); //Updates values in motorPowers array
-
         if (gp1.b) {
             odoUp();
         } else if (gp1.back && gp1.start) {
@@ -142,25 +144,31 @@ public class Drivetrain extends Mechanism {
         }
 
         if(gp1.dpad_up){ //precision movement forward, very slow
-            determineMotorPowers(0,0.35,0);
+            DMPZ = DMPZ + 0.35;
         }
-
         if(gp1.dpad_down){ //precision movement backward, very slow
-            determineMotorPowers(0,-0.35,0);
+            DMPZ = DMPZ - 0.35;
         }
-
         if(gp1.dpad_left) {
-            determineMotorPowers(0,0,-0.3);
+            DMPROT = DMPROT - 0.3;
         }
-
         if(gp1.dpad_right) {
-            determineMotorPowers(0,0,0.3);
+            DMPROT = DMPROT + 0.3;
         }
         if(gp1.right_bumper){
-            determineMotorPowers(.55, 0,0);
+            DMPX= DMPX + 0.55;
         }
         if(gp1.left_bumper){
-            determineMotorPowers(-.55,0,0);
+            DMPX= DMPX - 0.55;
+        }
+
+        if (DMPX != 0 || DMPZ != 0 || DMPROT != 0) {
+            determineMotorPowers(DMPX,DMPZ,DMPROT);
+            DMPX = 0;
+            DMPZ = 0;
+            DMPROT = 0;
+        } else {
+            determineMotorPowers(gp1); //Updates values in motorPowers array
         }
     }
 
