@@ -68,7 +68,11 @@ public class TeleOpMain extends LinearOpMode{
         imu.initialize(parameters);
         frontDistance = new DistanceSensor(hardwareMap.get(AnalogInput.class, "frontDistance"), telemetry, "Front");
         leftDistance = new DistanceSensor(hardwareMap.get(AnalogInput.class, "leftDistance"), telemetry, "Left");
+        while(!isStarted() && !isStopRequested()){
 
+            telemetry.addData("IMU callibration status ", imu.isGyroCalibrated());
+            telemetry.update();
+        }
         //These lines set motors and servos to their default position once teleOp starts
         waitForStart();
         spinner.servos.get(0).setPosition(.5);
@@ -118,20 +122,6 @@ public class TeleOpMain extends LinearOpMode{
                     imu.getLinearAcceleration().yAccel,
                     imu.getLinearAcceleration().zAccel);
 
-//            while(timer.seconds()>=88 && timer.seconds()<=89){
-//                blinkinLedDriver.setPattern(pattern2);
-//                try {
-//                    timer.wait(250);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                blinkinLedDriver.setPattern(pattern);
-//                try {
-//                    timer.wait(250);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
 
         }
     }

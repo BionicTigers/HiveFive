@@ -21,12 +21,12 @@ public class DistanceSensor extends Mechanism{
 
     @Override
     public void update(Gamepad gp1, Gamepad gp2) {
-        c = distanceI.getVoltage() * 2249.172474 - 212.0578341;
-        if (c != distanceI.getVoltage() * 2249.172474 - 212.0578341) {
+
+        if (c != distanceI.getVoltage() * 1764.642713 - 1329.143288) {
             a = b;
             b = c;
-            c = distanceI.getVoltage() * 2249.172474 - 212.0578341;
-            average = (a + b + c) / 3.0;
+            c = distanceI.getVoltage() * 1764.642713 - 1329.143288;
+            average = ((a + b + c) / 3.0);
         }
     }
 
@@ -39,4 +39,6 @@ public class DistanceSensor extends Mechanism{
         telemetry.addData("B", b);
         telemetry.addData("C", c);
     }
+
+    public double averageDistance;
 }
