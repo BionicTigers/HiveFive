@@ -60,6 +60,8 @@ public class AutoWithGyro extends LinearOpMode {
 
     private final Location levelThreeDeposit = new Location(-302.02, 0, -428.28, 356.67);
 
+    private final Location exitScoring = new Location(500,0,850,270);
+
     public boolean hasFreight;
     public boolean inWarehouse;
 
@@ -155,7 +157,7 @@ public class AutoWithGyro extends LinearOpMode {
         sleep(1000);
         transfer.motors.get(0).setTargetPosition(600 * 223 / 312);
 
-        while (!stop.hasExpired()) {
+        while (!stop.hasExpired()&& opModeIsActive()) {
             drive.moveToPositionSlow(preTurn, 5, 5, 2, 500);
             drive.moveToPositionSlow(finalTurn, 5, 5, 2, 2000);
             hasFreight = false;
@@ -165,14 +167,14 @@ public class AutoWithGyro extends LinearOpMode {
 
             //enters warehouse
             while (imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle < initialX+0.2 &&
-                    !(imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle > 45)) {
+                    !(imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle > 45)&& opModeIsActive()) {
                 telemetry.addLine("In IMU loop");
                 telemetry.addData("x position: ", imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle);
                 telemetry.update();
-                drive.motors.get(0).setPower(0.9);
-                drive.motors.get(1).setPower(0.9);
-                drive.motors.get(2).setPower(0.9);
-                drive.motors.get(3).setPower(0.9);
+                drive.motors.get(0).setPower(1);
+                drive.motors.get(1).setPower(1);
+                drive.motors.get(2).setPower(1);
+                drive.motors.get(3).setPower(1);
                 inWarehouse = true;
             }
             sleep(400);
@@ -183,7 +185,7 @@ public class AutoWithGyro extends LinearOpMode {
             drive.odoDown();
             robot.odometry.reset();
             rightTurn.reset();
-            while (!hasFreight) {
+            while (!hasFreight&& opModeIsActive()) {
 
 
                 //sets warehouse flag to true, runs intake while swerving back and forth and constantly checking for freight
@@ -192,7 +194,7 @@ public class AutoWithGyro extends LinearOpMode {
                 intake.motors.get(0).setPower(1);
                 transfer.motors.get(0).setTargetPosition(0);
                 sleep(200);
-                while (!rightTurn.hasExpired() && !hasFreight && !stop.hasExpired()) {
+                while (!rightTurn.hasExpired() && !hasFreight && !stop.hasExpired()&& opModeIsActive()) {
                     drive.motors.get(0).setPower(0.4);
                     drive.motors.get(2).setPower(0);
                     drive.motors.get(1).setPower(0);
@@ -200,6 +202,9 @@ public class AutoWithGyro extends LinearOpMode {
                     if (color.green() / 55.0 > 38) {
                         hasFreight = true;
                     }
+                    robot.odometry.updatePosition();
+                    drive.telemetry.addData("Odometry x:", robot.odometry.getPosition().getLocation(0) + " \n z: " + robot.odometry.getPosition().getLocation(2) + "\n rot:" + robot.odometry.getPosition().getLocation(3));
+                    drive.telemetry.update();
                 }
 
 //                leftTurn.reset();
@@ -231,30 +236,37 @@ public class AutoWithGyro extends LinearOpMode {
             drive.moveToPositionSlow(origin, 5, 5, 2, 2000);
             transfer.motors.get(0).setTargetPosition(600*223/312);
             drive.odoUp();
+            initialX =  imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle;
             // leave warehouse
-            while (imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle < initialX+0.2) {
-                telemetry.addLine("Second IMU loop");
-                telemetry.addData("x position: ", imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle);
-                telemetry.update();
-                drive.motors.get(0).setPower(-0.9);
-                drive.motors.get(1).setPower(-0.9);
-                drive.motors.get(2).setPower(-0.9);
-                drive.motors.get(3).setPower(-0.9);
+            while (imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle < initialX+0.2 && opModeIsActive()) {
+                drive.dashboardtelemetry.addLine("Second IMU loop");
+                drive.dashboardtelemetry.addData("x position: ", imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle);
+                drive.dashboardtelemetry.update();
+                drive.motors.get(0).setPower(-1);
+                drive.motors.get(1).setPower(-1);
+                drive.motors.get(2).setPower(-1);
+                drive.motors.get(3).setPower(-1);
             }
-            sleep(400);
+            sleep(500);
             drive.motors.get(0).setPower(0);
             drive.motors.get(2).setPower(0);
             drive.motors.get(1).setPower(0);
             drive.motors.get(3).setPower(0);
+
+             inWarehouse = false;
+           for( int i =0; i < 3; i++ ){
+                frontDistance.getDistance();
+                leftDistance.getDistance();
+                sleep(100);
+            }
+           telemetry.addData("I reset x with", frontDistance.getAverage());
+           telemetry.addData("I reset z with", leftDistance.getAverage());
+           telemetry.addData("I reset rot with", Math.abs(imu.getAngularOrientation(AxesReference.EXTRINSIC,AxesOrder.XYZ,AngleUnit.DEGREES).secondAngle));
+//            outOfWarehouseReset = new Location(frontDistance.getAverage(), 0, leftDistance.getAverage(), Math.abs(imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).secondAngle));
+//            robot.odometry.reset(outOfWarehouseReset);
+//            drive.moveToPositionSlow(exitScoring,5,5,2,2000);
+            sleep(20000);
             break;
-//            inWarehouse = false;
-//            for( int i =0; i < 3; i++ ){
-//                frontDistance.getDistance();
-//                leftDistance.getDistance();
-//                sleep(100);
-//            }
-//            outOfWarehouseReset = new Location(frontDistance.getAverage(), 0, leftDistance.getAverage(), imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).secondAngle);
-//            robot.odometry.reset();
         }
 
     }
