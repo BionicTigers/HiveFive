@@ -20,6 +20,7 @@ public class Spinner extends Mechanism{
         motors.add(spinner);
         motors.get(0).setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         servos.add(carouselB);
+        motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     //Carousel arm methods
@@ -56,19 +57,19 @@ public class Spinner extends Mechanism{
         } else {
             servos.get(0).setPosition(0.48);
         }
-        if (spinning && motors.get(0).getCurrentPosition() >= 1115) {
+        if (spinning && motors.get(0).getCurrentPosition() >= 800) {
             motors.get(0).setPower(1);
         }
-        if (motors.get(0).getCurrentPosition() >= 2100) {
+        if (motors.get(0).getCurrentPosition() >= 1700) {
             motors.get(0).setPower(0);
             motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         }
     }
 
     public void autoSpin() {
-        motors.get(0).setTargetPosition(2100);
+        motors.get(0).setTargetPosition(1700);
         motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motors.get(0).setPower(0.32275);
+        motors.get(0).setPower(0.6);
         spinning = true;
     }
 }
