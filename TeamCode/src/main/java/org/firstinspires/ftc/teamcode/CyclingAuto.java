@@ -18,7 +18,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.concurrent.TimeUnit;
 
-@Autonomous(name = "CycleAuto", group = "Autonomous")
+@Autonomous(name = "Cycle Auto", group = "Autonomous")
 public class CyclingAuto extends LinearOpMode{
     private Robot robot;
     private Intake intake;
@@ -126,6 +126,7 @@ public class CyclingAuto extends LinearOpMode{
                 }
                 intake.motors.get(0).setPower(-1);
                 sleep(500);
+                drive.moveToPositionSlow(inWarehouse, 5, 5, 2, 100);
                 intake.motors.get(0).setPower(0);
                 drive.moveToPositionSlow(finalTurn, 5, 5, 2, 750);
                 drive.moveToPositionSlow(levelThreeDeposit, 5, 5, 2, 1000);
