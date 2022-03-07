@@ -10,9 +10,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
 import org.openftc.easyopencv.OpenCvCamera;
@@ -21,8 +18,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.concurrent.TimeUnit;
 
-@Autonomous(name = "Duck Auto", group = "Autonomous")
-public class DuckAuto extends LinearOpMode{
+@Autonomous(name = "Blue Cycle Auto", group = "Autonomous")
+public class BlueCycling extends LinearOpMode{
     private Robot robot;
     private Intake intake;
     private PositionalTransfer transfer;
@@ -37,20 +34,14 @@ public class DuckAuto extends LinearOpMode{
 
     private int[] wheels = {0, 1, 2, 3};
     private int mode;
+    public boolean hasFreight;
 
-    private final Location postDropMove = new Location(-260,0,-350,0);
-    private final Location preCarousel = new Location(-1057.30,0,-188.99,38.03);
-    private final Location carousel = new Location(-1425.81,0,-200.70,39);
-    private final Location preDuck = new Location(-1534.05,0,-612,93);
-    private final Location duck = new Location(-885.22,0,-622,93);
-    private final Location preHubDuck = new Location(-800,0,-400,360);
-    private final Location storageUnit = new Location(0, 0, 0, 0); //get position
-
-    private final Location levelOneDeposit = new Location (-259.58,0,-531.44,0);
-
-    private final Location levelTwoDeposit = new Location (-308.83, 0,-530,356.14);
-
-    private final Location levelThreeDeposit = new Location (-302.02, 0, -428.28, 356.67);
+    private final Location preTurn = new Location(-302.02, 0, -328.28, 356.67); //For this and next, change names if necessary
+    private final Location finalTurn = new Location(-302.02, 0, -328.28, 86.67); //Turned toward warehouse against wall
+    private final Location levelOneDeposit = new Location (-259.58,0,-531.44,0); //Change position
+    private final Location levelTwoDeposit = new Location (-308.83, 0,-530,356.14); //Change position
+    private final Location levelThreeDeposit = new Location (-302.02, 0, -428.28, 356.67); //Change position
+    private final Location inWarehouse = new Location(0, 0, 0, 0); //Get position
 
     public void runOpMode(){
         robot = new Robot(this);
@@ -93,60 +84,60 @@ public class DuckAuto extends LinearOpMode{
             cap.servos.get(0).setPosition(0.1);
             spinner.motors.get(0).setTargetPosition(0);
             spinner.motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        }
-        waitForStart();
-        robot.odometry.reset();
-        time.reset();
-        transfer.motors.get(0).setTargetPosition(0);
-        switch(mode) {
-            case 2:
-                drive.moveToPositionSlow(levelTwoDeposit, 5, 5, 2, 2000);
-                transfer.motors.get(0).setTargetPosition(1475* 223/312);
-                break;
-            case 3:
-                drive.moveToPositionSlow(levelThreeDeposit, 5, 5, 2, 2000);
+
+            waitForStart();
+            robot.odometry.reset();
+            time.reset();
+            transfer.motors.get(0).setTargetPosition(0);
+            switch(mode) {
+                case 2:
+                    drive.moveToPositionSlow(levelTwoDeposit, 5, 5, 2, 2000);
+                    transfer.motors.get(0).setTargetPosition(1475* 223/312);
+                    break;
+                case 3:
+                    drive.moveToPositionSlow(levelThreeDeposit, 5, 5, 2, 2000);
+                    transfer.motors.get(0).setTargetPosition(2460 * 223/312);
+                    break;
+                default:
+                    drive.moveToPositionSlow(levelOneDeposit, 5, 5, 2, 2000);
+                    transfer.motors.get(0).setTargetPosition(1200 * 223/312);
+                    break;
+            }
+            transfer.motors.get(0).setPower(80);
+            sleep(1000);
+            output.servos.get(0).setPosition(1);
+            sleep(500);
+            output.servos.get(0).setPosition(0.7);
+            transfer.motors.get(0).setTargetPosition(0);
+            transfer.motors.get(0).setPower(80);
+            //Freight has been dropped
+            while(!stop.hasExpired() && opModeIsActive()) {
+                drive.moveToPositionSlow(inWarehouse, 5, 5, 2, 500);
+                intake.motors.get(0).setPower(1);
+                while (!rightTurn.hasExpired() && !hasFreight && opModeIsActive()) {
+                    drive.motors.get(0).setPower(0.4);
+                    drive.motors.get(2).setPower(0.2);
+                    drive.motors.get(1).setPower(0.2);
+                    drive.motors.get(3).setPower(0.4);
+                    if (color.red() / 55.0 > 21.0) {
+                        hasFreight = true;
+                    }
+                    rightTurn.reset();
+                }
+                intake.motors.get(0).setPower(-1);
+                sleep(500);
+                drive.moveToPositionSlow(inWarehouse, 5, 5, 2, 100);
+                intake.motors.get(0).setPower(0);
+                drive.moveToPositionSlow(finalTurn, 5, 5, 2, 750);
+                drive.moveToPositionSlow(levelThreeDeposit, 5, 5, 2, 1000);
                 transfer.motors.get(0).setTargetPosition(2460 * 223/312);
-                break;
-            default:
-                drive.moveToPositionSlow(levelOneDeposit, 5, 5, 2, 2000);
-                transfer.motors.get(0).setTargetPosition(1200 * 223/312);
-                break;
-        }
-        transfer.motors.get(0).setPower(80);
-        sleep(1000);
-        output.servos.get(0).setPosition(1);
-        sleep(500);
-        //Freight has been dropped
-        drive.moveToPosition(postDropMove, 5,5,2,500);
-        output.servos.get(0).setPosition(0.7);
-        transfer.motors.get(0).setTargetPosition(0);
-        transfer.motors.get(0).setPower(80);
-        drive.moveToPosition(preCarousel,5,5,2,1000);
-        drive.moveToPosition(carousel,5,5,2,2500);
-        spinner.servos.get(0).setPosition(0.2);
-        spinner.motors.get(0).setTargetPosition(1700);
-        spinner.motors.get(0).setPower(0.32);
-        sleep(1900);
-        spinner.motors.get(0).setPower(0);
-        spinner.servos.get(0).setPosition(0.46);
-        drive.moveToPositionSlow(preDuck, 5, 5, 2, 2500);
-        intake.motors.get(0).setPower(1);
-        drive.moveToPositionSuperSlow(duck, 5, 5, 2, 2750);
-        transfer.motors.get(0).setTargetPosition(600 * 223/312);
-        transfer.motors.get(0).setPower(80);
-        sleep(500);
-        intake.motors.get(0).setPower(0);
-        drive.moveToPosition(preHubDuck,5,5,2,500);
-        drive.moveToPositionSlow(levelThreeDeposit,5,5,2,1500);
-        transfer.motors.get(0).setTargetPosition(2460 * 223/312);
-        transfer.motors.get(0).setPower(80);
-        sleep(1000);
-        output.servos.get(0).setPosition(1);
-        sleep(500);
-        output.servos.get(0).setPosition(0.7);
-        sleep(1000);
-        transfer.motors.get(0).setTargetPosition(600 * 223/312);
-        sleep(1000);
-        drive.moveToPositionSlow(storageUnit, 5, 5, 2, 2000);
+                sleep(750);
+                output.servos.get(0).setPosition(1);
+                sleep(500);
+                output.servos.get(0).setPosition(0.7);
+                transfer.motors.get(0).setTargetPosition(0);
+            }
+            drive.moveToPositionSlow(finalTurn, 5, 5, 2, 750);
+            drive.moveToPositionSlow(inWarehouse, 5, 5, 2, 750);
     }
-}
+}}

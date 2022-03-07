@@ -10,9 +10,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
 import org.openftc.easyopencv.OpenCvCamera;
@@ -21,8 +18,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.concurrent.TimeUnit;
 
-@Autonomous(name = "Full Auto", group = "Autonomous")
-public class EverythingAuto extends LinearOpMode {
+@Autonomous(name = "Blue Full Auto", group = "Autonomous")
+public class BlueEverything extends LinearOpMode {
     private Robot robot;
     private Intake intake;
     private PositionalTransfer transfer;
