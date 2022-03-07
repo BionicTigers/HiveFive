@@ -52,7 +52,7 @@ public class PositionalTransfer extends Mechanism{
             position = "Up";
         } else if(gp2.left_trigger >= 0.3){
             position = "Mid";
-        } else if((gp1.right_trigger >= .2  && position != "Up" )){
+        } else if((gp1.right_trigger >= .3  && position != "Up" )){
             position = "Down";
         }
 
@@ -77,17 +77,17 @@ public class PositionalTransfer extends Mechanism{
     }
 
     public void write(){
-        if(motors.get(0).getCurrent(CurrentUnit.AMPS) >= 5 && position.equals("Up") && motors.get(0).getCurrentPosition() > 2000 * 223/312){
-            trim = 2465* 223/312 - motors.get(0).getCurrentPosition();
+        if(motors.get(0).getCurrent(CurrentUnit.AMPS) >= 5.5 && position.equals("Up") && motors.get(0).getCurrentPosition() > 2000 * 223/312){
+            trim = 1650 - motors.get(0).getCurrentPosition();
         }
         if(position == "Up"){
             motors.get(0).setPower(100);
-            motors.get(0).setTargetPosition(2460* 223/312 - trim);
+            motors.get(0).setTargetPosition(1650 - trim);
         }
         else if(position == "Down" && sensors.get(0).getState()) {
             motors.get(0).setPower(60);
             motors.get(0).setTargetPosition(-trim2);
-            if(reset) {
+            if(reset || trim2 < 50) {
                 trim2 = trim2 + 10;
             }
         }
@@ -97,7 +97,7 @@ public class PositionalTransfer extends Mechanism{
         }
         else if (position == "intake")
         {
-            motors.get(0).setTargetPosition(400* 223/312);
+            motors.get(0).setTargetPosition(250 * 223/312);
         }
         if (position == "Down")
         {

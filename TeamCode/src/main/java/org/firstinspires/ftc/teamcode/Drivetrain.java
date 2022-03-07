@@ -144,23 +144,23 @@ public class Drivetrain extends Mechanism {
         }
 
         if(gp1.dpad_up){ //precision movement forward, very slow
-            DMPZ = DMPZ + 0.35;
+            DMPZ = DMPZ + 0.45;
         }
         if(gp1.dpad_down){ //precision movement backward, very slow
-            DMPZ = DMPZ - 0.35;
+            DMPZ = DMPZ - 0.45;
         }
         if(gp1.dpad_left) {
-            DMPROT = DMPROT - 0.3;
+            DMPROT = DMPROT - 0.4;
         }
         if(gp1.dpad_right) {
-            DMPROT = DMPROT + 0.3;
+            DMPROT = DMPROT + 0.4;
         }
-        if(gp1.right_bumper){
-            DMPX= DMPX + 0.55;
-        }
-        if(gp1.left_bumper){
-            DMPX= DMPX - 0.55;
-        }
+//        if(gp1.right_bumper){
+//            DMPX= DMPX + 0.55;
+//        }
+//        if(gp1.left_bumper){
+//            DMPX= DMPX - 0.55;
+//        }
 
         if (DMPX != 0 || DMPZ != 0 || DMPROT != 0) {
             determineMotorPowers(DMPX,DMPZ,DMPROT);
@@ -368,8 +368,8 @@ public class Drivetrain extends Mechanism {
         if(Math.abs(Variables.krP*error.getLocation(3) + Variables.krI*integralValues[3] + Variables.krD * (error.getLocation(3) - lastRotationError))<1)
             integralValues[3]= integralValues[3]+error.getLocation(3);
 
-        double forwardPow = 0.15*((Variables.kfP*forwardError+ Variables.kfI*integralValues[0] + Variables.kfD * (forwardError - lastForwardError)));
-        double sidePow = 0.15*((Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError)));
+        double forwardPow = 0.2*((Variables.kfP*forwardError+ Variables.kfI*integralValues[0] + Variables.kfD * (forwardError - lastForwardError)));
+        double sidePow = 0.2*((Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError)));
         double rotPow = ((Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - lastRotationError)));
 
         lastForwardError = forwardPow;
@@ -443,9 +443,9 @@ public class Drivetrain extends Mechanism {
     }
 
     public void odoDown () {
-        servos.get(0).setPosition(0.46);
-        servos.get(1).setPosition(0.55);
-        servos.get(2).setPosition(0.31);
+        servos.get(0).setPosition(0.46);//L
+        servos.get(1).setPosition(0.55);//M
+        servos.get(2).setPosition(0.30);//R
     }
 
     /*

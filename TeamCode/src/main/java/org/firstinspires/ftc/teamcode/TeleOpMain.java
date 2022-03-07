@@ -14,6 +14,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.internal.system.Deadline;
+
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 /*
 This class calls the different mechanisms on the robot so that they can all be used based on the
@@ -38,13 +42,17 @@ public class TeleOpMain extends LinearOpMode{
     public int currentPattern = 1;
     public DistanceSensor frontDistance;
     public DistanceSensor leftDistance;
+    private RevBlinkinLedDriver.BlinkinPattern endgamePattern;
 
     public int[] motorNumbers = {0, 1, 2, 3}; //creates motor numbers array
+    private Deadline endgameFlashies = new Deadline(85, TimeUnit.SECONDS);
+    private Deadline endgameFlashiesOver = new Deadline(90,TimeUnit.SECONDS);
+
 
 
     public void runOpMode() {
         robot = new Robot(this);
-        drivetrain = new Drivetrain(robot, motorNumbers, telemetry, hardwareMap.get(Servo.class, "SDrive1"), hardwareMap.get(Servo.class, "SDrive2"), hardwareMap.get(Servo.class, "SDrive3"));
+        drivetrain = new Drivetrain(robot, motorNumbers, telemetry, hardwareMap.get(Servo.class, "SDriveL"), hardwareMap.get(Servo.class, "SDriveM"), hardwareMap.get(Servo.class, "SDriveR"));
         intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"));
         transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry, hardwareMap.get(DigitalChannel.class, "channel"));
         output = new Output(hardwareMap.get(Servo.class, "output"));
@@ -55,8 +63,12 @@ public class TeleOpMain extends LinearOpMode{
         blinkinLedDriver = hardwareMap.get(RevBlinkinLedDriver.class, "blinkin");
         pattern = RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_LAVA_PALETTE;
         pattern2 = RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_FOREST_PALETTE;
+        endgamePattern = RevBlinkinLedDriver.BlinkinPattern.BEATS_PER_MINUTE_PARTY_PALETTE;
         blinkinLedDriver.setPattern(pattern);
+
         timer = new ElapsedTime();
+        Deadline endgameFlashiesOver = new Deadline(90,TimeUnit.SECONDS);
+        Deadline endgameFlashies = new Deadline(80,TimeUnit.SECONDS);
         BNO055IMU imu;
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
@@ -70,20 +82,22 @@ public class TeleOpMain extends LinearOpMode{
         leftDistance = new DistanceSensor(hardwareMap.get(AnalogInput.class, "leftDistance"), telemetry, "Left");
         while(!isStarted() && !isStopRequested()){
 
-            telemetry.addData("IMU callibration status ", imu.isGyroCalibrated());
+            telemetry.addData("IMU calibration status ", imu.isGyroCalibrated());
             telemetry.update();
         }
         //These lines set motors and servos to their default position once teleOp starts
         waitForStart();
-        spinner.servos.get(0).setPosition(.5);
+        spinner.servos.get(0).setPosition(.46);
         output.servos.get(0).setPosition(.7);
         drivetrain.odoUp();
         cap.moveToStoringHeight();
         Mechanism[] mechanisms = {intake, transfer, output, spinner, drivetrain, cap, robot.odometry, frontDistance, leftDistance};
 
+
+        endgameFlashies.reset();
+        endgameFlashiesOver.reset();
         //what runs constantly once play button is pressed
         while(opModeIsActive()) {
-            timer.reset();
             drivetrain.dashboardtelemetry.addData("red", color.red()/55.0);
             drivetrain.dashboardtelemetry.addData("green", color.green()/55.0);
             drivetrain.dashboardtelemetry.addData("blue", color.blue()/55.0);
@@ -91,16 +105,23 @@ public class TeleOpMain extends LinearOpMode{
             drivetrain.dashboardtelemetry.addData("Spinner Speed", spinner.motors.get(0).getPower());
             drivetrain.dashboardtelemetry.addData("Spinning?", spinner.spinning);
             drivetrain.dashboardtelemetry.addData("deployed?", spinner.deployed);
-            if(color.green()/55.0 > 37.0 && currentPattern == 1)        //green when nothing = 8.4
+            drivetrain.dashboardtelemetry.addData("endgameFlashies", endgameFlashies.hasExpired());
+            drivetrain.dashboardtelemetry.addData("endgameFlashiesOver? :(", endgameFlashiesOver.hasExpired());
+            if(endgameFlashies.hasExpired() && !endgameFlashiesOver.hasExpired() && currentPattern != 3){
+                currentPattern = 3;
+                blinkinLedDriver.setPattern(endgamePattern);
+            }
+            else if(color.red()/55.0 > 20.0 && currentPattern !=2 && (!endgameFlashies.hasExpired() || endgameFlashiesOver.hasExpired()))//green when nothing = 8.4
             {
                 blinkinLedDriver.setPattern(pattern2);
                 currentPattern = 2;
             }
-            else if(currentPattern == 2 && !(color.green()/55.0 > 37.0))
+            else if(currentPattern != 1 && !(color.red()/55.0 > 20.0) && (!endgameFlashies.hasExpired() || endgameFlashiesOver.hasExpired()))
             {
                 blinkinLedDriver.setPattern(pattern);
                 currentPattern = 1;
             }
+
 
             for (Mechanism mech : mechanisms) { //For each mechanism in the mechanism array
                 mech.update(gamepad1, gamepad2); //Run their respective update methods
@@ -109,6 +130,7 @@ public class TeleOpMain extends LinearOpMode{
             for (Mechanism mech : mechanisms) { //For each mechanism in the mechanism array
                 mech.write(); //Run their respective write methods
             }
+
             drivetrain.dashboardtelemetry.addData("orientation:", "Angle:x=%6.1f,y=%6.1f,z=%6.1f",
                     imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle,
                     imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).secondAngle,
