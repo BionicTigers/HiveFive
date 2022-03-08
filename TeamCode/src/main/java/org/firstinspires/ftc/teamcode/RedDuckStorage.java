@@ -18,6 +18,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.concurrent.TimeUnit;
 
+//Spins carousel duck, scores barcode duck, and parks in storage unit for red side
 @Autonomous(name = "Red Duck Storage")
 public class RedDuckStorage extends LinearOpMode{
     private Robot robot;

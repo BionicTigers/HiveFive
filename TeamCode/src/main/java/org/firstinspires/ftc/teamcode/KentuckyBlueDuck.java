@@ -18,6 +18,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.concurrent.TimeUnit;
 
+//OG auto
 @Autonomous(name="Blue Duck")
 public class KentuckyBlueDuck extends LinearOpMode{
     private Robot robot;

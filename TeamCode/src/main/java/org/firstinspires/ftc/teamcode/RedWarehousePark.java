@@ -18,6 +18,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.concurrent.TimeUnit;
 
+//Just parks in red warehouse
 @Autonomous(name = "Red Warehouse Park")
 public class RedWarehousePark extends LinearOpMode{
     private Robot robot;

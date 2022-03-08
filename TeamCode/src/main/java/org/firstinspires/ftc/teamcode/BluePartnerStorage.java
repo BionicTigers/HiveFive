@@ -18,6 +18,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.concurrent.TimeUnit;
 
+//OG auto, but scores partner's preload and also has EvilVision and parks in storage unit
 @Autonomous(name = "Blue Partner Storage", group = "Autonomous")
 public class BluePartnerStorage extends LinearOpMode{
     private Robot robot;

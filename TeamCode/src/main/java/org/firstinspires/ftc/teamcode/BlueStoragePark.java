@@ -18,6 +18,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.concurrent.TimeUnit;
 
+//Just parks in blue storage unit
 @Autonomous(name = "Blue Storage Park")
 public class BlueStoragePark extends LinearOpMode{
     private Robot robot;

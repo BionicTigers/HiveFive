@@ -23,6 +23,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.concurrent.TimeUnit;
 
+//OG auto but with EvilVision
 @Autonomous(name="Autonomous State")
 public class KentuckyRedDuck extends LinearOpMode{
     private Robot robot;
