@@ -80,6 +80,7 @@ public class TeleOpMain extends LinearOpMode{
         imu.initialize(parameters);
         frontDistance = new DistanceSensor(hardwareMap.get(AnalogInput.class, "frontDistance"), telemetry, "Front");
         leftDistance = new DistanceSensor(hardwareMap.get(AnalogInput.class, "leftDistance"), telemetry, "Left");
+        final Location sharedHub = new Location (-259.58,0,-531.44,0);
         while(!isStarted() && !isStopRequested()){
 
             telemetry.addData("IMU calibration status ", imu.isGyroCalibrated());
@@ -120,6 +121,9 @@ public class TeleOpMain extends LinearOpMode{
             {
                 blinkinLedDriver.setPattern(pattern);
                 currentPattern = 1;
+            }
+            if(gamepad2.dpad_down){
+                drivetrain.moveToPositionSlow(sharedHub, 5, 5, 2, 2000);
             }
 
 
