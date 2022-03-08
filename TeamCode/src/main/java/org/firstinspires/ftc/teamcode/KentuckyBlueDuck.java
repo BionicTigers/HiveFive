@@ -1,9 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -12,9 +10,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
 import org.openftc.easyopencv.OpenCvCamera;
@@ -37,7 +32,6 @@ public class KentuckyBlueDuck extends LinearOpMode{
     private ElapsedTime time;
     public ColorSensor color;
 
-    private double initialX;
     private Location position = new Location();
     private int[] wheels = {0, 1, 2, 3};
     private int mode;
@@ -60,15 +54,6 @@ public class KentuckyBlueDuck extends LinearOpMode{
     private final Location levelThreeDeposit = new Location (-302.02, 0, -428.28, 356.67);
     @Override
     public void runOpMode() throws InterruptedException {
-        BNO055IMU imu;
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
-        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.calibrationDataFile = "BNO055IMUCalibration.json";
-        parameters.loggingEnabled = true;
-        parameters.loggingTag = "IMU";
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
-        imu.initialize(parameters);
 
         robot = new Robot(this);
         drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDriveL"), hardwareMap.get(Servo.class, "SDriveM"), hardwareMap.get(Servo.class, "SDriveR"));
@@ -110,7 +95,6 @@ public class KentuckyBlueDuck extends LinearOpMode{
             cap.servos.get(0).setPosition(0.1);
             spinner.motors.get(0).setTargetPosition(0);
             spinner.motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            initialX = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle;
         }
         waitForStart();
         robot.odometry.reset();

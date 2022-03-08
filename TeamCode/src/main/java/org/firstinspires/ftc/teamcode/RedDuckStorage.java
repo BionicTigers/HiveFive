@@ -18,8 +18,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.concurrent.TimeUnit;
 
-@Autonomous(name = "Red Partner Preload", group = "Autonomous")
-public class RedPartnerScore extends LinearOpMode {
+@Autonomous(name = "Red Duck Storage")
+public class RedDuckStorage extends LinearOpMode{
     private Robot robot;
     private Intake intake;
     private PositionalTransfer transfer;
@@ -42,19 +42,17 @@ public class RedPartnerScore extends LinearOpMode {
     private final Location carousel = new Location(-1425.81,0,-200.70,39);
     private final Location preDuck = new Location(-1534.05,0,-612,93);
     private final Location duck = new Location(-885.22,0,-622,93);
-    private final Location preTurn = new Location(-302.02,0,-328.28,356.67);
-    private final Location finalTurn = new Location(-302.02,0,-328.28,86.67);
-    private final Location origin = new Location(0,0,125,0);
+    private final Location storageUnit = new Location(0,0,0,0); //get position
     private final Location preHubDuck = new Location(-800,0,-400,360);
-    private final Location partnerPreload = new Location(0,0,0,0); //get position
 
     private final Location levelOneDeposit = new Location (-259.58,0,-531.44,0);
 
-    private final Location levelTwoDeposit = new Location (-308.83,0,-530,356.14);
+    private final Location levelTwoDeposit = new Location (-308.83, 0,-530,356.14);
 
-    private final Location levelThreeDeposit = new Location (-302.02,0,-428.28,356.67);
+    private final Location levelThreeDeposit = new Location (-302.02, 0, -428.28, 356.67);
     @Override
     public void runOpMode() throws InterruptedException {
+
         robot = new Robot(this);
         drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDriveL"), hardwareMap.get(Servo.class, "SDriveM"), hardwareMap.get(Servo.class, "SDriveR"));
         spinner = new Spinner(hardwareMap.get(DcMotorEx.class,"spinner"), hardwareMap.get(Servo.class, "carouselB"));
@@ -123,21 +121,6 @@ public class RedPartnerScore extends LinearOpMode {
         output.servos.get(0).setPosition(0.7);
         transfer.motors.get(0).setTargetPosition(0);
         transfer.motors.get(0).setPower(80);
-        drive.moveToPositionSlow(partnerPreload, 5,5,2,1500);
-        while(color.red()/55.0 > 21.0){
-            intake.motors.get(0).setPower(1);
-        }
-        intake.motors.get(0).setPower(0);
-        drive.moveToPositionSlow(levelThreeDeposit,5,5,2,2000);
-        transfer.motors.get(0).setTargetPosition(2460 * 223/312);
-        transfer.motors.get(0).setPower(80);
-        sleep(1000);
-        output.servos.get(0).setPosition(1);
-        sleep(500);
-        drive.moveToPositionSlow(postDropMove,5,5,2,500);
-        output.servos.get(0).setPosition(0.7);
-        transfer.motors.get(0).setTargetPosition(0);
-        transfer.motors.get(0).setPower(80);
         drive.moveToPosition(preCarousel,5,5,2,1000);
         drive.moveToPosition(carousel,5,5,2,2500);
         spinner.servos.get(0).setPosition(0.2);
@@ -164,43 +147,6 @@ public class RedPartnerScore extends LinearOpMode {
         output.servos.get(0).setPosition(0.7);
         sleep(1000);
         transfer.motors.get(0).setTargetPosition(600 * 223/312);
-        drive.moveToPositionSlow(preTurn, 5, 5, 2, 500);
-        drive.moveToPositionSlow(finalTurn, 5, 5, 2, 1000);
-        drive.odoUp();
-        drive.motors.get(0).setPower(1);
-        drive.motors.get(1).setPower(1);
-        drive.motors.get(2).setPower(1);
-        drive.motors.get(3).setPower(1);
-        sleep(1200);
-        drive.motors.get(0).setPower(-0.35);
-        drive.motors.get(1).setPower(-0.35);
-        drive.motors.get(2).setPower(-0.35);
-        drive.motors.get(3).setPower(-0.35);
-        sleep(900);
-        drive.motors.get(0).setPower(0);
-        drive.motors.get(1).setPower(0);
-        drive.motors.get(2).setPower(0);
-        drive.motors.get(3).setPower(0);
-        transfer.motors.get(0).setTargetPosition(0);
-        drive.odoDown();
-        robot.odometry.reset();
-        rightTurn.reset();
-        intake.motors.get(0).setPower(1);
-        while (!rightTurn.hasExpired() && !hasFreight && opModeIsActive()) {
-            drive.motors.get(0).setPower(0.4);
-            drive.motors.get(2).setPower(0.2);
-            drive.motors.get(1).setPower(0.2);
-            drive.motors.get(3).setPower(0.4);
-            if (color.red() / 55.0 > 21.0) {
-                hasFreight = true;
-            }
-            rightTurn.reset();
-            robot.odometry.updatePosition();
-        }
-        sleep(250);
-        intake.motors.get(0).setPower(-1);
-        drive.moveToPositionSlow(origin, 5, 5, 2, 2000);
-        transfer.motors.get(0).setTargetPosition(600*223/312);
-        drive.odoUp();
+        drive.moveToPositionSlow(storageUnit,5,5,2,2000);
     }
 }

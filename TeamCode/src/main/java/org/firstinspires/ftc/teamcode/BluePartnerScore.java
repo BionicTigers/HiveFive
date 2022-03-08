@@ -46,7 +46,7 @@ public class BluePartnerScore extends LinearOpMode {
     private final Location finalTurn = new Location(-302.02,0,-328.28,86.67);
     private final Location origin = new Location(0,0,125,0);
     private final Location preHubDuck = new Location(-800,0,-400,360);
-    private final Location partnerPreload = new Location(0,0,0,0);
+    private final Location partnerPreload = new Location(0,0,0,0); //get position
 
     private final Location levelOneDeposit = new Location (-259.58,0,-531.44,0);
 
