@@ -438,7 +438,7 @@ public class Drivetrain extends Mechanism {
 
     public void odoUp () {
         servos.get(0).setPosition(0.27);
-        servos.get(1).setPosition(0.27);
+        servos.get(1).setPosition(0.3);
         servos.get(2).setPosition(0.57);
     }
 

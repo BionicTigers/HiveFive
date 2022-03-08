@@ -70,9 +70,6 @@ public class PositionalTransfer extends Mechanism{
         telemetry.addData("Amps", motors.get(0).getCurrent(CurrentUnit.AMPS));
         telemetry.addData("Is pressed? ", sensors.get(0).getState());
         reset = gp1.right_stick_button || gp2.left_bumper;
-        if(gp2.dpad_down){
-            position = "intake";
-        }
 //        telemetry.update();
     }
 

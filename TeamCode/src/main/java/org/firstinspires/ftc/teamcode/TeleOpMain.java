@@ -80,7 +80,6 @@ public class TeleOpMain extends LinearOpMode{
         imu.initialize(parameters);
         frontDistance = new DistanceSensor(hardwareMap.get(AnalogInput.class, "frontDistance"), telemetry, "Front");
         leftDistance = new DistanceSensor(hardwareMap.get(AnalogInput.class, "leftDistance"), telemetry, "Left");
-        final Location sharedHub = new Location (-259.58,0,-531.44,0);
         while(!isStarted() && !isStopRequested()){
 
             telemetry.addData("IMU calibration status ", imu.isGyroCalibrated());
@@ -88,7 +87,7 @@ public class TeleOpMain extends LinearOpMode{
         }
         //These lines set motors and servos to their default position once teleOp starts
         waitForStart();
-        spinner.servos.get(0).setPosition(.46);
+        spinner.servos.get(0).setPosition(0.1);
         output.servos.get(0).setPosition(.7);
         drivetrain.odoUp();
         cap.moveToStoringHeight();
@@ -122,10 +121,6 @@ public class TeleOpMain extends LinearOpMode{
                 blinkinLedDriver.setPattern(pattern);
                 currentPattern = 1;
             }
-            if(gamepad2.dpad_down){
-                drivetrain.moveToPositionSlow(sharedHub, 5, 5, 2, 2000);
-            }
-
 
             for (Mechanism mech : mechanisms) { //For each mechanism in the mechanism array
                 mech.update(gamepad1, gamepad2); //Run their respective update methods

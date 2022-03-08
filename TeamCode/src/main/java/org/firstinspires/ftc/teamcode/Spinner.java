@@ -62,9 +62,9 @@ public class Spinner extends Mechanism {
 
     public void write() {
         if (deployed) {
-            servos.get(0).setPosition(0.2);
+            servos.get(0).setPosition(0);
         } else {
-            servos.get(0).setPosition(0.46);
+            servos.get(0).setPosition(0.5);
         }
         if (spinning && motors.get(0).getCurrentPosition() >= 1000) {
             motors.get(0).setPower(0.75);
