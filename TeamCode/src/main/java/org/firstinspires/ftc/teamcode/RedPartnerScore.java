@@ -18,6 +18,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.concurrent.TimeUnit;
 
+//OG auto, but scores partner's preload and has EvilVision
 @Autonomous(name = "Red Partner Preload", group = "Autonomous")
 public class RedPartnerScore extends LinearOpMode {
     private Robot robot;

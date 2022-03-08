@@ -18,6 +18,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.concurrent.TimeUnit;
 
+//OG auto, but scores partner's preload
 @Autonomous(name="Blue Partner Preload")
 public class BluePartnerScore extends LinearOpMode {
     private Robot robot;
