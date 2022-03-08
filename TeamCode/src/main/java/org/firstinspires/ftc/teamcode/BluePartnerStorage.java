@@ -18,8 +18,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.concurrent.TimeUnit;
 
-@Autonomous(name = "Blue Duck Storage")
-public class BlueDuckStorage extends LinearOpMode{
+@Autonomous(name = "Blue Partner Storage", group = "Autonomous")
+public class BluePartnerStorage extends LinearOpMode{
     private Robot robot;
     private Intake intake;
     private PositionalTransfer transfer;
@@ -43,6 +43,7 @@ public class BlueDuckStorage extends LinearOpMode{
     private final Location preDuck = new Location(-1534.05,0,-612,93);
     private final Location duck = new Location(-885.22,0,-622,93);
     private final Location storageUnit = new Location(0,0,0,0); //get position
+    private final Location partnerPreload = new Location(0,0,0,0); //get position
     private final Location preHubDuck = new Location(-800,0,-400,360);
 
     private final Location levelOneDeposit = new Location (-259.58,0,-531.44,0);
@@ -50,9 +51,9 @@ public class BlueDuckStorage extends LinearOpMode{
     private final Location levelTwoDeposit = new Location (-308.83, 0,-530,356.14);
 
     private final Location levelThreeDeposit = new Location (-302.02, 0, -428.28, 356.67);
+
     @Override
     public void runOpMode() throws InterruptedException {
-
         robot = new Robot(this);
         drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDriveL"), hardwareMap.get(Servo.class, "SDriveM"), hardwareMap.get(Servo.class, "SDriveR"));
         spinner = new Spinner(hardwareMap.get(DcMotorEx.class,"spinner"), hardwareMap.get(Servo.class, "carouselB"));
@@ -121,6 +122,21 @@ public class BlueDuckStorage extends LinearOpMode{
         output.servos.get(0).setPosition(0.7);
         transfer.motors.get(0).setTargetPosition(0);
         transfer.motors.get(0).setPower(80);
+        drive.moveToPositionSlow(partnerPreload, 5,5,2,1500);
+        while(color.red()/55.0 > 21.0){
+            intake.motors.get(0).setPower(1);
+        }
+        intake.motors.get(0).setPower(0);
+        drive.moveToPositionSlow(levelThreeDeposit,5,5,2,2000);
+        transfer.motors.get(0).setTargetPosition(2460 * 223/312);
+        transfer.motors.get(0).setPower(80);
+        sleep(1000);
+        output.servos.get(0).setPosition(1);
+        sleep(500);
+        drive.moveToPositionSlow(postDropMove,5,5,2,500);
+        output.servos.get(0).setPosition(0.7);
+        transfer.motors.get(0).setTargetPosition(0);
+        transfer.motors.get(0).setPower(80);
         drive.moveToPosition(preCarousel,5,5,2,1000);
         drive.moveToPosition(carousel,5,5,2,2500);
         spinner.servos.get(0).setPosition(0.2);
@@ -138,6 +154,7 @@ public class BlueDuckStorage extends LinearOpMode{
         intake.motors.get(0).setPower(0);
         drive.moveToPosition(preHubDuck,5,5,2,500);
         drive.moveToPositionSlow(levelThreeDeposit,5,5,2,1500);
+        hasFreight = false;
         transfer.motors.get(0).setTargetPosition(2460 * 223/312);
         transfer.motors.get(0).setPower(80);
         sleep(1000);
@@ -146,5 +163,4 @@ public class BlueDuckStorage extends LinearOpMode{
         output.servos.get(0).setPosition(0.7);
         sleep(1000);
         drive.moveToPositionSlow(storageUnit,5,5,2,2000);
-    }
-}
+}}

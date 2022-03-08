@@ -138,7 +138,6 @@ public class RedDuckStorage extends LinearOpMode{
         intake.motors.get(0).setPower(0);
         drive.moveToPosition(preHubDuck,5,5,2,500);
         drive.moveToPositionSlow(levelThreeDeposit,5,5,2,1500);
-        hasFreight = false;
         transfer.motors.get(0).setTargetPosition(2460 * 223/312);
         transfer.motors.get(0).setPower(80);
         sleep(1000);
@@ -146,7 +145,6 @@ public class RedDuckStorage extends LinearOpMode{
         sleep(500);
         output.servos.get(0).setPosition(0.7);
         sleep(1000);
-        transfer.motors.get(0).setTargetPosition(600 * 223/312);
         drive.moveToPositionSlow(storageUnit,5,5,2,2000);
     }
 }
