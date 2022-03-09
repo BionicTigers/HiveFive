@@ -19,6 +19,8 @@ public class PositionalTransfer extends Mechanism{
     private DigitalChannel channel;
     private HardwareMap hardwareMap;
     private boolean reset = false;
+    private boolean liftOverride = false;
+    private boolean isPressed = false;
 
     public PositionalTransfer(DcMotorEx m, Telemetry T, DigitalChannel channel){
         super();
@@ -60,6 +62,15 @@ public class PositionalTransfer extends Mechanism{
             trim = trim + 1;
         }
 
+         if(gp2.start && gp2.back && !isPressed){
+             if(liftOverride) liftOverride = false;
+             else liftOverride = true;
+             isPressed = true;
+         }
+         else if(!gp2.start && !gp2.back && isPressed){
+             isPressed = false;
+         }
+
         if (gp2.right_stick_button) {
             trim = trim + 3;
         }
@@ -73,6 +84,7 @@ public class PositionalTransfer extends Mechanism{
         if(gp2.dpad_down){
             position = "intake";
         }
+        if(liftOverride) motors.get(0).setPower(0);
 //        telemetry.update();
     }
 

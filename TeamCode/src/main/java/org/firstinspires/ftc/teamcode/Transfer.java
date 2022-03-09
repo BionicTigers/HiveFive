@@ -26,6 +26,7 @@ public class Transfer extends Mechanism{
     }
 
     public void write() {
+        //Controls transfer
         if (up){
             motors.get(0).setPower(60);
         } else if(down){

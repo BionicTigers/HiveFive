@@ -44,6 +44,17 @@ public class Odometry extends Mechanism {
     private static final double ODO_DISTANCE_FROM_CENTER = 113.875;
 //795.3-->266.3
 
+    //Odo testing:
+    //Right side
+    //1.6577
+    //1665.8577
+    //1.9283
+
+    //Left side
+    //32.342
+    //
+    //
+
 //497.10236
 //503.48
 
