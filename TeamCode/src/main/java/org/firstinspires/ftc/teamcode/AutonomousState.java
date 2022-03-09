@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 //OG auto but with EvilVision
 @Autonomous(name="Autonomous State")
-public class KentuckyRedDuck extends LinearOpMode{
+public class AutonomousState extends LinearOpMode{
     private Robot robot;
     private Intake intake;
     private PositionalTransfer transfer;
@@ -144,12 +144,12 @@ public class KentuckyRedDuck extends LinearOpMode{
         drive.moveToPosition(carousel,5,5,2,2500);
         spinner.servos.get(0).setPosition(0.2);
         spinner.motors.get(0).setTargetPosition(1700);
-        spinner.motors.get(0).setPower(0.32);
+        spinner.motors.get(0).setPower(0.32*4/3);
         sleep(1900);
         spinner.motors.get(0).setPower(0);
         spinner.servos.get(0).setPosition(0.46);
         drive.moveToPositionSlow(preDuck, 5, 5, 2, 2500);
-        intake.motors.get(0).setPower(1);
+        intake.motors.get(0).setPower(-1);
         drive.moveToPositionSuperSlow(duck, 5, 5, 2, 2750);
         transfer.motors.get(0).setTargetPosition(600 * 223/312);
         transfer.motors.get(0).setPower(80);
@@ -187,7 +187,7 @@ public class KentuckyRedDuck extends LinearOpMode{
         drive.odoDown();
         robot.odometry.reset();
         rightTurn.reset();
-        intake.motors.get(0).setPower(1);
+        intake.motors.get(0).setPower(-1);
         while (!rightTurn.hasExpired() && !hasFreight && opModeIsActive()) {
             drive.motors.get(0).setPower(0.4);
             drive.motors.get(2).setPower(0.2);
@@ -200,7 +200,7 @@ public class KentuckyRedDuck extends LinearOpMode{
             robot.odometry.updatePosition();
         }
         sleep(250);
-        intake.motors.get(0).setPower(-1);
+        intake.motors.get(0).setPower(1);
         drive.moveToPositionSlow(origin, 5, 5, 2, 2000);
         transfer.motors.get(0).setTargetPosition(600*223/312);
         drive.odoUp();

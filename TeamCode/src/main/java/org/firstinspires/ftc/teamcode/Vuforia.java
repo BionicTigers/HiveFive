@@ -61,7 +61,7 @@ import java.util.List;
      public Mat processFrame(Mat source0) {
          Mat hiarchy = new Mat();
 
-         double[] hslThresholdHue = {0, 30};
+         double[] hslThresholdHue = {10, 20};
          double[] hslThresholdSaturation = {177, 255};
          double[] hslThresholdLuminance = {32 , 161};
          //takes values for hue, saturation, and luminance and apply's them to what the camera sees

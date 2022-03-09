@@ -10,6 +10,10 @@ import org.openftc.revextensions2.RevBulkData;
  */
 public class Odometry extends Mechanism {
 
+    // 0 = Left
+    // 1 = Right
+    // 2 = Middle
+
     //VERY IMPORTANT, LAST YEAR'S ROBOT STATS, CHANGE NEW ONE BELOW FOR NEW BOT
 
 //    //Declares constants that relate to odometry wheels
