@@ -7,14 +7,17 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-public class Spinner extends Mechanism{
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
+public class Spinner extends Mechanism {
 
     //Controller buttons
     public boolean deployed;
     public boolean aIsPressed;
     public boolean spinning;
+    public int x = 0;
 
-     //Used to declare new instances of Spinner
+    //Used to declare new instances of Spinner
     public Spinner(DcMotorEx spinner, Servo carouselB) {
         super();
         motors.add(spinner);
@@ -24,13 +27,13 @@ public class Spinner extends Mechanism{
     }
 
     //Carousel arm methods
-     //Moves the carousel arm out
+    //Moves the carousel arm out
     public void moveArmOut() {
         servos.get(0).setPosition(0.3);
     }
 
-     //Moves the carousel arm back over the robot
-    public void moveArmBack(Servo carouselB){
+    //Moves the carousel arm back over the robot
+    public void moveArmBack(Servo carouselB) {
         carouselB.setPosition(0);
     }
 
@@ -49,28 +52,36 @@ public class Spinner extends Mechanism{
         if (gp2.b) {
             deployed = false;
         }
+        if(gp2.right_bumper){
+            x = x+50;
+            motors.get(0).setTargetPosition(x);
+            motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            motors.get(0).setPower(0.35);
+        }
     }
 
     public void write() {
         if (deployed) {
-            servos.get(0).setPosition(0.2);
+            servos.get(0).setPosition(0);
         } else {
-            servos.get(0).setPosition(0.48);
+            servos.get(0).setPosition(0.5);
         }
-        if (spinning && motors.get(0).getCurrentPosition() >= 800) {
-            motors.get(0).setPower(1);
+        if (spinning && motors.get(0).getCurrentPosition() >= 1000) {
+            motors.get(0).setPower(0.75);
         }
-        if (motors.get(0).getCurrentPosition() >= 1700) {
+        if (motors.get(0).getCurrentPosition() >= 1800) {
             motors.get(0).setPower(0);
             motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            x = 0;
         }
     }
 
     public void autoSpin() {
-        motors.get(0).setTargetPosition(1700);
+        motors.get(0).setTargetPosition(1800);
         motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motors.get(0).setPower(0.6);
+        motors.get(0).setVelocity(1100);
         spinning = true;
+
     }
 }
 
