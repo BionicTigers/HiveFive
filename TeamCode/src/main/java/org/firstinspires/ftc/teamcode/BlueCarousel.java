@@ -18,9 +18,9 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.concurrent.TimeUnit;
 
-//Spins carousel duck, scores barcode duck, and parks in storage unit for blue side
-@Autonomous(name = "Blue Duck Storage")
-public class BlueDuckStorage extends LinearOpMode{
+//OG auto
+@Autonomous(name="Blue Carousel")
+public class BlueCarousel extends LinearOpMode {
     private Robot robot;
     private Intake intake;
     private PositionalTransfer transfer;
@@ -38,25 +38,32 @@ public class BlueDuckStorage extends LinearOpMode{
     private int mode;
     public boolean hasFreight;
     //still need location for deposit level 2 and 3, drop duck off at 3 btw
-    private final Location postDropMove = new Location(-260,0,-350,0);
-    private final Location preCarousel = new Location(-1057.30,0,-188.99,38.03);
-    private final Location carousel = new Location(-1425.81,0,-200.70,39);
-    private final Location preDuck = new Location(-1534.05,0,-612,93);
-    private final Location duck = new Location(-885.22,0,-622,93);
-    private final Location storageUnit = new Location(0,0,0,0); //get position
-    private final Location preHubDuck = new Location(-800,0,-400,360);
+    private final Location carousel = new Location(-51.45, 0, -8.95, 359.39);
+    // X=-51.45 Z=-8.95 R=359.39  (move to carousel)
 
-    private final Location levelOneDeposit = new Location (-259.58,0,-531.44,0);
+    private final Location Intermediate = new Location(1000, 0, -230.36, 351.80);
+// (move to intermed pre score) X=852.37 Z=-230.36 R=351.80
 
-    private final Location levelTwoDeposit = new Location (-308.83, 0,-530,356.14);
+    private final Location levelOneDeposit = new Location(913.89, 0, -531.44, 353.34);
+// (1st level score) X=913.89 Z=-511.06 R=353.34
 
-    private final Location levelThreeDeposit = new Location (-302.02, 0, -428.28, 356.67);
+    private final Location levelTwoDeposit = new Location(917.07, 0, -530, 352.95);
+// 2nd level score) X=917.07 Z=-548.03 R=352.95
+
+    private final Location levelThreeDeposit = new Location(896.79, 0, -428.28, 348.17);
+    //(3rd level score) X=896.79 Z=-437.73 R= 348.17
+
+    private final Location StorageUnit = new Location(-319.01, 0, -692.03, 90);
+// (Parking storage unit) X=-355.21 -644.76 R=95.43
+private final Location Postcube = new Location(211.44, 0, -130.3, 0);
+
+
     @Override
     public void runOpMode() throws InterruptedException {
 
         robot = new Robot(this);
         drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDriveL"), hardwareMap.get(Servo.class, "SDriveM"), hardwareMap.get(Servo.class, "SDriveR"));
-        spinner = new Spinner(hardwareMap.get(DcMotorEx.class,"spinner"), hardwareMap.get(Servo.class, "carouselB"));
+        spinner = new Spinner(hardwareMap.get(DcMotorEx.class, "spinner"), hardwareMap.get(Servo.class, "carouselB"));
         transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry, hardwareMap.get(DigitalChannel.class, "channel"));
         cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
         output = new Output(hardwareMap.get(Servo.class, "output"));
@@ -79,7 +86,7 @@ public class BlueDuckStorage extends LinearOpMode{
         webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
         vuforia = new Vuforia(webcam);
 
-        while (!isStarted()&& !isStopRequested()) {
+        while (!isStarted() && !isStopRequested()) {
             robot.odometry.updatePosition();
             drive.telemetry.addData("Odometry", robot.odometry.getPosition().getLocation(0) + ", " + robot.odometry.getPosition().getLocation(2) + ", " + robot.odometry.getPosition().getLocation(3));
             mode = vuforia.getMode();
@@ -89,7 +96,7 @@ public class BlueDuckStorage extends LinearOpMode{
             if (gamepad1.a) {
                 robot.odometry.reset();
             }
-            transfer.motors.get(0).setTargetPosition(600 * 223/312);
+            transfer.motors.get(0).setTargetPosition(600 * 223 / 312);
             transfer.motors.get(0).setPower(50);
             cap.servos.get(0).setPosition(0.1);
             spinner.motors.get(0).setTargetPosition(0);
@@ -99,53 +106,41 @@ public class BlueDuckStorage extends LinearOpMode{
         robot.odometry.reset();
         time.reset();
         transfer.motors.get(0).setTargetPosition(0);
-        switch(mode) {
+
+        drive.moveToPositionSlow(carousel, 5, 5, 2, 2500);
+        spinner.servos.get(0).setPosition(0.1);
+        spinner.motors.get(0).setTargetPosition(1700);
+        spinner.motors.get(0).setPower(0.32*4/3);
+        sleep(1900);
+        spinner.servos.get(0).setPosition(0.5);
+        drive.moveToPosition(Intermediate, 5, 5, 2, 2500);
+        transfer.motors.get(0).setPower(80);
+
+
+
+        switch (mode) {
             case 2:
-                drive.moveToPositionSlow(levelTwoDeposit, 5, 5, 2, 2000);
-                transfer.motors.get(0).setTargetPosition(1475* 223/312);
+                transfer.motors.get(0).setTargetPosition(1475 * 223 / 312);
+                drive.moveToPositionSlow(levelTwoDeposit, 5, 5, 2, 1500);
                 break;
             case 3:
-                drive.moveToPositionSlow(levelThreeDeposit, 5, 5, 2, 2000);
-                transfer.motors.get(0).setTargetPosition(2460 * 223/312);
+                transfer.motors.get(0).setTargetPosition(2460 * 223 / 312);
+
+                drive.moveToPositionSlow(levelThreeDeposit, 5, 5, 2, 1500);
                 break;
             default:
-                drive.moveToPositionSlow(levelOneDeposit, 5, 5, 2, 2000);
-                transfer.motors.get(0).setTargetPosition(1200 * 223/312);
+                transfer.motors.get(0).setTargetPosition(2460 * 223 / 312);
+                drive.moveToPositionSlow(levelOneDeposit, 5, 5, 2, 1500);
                 break;
         }
-        transfer.motors.get(0).setPower(80);
-        sleep(1000);
+
+
+
         output.servos.get(0).setPosition(1);
-        sleep(500);
-        //Freight has been dropped
-        drive.moveToPosition(postDropMove, 5,5,2,500);
-        output.servos.get(0).setPosition(0.7);
+        sleep(600);
+        drive.moveToPositionSlow(Postcube, 5, 5, 2, 500);
         transfer.motors.get(0).setTargetPosition(0);
-        transfer.motors.get(0).setPower(80);
-        drive.moveToPosition(preCarousel,5,5,2,1000);
-        drive.moveToPosition(carousel,5,5,2,2500);
-        spinner.servos.get(0).setPosition(0.2);
-        spinner.motors.get(0).setTargetPosition(1700);
-        spinner.motors.get(0).setPower(0.32);
-        sleep(1900);
-        spinner.motors.get(0).setPower(0);
-        spinner.servos.get(0).setPosition(0.46);
-        drive.moveToPositionSlow(preDuck, 5, 5, 2, 2500);
-        intake.motors.get(0).setPower(1);
-        drive.moveToPositionSuperSlow(duck, 5, 5, 2, 2750);
-        transfer.motors.get(0).setTargetPosition(600 * 223/312);
-        transfer.motors.get(0).setPower(80);
-        sleep(500);
-        intake.motors.get(0).setPower(0);
-        drive.moveToPosition(preHubDuck,5,5,2,500);
-        drive.moveToPositionSlow(levelThreeDeposit,5,5,2,1500);
-        transfer.motors.get(0).setTargetPosition(2460 * 223/312);
-        transfer.motors.get(0).setPower(80);
-        sleep(1000);
-        output.servos.get(0).setPosition(1);
-        sleep(500);
-        output.servos.get(0).setPosition(0.7);
-        sleep(1000);
-        drive.moveToPositionSlow(storageUnit,5,5,2,2000);
+        drive.moveToPositionSlow(StorageUnit, 5, 5, 62, 2500);
+
     }
 }

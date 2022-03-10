@@ -62,8 +62,8 @@ import java.util.List;
          Mat hiarchy = new Mat();
 
          double[] hslThresholdHue = {10, 20};
-         double[] hslThresholdSaturation = {177, 255};
-         double[] hslThresholdLuminance = {32 , 161};
+         double[] hslThresholdSaturation = {64, 255};
+         double[] hslThresholdLuminance = {20 , 229};
          //takes values for hue, saturation, and luminance and apply's them to what the camera sees
          hslThreshold(source0, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, hslThresholdOutput);
          List<MatOfPoint> contoursBlack = new ArrayList<>();
@@ -144,11 +144,11 @@ import java.util.List;
 
      //based of the area of the contours, this method finds the position of the team shipping elemen (Left Middle Right)
      public void Elementlocation(){
-         if(area <= 1000)
+         if(area <= 2000)
              mode = 1;
-         else if(area > 3800)
+         else if(area > 3500)
              mode = 3;
-         else if(area <= 3800)
+         else if(area <= 3500)
              mode =2;
      }
 

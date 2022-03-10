@@ -77,6 +77,9 @@ public class PositionalTransfer extends Mechanism{
         if(gp1.y){
             trim2 ++;
         }
+        if(gp2.back){
+            position = "shared";
+        }
         telemetry.addData("position", motors.get(0).getCurrentPosition());
         telemetry.addData("Amps", motors.get(0).getCurrent(CurrentUnit.AMPS));
         telemetry.addData("Is pressed? ", sensors.get(0).getState());
@@ -99,6 +102,7 @@ public class PositionalTransfer extends Mechanism{
         else if(position == "Down" && sensors.get(0).getState()) {
             motors.get(0).setPower(60);
             motors.get(0).setTargetPosition(-trim2);
+
             if(reset || trim2 < 50) {
                 trim2 = trim2 + 10;
             }
@@ -110,6 +114,10 @@ public class PositionalTransfer extends Mechanism{
         else if (position == "intake")
         {
             motors.get(0).setTargetPosition(250 * 223/312);
+        }
+        else if(position.equals("shared"))
+        {
+            motors.get(0).setTargetPosition(1475*223/312);
         }
         if (position == "Down")
         {

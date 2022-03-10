@@ -62,9 +62,9 @@ public class EvilVision extends OpenCvPipeline {
     public Mat processFrame(Mat source0) {
         Mat hiarchy = new Mat();
 
-        double[] hslThresholdHue = {10, 40};
-        double[] hslThresholdSaturation = {60, 255};
-        double[] hslThresholdLuminance = {0 , 225};
+        double[] hslThresholdHue = {10, 20};
+        double[] hslThresholdSaturation = {64, 255};
+        double[] hslThresholdLuminance = {20 , 229};
         //takes values for hue, saturation, and luminance and apply's them to what the camera sees
         hslThreshold(source0, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, hslThresholdOutput);
         List<MatOfPoint> contoursBlack = new ArrayList<>();
@@ -145,11 +145,11 @@ public class EvilVision extends OpenCvPipeline {
 
     //based of the area of the contours, this method finds the number of rings the camera is seeing (0, 1, 4)
     public void Elementlocation(){
-        if(area <= 1000)
+        if(area <= 100)
             mode = 1;
-        else if(area > 4800)
+        else if(area > 1000)
             mode = 3;
-        else if(area <= 4800)
+        else if(area <= 1000)
             mode =2;
     }
 

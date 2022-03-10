@@ -36,7 +36,7 @@ public class BlueStoragePark extends LinearOpMode{
     private Location position = new Location();
     private int[] wheels = {0, 1, 2, 3};
 
-    private final Location storageUnit = new Location(0,0,0,0); //get position
+    private final Location StorageUnit = new Location(-319.01, 0, -672.03, 90);
 
     public void runOpMode(){
         robot = new Robot(this);
@@ -52,6 +52,6 @@ public class BlueStoragePark extends LinearOpMode{
         Deadline stop = new Deadline(28, TimeUnit.SECONDS);
         Deadline rightTurn = new Deadline(1, TimeUnit.SECONDS);
         waitForStart();
-        drive.moveToPositionSlow(storageUnit,5,5,2,4000);
+        drive.moveToPositionSlow(StorageUnit,5,5,2,4000);
     }
 }
