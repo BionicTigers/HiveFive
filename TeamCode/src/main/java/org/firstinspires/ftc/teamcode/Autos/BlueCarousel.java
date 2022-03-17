@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Autos;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -12,6 +12,15 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
+import org.firstinspires.ftc.teamcode.Cap;
+import org.firstinspires.ftc.teamcode.Drivetrain;
+import org.firstinspires.ftc.teamcode.Intake;
+import org.firstinspires.ftc.teamcode.Location;
+import org.firstinspires.ftc.teamcode.Output;
+import org.firstinspires.ftc.teamcode.PositionalTransfer;
+import org.firstinspires.ftc.teamcode.Robot;
+import org.firstinspires.ftc.teamcode.Spinner;
+import org.firstinspires.ftc.teamcode.Vuforia;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -41,10 +50,10 @@ public class BlueCarousel extends LinearOpMode {
     private final Location carousel = new Location(-51.45, 0, -8.95, 359.39);
     // X=-51.45 Z=-8.95 R=359.39  (move to carousel)
 
-    private final Location Intermediate = new Location(1000, 0, -230.36, 351.80);
+    private final Location Intermediate = new Location(800, 0, -230.36, 351.80);
 // (move to intermed pre score) X=852.37 Z=-230.36 R=351.80
 
-    private final Location levelOneDeposit = new Location(913.89, 0, -531.44, 353.34);
+    private final Location levelOneDeposit = new Location(896.79, 0, -531.44, 353.34);
 // (1st level score) X=913.89 Z=-511.06 R=353.34
 
     private final Location levelTwoDeposit = new Location(917.07, 0, -530, 352.95);
@@ -53,7 +62,7 @@ public class BlueCarousel extends LinearOpMode {
     private final Location levelThreeDeposit = new Location(896.79, 0, -428.28, 348.17);
     //(3rd level score) X=896.79 Z=-437.73 R= 348.17
 
-    private final Location StorageUnit = new Location(-319.01, 0, -692.03, 90);
+    private final Location StorageUnit = new Location(-319.01, 0, -720.0, 85);
 // (Parking storage unit) X=-355.21 -644.76 R=95.43
 private final Location Postcube = new Location(211.44, 0, -130.3, 0);
 
@@ -96,19 +105,19 @@ private final Location Postcube = new Location(211.44, 0, -130.3, 0);
             if (gamepad1.a) {
                 robot.odometry.reset();
             }
-            transfer.motors.get(0).setTargetPosition(600 * 223 / 312);
+            transfer.motors.get(0).setTargetPosition(175);
             transfer.motors.get(0).setPower(50);
-            cap.servos.get(0).setPosition(0.1);
             spinner.motors.get(0).setTargetPosition(0);
             spinner.motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
         waitForStart();
+        cap.servos.get(0).setPosition(0.1);
         robot.odometry.reset();
         time.reset();
         transfer.motors.get(0).setTargetPosition(0);
 
-        drive.moveToPositionSlow(carousel, 5, 5, 2, 2500);
-        spinner.servos.get(0).setPosition(0.1);
+        drive.moveToPosition(carousel, 5, 5, 2, 1000);
+        spinner.servos.get(0).setPosition(0.13);
         spinner.motors.get(0).setTargetPosition(1700);
         spinner.motors.get(0).setPower(0.32*4/3);
         sleep(1900);
@@ -128,17 +137,16 @@ private final Location Postcube = new Location(211.44, 0, -130.3, 0);
 
                 drive.moveToPositionSlow(levelThreeDeposit, 5, 5, 2, 1500);
                 break;
-            default:
-                transfer.motors.get(0).setTargetPosition(2460 * 223 / 312);
+            case 1:
+                transfer.motors.get(0).setTargetPosition(1200 * 223 / 312);
                 drive.moveToPositionSlow(levelOneDeposit, 5, 5, 2, 1500);
                 break;
         }
-
-
-
         output.servos.get(0).setPosition(1);
         sleep(600);
-        drive.moveToPositionSlow(Postcube, 5, 5, 2, 500);
+        output.servos.get(0).setPosition(0.7);
+        drive.moveToPositionSlow(Intermediate, 5, 5, 2, 2500);
+        drive.moveToPositionSlow(Postcube, 5, 5, 2, 2500);
         transfer.motors.get(0).setTargetPosition(0);
         drive.moveToPositionSlow(StorageUnit, 5, 5, 62, 2500);
 

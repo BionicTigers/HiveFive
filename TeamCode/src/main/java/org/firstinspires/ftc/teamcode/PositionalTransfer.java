@@ -57,11 +57,12 @@ public class PositionalTransfer extends Mechanism{
         } else if((gp1.right_trigger >= .3  && position != "Up" )){
             position = "Down";
         }
-
+        else if(gp2.start){
+            position = "shared";
+        }
          else if (gp2.left_bumper) {
             trim = trim + 1;
         }
-
          if(gp2.start && gp2.back && !isPressed){
              if(liftOverride) liftOverride = false;
              else liftOverride = true;
@@ -87,7 +88,7 @@ public class PositionalTransfer extends Mechanism{
         if(gp2.dpad_down){
             position = "intake";
         }
-        if(liftOverride) motors.get(0).setPower(0);
+
 //        telemetry.update();
     }
 
@@ -95,11 +96,11 @@ public class PositionalTransfer extends Mechanism{
         if(motors.get(0).getCurrent(CurrentUnit.AMPS) >= 5.5 && position.equals("Up") && motors.get(0).getCurrentPosition() > 2000 * 223/312){
             trim = 1650 - motors.get(0).getCurrentPosition();
         }
-        if(position == "Up"){
+        if(position == "Up" && !liftOverride){
             motors.get(0).setPower(100);
             motors.get(0).setTargetPosition(1650 - trim);
         }
-        else if(position == "Down" && sensors.get(0).getState()) {
+        else if(position == "Down" && sensors.get(0).getState() && !liftOverride) {
             motors.get(0).setPower(60);
             motors.get(0).setTargetPosition(-trim2);
 
@@ -107,15 +108,15 @@ public class PositionalTransfer extends Mechanism{
                 trim2 = trim2 + 10;
             }
         }
-        else if (position == "Mid"){
+        else if (position == "Mid"&& !liftOverride){
             motors.get(0).setPower(30);
             motors.get(0).setTargetPosition(600);//* 223/312);
         }
-        else if (position == "intake")
+        else if (position == "intake"&& !liftOverride)
         {
-            motors.get(0).setTargetPosition(250 * 223/312);
+            motors.get(0).setTargetPosition(450 * 223/312);
         }
-        else if(position.equals("shared"))
+        else if(position.equals("shared") && !liftOverride)
         {
             motors.get(0).setTargetPosition(1475*223/312);
         }
@@ -133,6 +134,9 @@ public class PositionalTransfer extends Mechanism{
         }
         if (sensors.get(0).getState()) {
             currentlyPressed = false;
+        }
+        if(liftOverride){
+            motors.get(0).setPower(0);
         }
     }
 }

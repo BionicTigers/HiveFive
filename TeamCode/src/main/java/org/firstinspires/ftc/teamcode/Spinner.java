@@ -15,6 +15,7 @@ public class Spinner extends Mechanism {
     public boolean deployed;
     public boolean aIsPressed;
     public boolean spinning;
+    public boolean spinningBack;
     public int x = 0;
 
     //Used to declare new instances of Spinner
@@ -45,7 +46,10 @@ public class Spinner extends Mechanism {
         if (!gp2.a && aIsPressed) {
             aIsPressed = false;
         }
-        if (deployed && !aIsPressed && gp2.a) {
+        if (deployed && !aIsPressed && gp2.a && gp2.back) {
+            autoSpinBack();
+            aIsPressed = true;
+        } else if (deployed && !aIsPressed && gp2.a) {
             autoSpin();
             aIsPressed = true;
         }
@@ -66,10 +70,18 @@ public class Spinner extends Mechanism {
         } else {
             servos.get(0).setPosition(0.5);
         }
-        if (spinning && motors.get(0).getCurrentPosition() >= 1000) {
+        if (spinning && motors.get(0).getCurrentPosition() >= 1000*4/3) {
             motors.get(0).setPower(0.75*4/3);
         }
-        if (motors.get(0).getCurrentPosition() >= 1800) {
+        if (motors.get(0).getCurrentPosition() >= 1800*4/3) {
+            motors.get(0).setPower(0);
+            motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            x = 0;
+        }
+        if (spinningBack && motors.get(0).getCurrentPosition() <= -1000*4/3) {
+            motors.get(0).setPower(0.75*4/3);
+        }
+        if (motors.get(0).getCurrentPosition() <= -1800*4/3) {
             motors.get(0).setPower(0);
             motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             x = 0;
@@ -77,10 +89,18 @@ public class Spinner extends Mechanism {
     }
 
     public void autoSpin() {
-        motors.get(0).setTargetPosition(1800);
+        motors.get(0).setTargetPosition(1800*4/3);
         motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motors.get(0).setVelocity(1600);
         spinning = true;
+
+    }
+
+    public void autoSpinBack() {
+        motors.get(0).setTargetPosition(-1800*4/3);
+        motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motors.get(0).setVelocity(1600);
+        spinningBack = true;
 
     }
 }

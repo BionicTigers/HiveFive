@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Autos;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -12,6 +12,15 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
+import org.firstinspires.ftc.teamcode.Cap;
+import org.firstinspires.ftc.teamcode.Drivetrain;
+import org.firstinspires.ftc.teamcode.EvilVision;
+import org.firstinspires.ftc.teamcode.Intake;
+import org.firstinspires.ftc.teamcode.Location;
+import org.firstinspires.ftc.teamcode.Output;
+import org.firstinspires.ftc.teamcode.PositionalTransfer;
+import org.firstinspires.ftc.teamcode.Robot;
+import org.firstinspires.ftc.teamcode.Spinner;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -38,23 +47,20 @@ public class RedCarousel extends LinearOpMode {
     private int mode;
     public boolean hasFreight;
     //still need location for deposit level 2 and 3, drop duck off at 3 btw
-    private final Location carousel = new Location(-51.45, 0, -8.95, 359.39);
-    // X=-51.45 Z=-8.95 R=359.39  (move to carousel)
+    private final Location carousel = new Location(800, 0, -104.16, 142.7);
+// (Carousel) X=
 
-    private final Location Intermediate = new Location(832.37, 0, -230.36, 351.80);
-// (move to intermed pre score) X=852.37 Z=-230.36 R=351.80
+    private final Location levelOneDeposit = new Location(-308.37, 0, -565, 0);
+// (1st level score) X=
 
-    private final Location levelOneDeposit = new Location(913.89, 0, -511.06, 353.34);
-// (1st level score) X=913.89 Z=-511.06 R=353.34
 
-    private final Location levelTwoDeposit = new Location(917.07, 0, -548.003, 352.95);
-// 2nd level score) X=917.07 Z=-548.03 R=352.95
-
-    private final Location levelThreeDeposit = new Location(896.79, 0, -437.73, 348.17);
-    //(3rd level score) X=896.79 Z=-437.73 R= 348.17
-
-    private final Location StorageUnit = new Location(-319.01, 0, -672.03, 90);
-// (Parking storage unit) X=-355.21 -644.76 R=95.43
+    private final Location levelTwoDeposit = new Location(-308.37, 0, -555, 0);
+// 2nd level score) X=
+    private final Location levelThreeDeposit = new Location(-308.37, 0, -425, 0);
+    //(3rd level score) X=b
+    private final Location StorageUnit = new Location(920, 0, -740, 87.59);
+// (Parking storage unit) X=
+private final Location Intermediate = new Location(-308.37, 0, -365, 350.17);
 
 
     @Override
@@ -81,7 +87,7 @@ public class RedCarousel extends LinearOpMode {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         webcam.openCameraDevice();
-        webcam.setPipeline(new Vuforia());
+        webcam.setPipeline(new EvilVision());
         webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
         evilvision = new EvilVision(webcam);
 
@@ -95,13 +101,13 @@ public class RedCarousel extends LinearOpMode {
             if (gamepad1.a) {
                 robot.odometry.reset();
             }
-            transfer.motors.get(0).setTargetPosition(600 * 223 / 312);
+            transfer.motors.get(0).setTargetPosition(175);
             transfer.motors.get(0).setPower(50);
-            cap.servos.get(0).setPosition(0.1);
             spinner.motors.get(0).setTargetPosition(0);
             spinner.motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
         waitForStart();
+        cap.servos.get(0).setPosition(0.1);
         robot.odometry.reset();
         time.reset();
         transfer.motors.get(0).setTargetPosition(0);
@@ -123,16 +129,18 @@ public class RedCarousel extends LinearOpMode {
         sleep(1000);
         output.servos.get(0).setPosition(1);
         sleep(500);
-
-        drive.moveToPositionSlow(carousel, 5, 5, 2, 2500);
-        spinner.servos.get(0).setPosition(0.1);
-        spinner.motors.get(0).setTargetPosition(1700);
+        transfer.motors.get(0).setTargetPosition(0);
+        drive.moveToPositionSlow(Intermediate, 5, 5, 2, 2500);
+        output.servos.get(0).setPosition(0.7);
+        drive.moveToPositionSlow(carousel, 5, 5, 2, 3000);
+        spinner.servos.get(0).setPosition(0);
+        spinner.motors.get(0).setTargetPosition(-1700);
         spinner.motors.get(0).setPower(0.32);
-        sleep(1900);
+        sleep(2200);
         spinner.servos.get(0).setPosition(0.5);
         sleep(500);
 
-        drive.moveToPositionSlow(StorageUnit, 5, 5, 2, 2000);
+        drive.moveToPosition(StorageUnit, 5, 5, 2);
 
     }
 }

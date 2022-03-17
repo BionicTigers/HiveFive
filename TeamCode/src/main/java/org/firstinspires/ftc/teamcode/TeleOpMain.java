@@ -111,7 +111,7 @@ public class TeleOpMain extends LinearOpMode{
                 currentPattern = 3;
                 blinkinLedDriver.setPattern(endgamePattern);
             }
-            else if(color.red()/55.0 > 5.5 && currentPattern !=2 && (!endgameFlashies.hasExpired() || endgameFlashiesOver.hasExpired()))//green when nothing = 8.4
+            else if(color.green()/55.0 > 10.5 && currentPattern !=2 && (!endgameFlashies.hasExpired() || endgameFlashiesOver.hasExpired()))//green when nothing = 8.4
             {
                 blinkinLedDriver.setPattern(pattern2);
                 currentPattern = 2;

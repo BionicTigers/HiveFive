@@ -25,19 +25,17 @@ public class Cap extends Mechanism {
      * Moves the arm to the intake height
      */
     public void moveToIntakeHeight(){
-        servos.get(0).setPosition(0.97);
+        servos.get(0).setPosition(0.95);
     }
     /*
      * Moves the arm to the scoring/scoring height
      */
     public void moveToStoringHeight(){
-        servos.get(0).setPosition(0.2);
+        servos.get(0).setPosition(0.1);
     }
-    public void moveToScoringHeight(){
-        servos.get(0).setPosition(0.61);
-    } // prescore
+    public void moveToScoringHeight() { servos.get(0).setPosition(0.55); } // prescore
     public void moveToScoringHeight2(){
-        servos.get(0).setPosition(0.69);
+        servos.get(0).setPosition(0.71);
     } // knock the cap off
     public void pickUpElement(){
         servos.get(0).setPosition(0);
