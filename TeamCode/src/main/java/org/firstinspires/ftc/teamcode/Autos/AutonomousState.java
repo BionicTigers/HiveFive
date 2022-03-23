@@ -82,13 +82,13 @@ public class AutonomousState extends LinearOpMode{
 
         robot = new Robot(this);
         drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDriveL"), hardwareMap.get(Servo.class, "SDriveM"), hardwareMap.get(Servo.class, "SDriveR"));
-        spinner = new Spinner(hardwareMap.get(DcMotorEx.class,"spinner"), hardwareMap.get(Servo.class, "carouselB"));
-        transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry, hardwareMap.get(DigitalChannel.class, "channel"));
-        cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
+        spinner = new Spinner(hardwareMap.get(DcMotorEx.class,"spinner"));
+        transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry, hardwareMap.get(DigitalChannel.class, "channel"), hardwareMap.get(Servo.class, "STransfer1"), hardwareMap.get(Servo.class, "STransfer2"));
+        cap = new Cap(hardwareMap.get(Servo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"));
         output = new Output(hardwareMap.get(Servo.class, "output"));
         vision = new EvilVision();
         time = new ElapsedTime();
-        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"));
+        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intakeServo"));
         color = hardwareMap.get(ColorSensor.class, "color");
         Deadline stop = new Deadline(28, TimeUnit.SECONDS);
         Deadline rightTurn = new Deadline(1, TimeUnit.SECONDS);

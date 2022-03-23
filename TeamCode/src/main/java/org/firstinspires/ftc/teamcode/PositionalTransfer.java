@@ -8,6 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class PositionalTransfer extends Mechanism{
     public String position = "Mid";
@@ -22,7 +23,7 @@ public class PositionalTransfer extends Mechanism{
     private boolean liftOverride = false;
     private boolean isPressed = false;
 
-    public PositionalTransfer(DcMotorEx m, Telemetry T, DigitalChannel channel){
+    public PositionalTransfer(DcMotorEx m, Telemetry T, DigitalChannel channel, Servo servo1, Servo servo2){
         super();
         telemetry = T;
         telemetry.addData("<", "Fully initialized");
@@ -33,6 +34,8 @@ public class PositionalTransfer extends Mechanism{
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         sensors.add(channel);
         sensors.get(0).setMode(DigitalChannel.Mode.INPUT);
+        getServos().add(servo1);
+        getServos().add(servo2);
     }
 
      //Moves the arm to the bottom

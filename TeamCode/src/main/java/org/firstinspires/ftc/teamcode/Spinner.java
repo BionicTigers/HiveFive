@@ -19,23 +19,11 @@ public class Spinner extends Mechanism {
     public int x = 0;
 
     //Used to declare new instances of Spinner
-    public Spinner(DcMotorEx spinner, Servo carouselB) {
+    public Spinner(DcMotorEx spinner) {
         super();
         motors.add(spinner);
         motors.get(0).setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        servos.add(carouselB);
         motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
-
-    //Carousel arm methods
-    //Moves the carousel arm out
-    public void moveArmOut() {
-        servos.get(0).setPosition(0.3);
-    }
-
-    //Moves the carousel arm back over the robot
-    public void moveArmBack(Servo carouselB) {
-        carouselB.setPosition(0);
     }
 
     public void update(Gamepad gp1, Gamepad gp2) {
@@ -65,11 +53,6 @@ public class Spinner extends Mechanism {
     }
 
     public void write() {
-        if (deployed) {
-            servos.get(0).setPosition(0);
-        } else {
-            servos.get(0).setPosition(0.5);
-        }
         if (spinning && motors.get(0).getCurrentPosition() >= 1000*4/3) {
             motors.get(0).setPower(0.75*4/3);
         }

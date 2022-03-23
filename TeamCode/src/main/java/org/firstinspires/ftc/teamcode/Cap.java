@@ -16,9 +16,10 @@ public class Cap extends Mechanism {
     /*
      * Cap constructor; makes a new instance of cap
      */
-    public Cap(Servo capServo){
+    public Cap(Servo cap1, Servo cap2){
         super();
-        getServos().add(capServo);
+        getServos().add(cap1);
+        getServos().add(cap2);
     }
 
     /*

@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 
 import java.util.concurrent.TimeUnit;
@@ -17,10 +19,11 @@ public class Intake extends Mechanism {
     /*
      * Creates, declares, and assigns a motor to the motors array list
      */
-    public Intake(DcMotorEx intake) {
+    public Intake(DcMotorEx intake, Servo intakeServo) {
         super();
         motors.add(intake);
         motors.get(0).setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        servos.add(intakeServo);
     }
 
     /*

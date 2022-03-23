@@ -75,7 +75,7 @@ public class Drivetrain extends Mechanism {
         dashboard.updateConfig();
         //odo = bot.odometry;
         dashboard = FtcDashboard.getInstance();
-        dashboardtelemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
+        dashboardtelemetry = telemetry;
         getServos().add(SDrive1);
         getServos().add(SDrive2);
         getServos().add(SDrive3);

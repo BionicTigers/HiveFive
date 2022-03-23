@@ -10,11 +10,13 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -53,11 +55,11 @@ public class TeleOpMain extends LinearOpMode{
     public void runOpMode() {
         robot = new Robot(this);
         drivetrain = new Drivetrain(robot, motorNumbers, telemetry, hardwareMap.get(Servo.class, "SDriveL"), hardwareMap.get(Servo.class, "SDriveM"), hardwareMap.get(Servo.class, "SDriveR"));
-        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"));
-        transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry, hardwareMap.get(DigitalChannel.class, "channel"));
+        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intakeServo"));
+        spinner = new Spinner(hardwareMap.get(DcMotorEx.class,"spinner"));
+        transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry, hardwareMap.get(DigitalChannel.class, "channel"), hardwareMap.get(Servo.class, "STransfer1"), hardwareMap.get(Servo.class, "STransfer2"));
         output = new Output(hardwareMap.get(Servo.class, "output"));
-        spinner = new Spinner(hardwareMap.get(DcMotorEx.class, "spinner"), hardwareMap.get(Servo.class, "carouselB"));
-        cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
+        cap = new Cap(hardwareMap.get(Servo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"));
         color = hardwareMap.get(ColorSensor.class, "color");
         robot.initMotors(motorNames);
         blinkinLedDriver = hardwareMap.get(RevBlinkinLedDriver.class, "blinkin");
@@ -65,6 +67,8 @@ public class TeleOpMain extends LinearOpMode{
         pattern2 = RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_FOREST_PALETTE;
         endgamePattern = RevBlinkinLedDriver.BlinkinPattern.BEATS_PER_MINUTE_PARTY_PALETTE;
         blinkinLedDriver.setPattern(pattern);
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
 
         timer = new ElapsedTime();
         Deadline endgameFlashiesOver = new Deadline(90,TimeUnit.SECONDS);
@@ -107,6 +111,9 @@ public class TeleOpMain extends LinearOpMode{
             drivetrain.dashboardtelemetry.addData("deployed?", spinner.deployed);
             drivetrain.dashboardtelemetry.addData("endgameFlashies", endgameFlashies.hasExpired());
             drivetrain.dashboardtelemetry.addData("endgameFlashiesOver? :(", endgameFlashiesOver.hasExpired());
+            drivetrain.dashboardtelemetry.addData("x", poseEstimate.getX());
+            drivetrain.dashboardtelemetry.addData("y", drive.poseEstimate.getY());
+            drivetrain.dashboardtelemetry.addData("heading", poseEstimate.getHeading());
             if(endgameFlashies.hasExpired() && !endgameFlashiesOver.hasExpired() && currentPattern != 3){
                 currentPattern = 3;
                 blinkinLedDriver.setPattern(endgamePattern);
@@ -121,6 +128,7 @@ public class TeleOpMain extends LinearOpMode{
                 blinkinLedDriver.setPattern(pattern);
                 currentPattern = 1;
             }
+            drive.update();
 
             for (Mechanism mech : mechanisms) { //For each mechanism in the mechanism array
                 mech.update(gamepad1, gamepad2); //Run their respective update methods
