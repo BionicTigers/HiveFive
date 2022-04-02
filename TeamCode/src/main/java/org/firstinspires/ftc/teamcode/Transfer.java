@@ -2,15 +2,18 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class Transfer extends Mechanism{
 
     public boolean up;
     public boolean down;
 
-    public Transfer(DcMotorEx transferMotor){
+    public Transfer(DcMotorEx transferMotor, Servo transferServo1, Servo transferservo2){
         super();
         motors.add(transferMotor);
+        getServos().add(transferServo1);
+        getServos().add(transferservo2);
     }
 
     @Override

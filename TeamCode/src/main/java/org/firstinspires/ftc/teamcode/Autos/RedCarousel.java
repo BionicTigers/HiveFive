@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Autos;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -70,7 +71,7 @@ private final Location Intermediate = new Location(-308.37, 0, -365, 350.17);
         drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDriveL"), hardwareMap.get(Servo.class, "SDriveM"), hardwareMap.get(Servo.class, "SDriveR"));
         spinner = new Spinner(hardwareMap.get(DcMotorEx.class,"spinner"));
         transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry, hardwareMap.get(DigitalChannel.class, "channel"), hardwareMap.get(Servo.class, "STransfer1"), hardwareMap.get(Servo.class, "STransfer2"));
-        cap = new Cap(hardwareMap.get(Servo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"));
+        cap = new Cap(hardwareMap.get(CRServo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"));
         output = new Output(hardwareMap.get(Servo.class, "output"));
         evilvision = new EvilVision();
         time = new ElapsedTime();

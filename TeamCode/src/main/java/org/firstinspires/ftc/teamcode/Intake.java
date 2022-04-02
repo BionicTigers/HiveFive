@@ -23,7 +23,7 @@ public class Intake extends Mechanism {
         super();
         motors.add(intake);
         motors.get(0).setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        servos.add(intakeServo);
+        getServos().add(intakeServo);
     }
 
     /*
