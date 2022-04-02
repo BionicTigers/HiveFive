@@ -35,6 +35,7 @@ public class TeleOpWorlds extends LinearOpMode{
     public Output output;
     public Cap cap;
     public Spinner spinner;
+    public Turret turret;
     public ColorSensor color;
     public RevBlinkinLedDriver blinkinLedDriver;
     RevBlinkinLedDriver.BlinkinPattern pattern;
@@ -59,6 +60,7 @@ public class TeleOpWorlds extends LinearOpMode{
         transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry, hardwareMap.get(DigitalChannel.class, "channel"), hardwareMap.get(Servo.class, "STransfer1"), hardwareMap.get(Servo.class, "STransfer2"));
         output = new Output(hardwareMap.get(Servo.class, "output"));
         cap = new Cap(hardwareMap.get(CRServo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"));
+        turret = new Turret(hardwareMap.get(DcMotorEx.class, "turrets"));
         color = hardwareMap.get(ColorSensor.class, "color");
         robot.initMotors(motorNames);
         blinkinLedDriver = hardwareMap.get(RevBlinkinLedDriver.class, "blinkin");
@@ -93,8 +95,7 @@ public class TeleOpWorlds extends LinearOpMode{
         spinner.servos.get(0).setPosition(0.1);
         output.servos.get(0).setPosition(.7);
         drivetrain.odoUp();
-        cap.moveToStoringHeight();
-        Mechanism[] mechanisms = {intake, transfer, output, spinner, drivetrain, cap, robot.odometry, frontDistance, leftDistance};
+        Mechanism[] mechanisms = {intake, transfer, output, spinner, drivetrain, cap, turret, robot.odometry, frontDistance, leftDistance};
 
 
         endgameFlashies.reset();

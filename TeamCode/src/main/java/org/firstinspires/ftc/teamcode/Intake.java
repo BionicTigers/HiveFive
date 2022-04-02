@@ -15,6 +15,7 @@ public class Intake extends Mechanism {
     //Both of these variables control the direction of the intake
     public boolean goingIn;
     public boolean goingOut;
+    public boolean deposit;
 
     /*
      * Creates, declares, and assigns a motor to the motors array list
@@ -30,8 +31,9 @@ public class Intake extends Mechanism {
      * Controls the robot during TeleOp and sends input to run
      */
     public void update(Gamepad gp1, Gamepad gp2) {
-        goingIn = gp1.left_trigger >= .3;
-        goingOut = gp1.right_trigger >= .3 || gp1.x;
+        goingIn = gp1.right_trigger >= .3;
+        goingOut = gp1.left_trigger >= .3;
+        deposit = gp1.left_bumper;
         if(gp1.right_trigger >= .3){stop.reset();}
     }
 
@@ -44,14 +46,14 @@ public class Intake extends Mechanism {
         }
     }
 
-
      //Controls the intake during TeleOp using input from update
     public void run(boolean in, boolean out) {
         if (in) {
             motors.get(0).setPower(1);
-
         } else if (out) {
             motors.get(0).setPower(-1);
+        } else if (deposit) {
+            motors.get(0).setPower(-0.1);
         } else {
             motors.get(0).setPower(0);
         }

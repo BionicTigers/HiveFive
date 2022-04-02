@@ -61,7 +61,7 @@ public class Drivetrain extends Mechanism {
     public double cosrang = 0;
     public double pow = 0;
 
-
+    public boolean altMode = false;
 
     //Constructs a drivetrain object with parameters of the robot, motor numbers, telemetry, and 3 servos
     public Drivetrain(@NonNull org.firstinspires.ftc.teamcode.Robot bot, @NonNull int[] motorNumbers, Telemetry T, Servo SDrive1, Servo SDrive2, Servo SDrive3) {
@@ -105,10 +105,17 @@ public class Drivetrain extends Mechanism {
         final double v3 = (P * sinRAngle) + (P * cosRAngle) + rightX;  //backRight
         final double v4 = (P * sinRAngle) - (P * cosRAngle) - rightX;  //backLeft
 
-        motorPowers[0] = v1;
-        motorPowers[1] = v2;
-        motorPowers[2] = v3;
-        motorPowers[3] = v4;
+        if (driverPad.right_bumper) {
+            motorPowers[0] = v1*0.3;
+            motorPowers[1] = v2*0.3;
+            motorPowers[2] = v3*0.3;
+            motorPowers[3] = v4*0.3;
+        } else {
+            motorPowers[0] = v1;
+            motorPowers[1] = v2;
+            motorPowers[2] = v3;
+            motorPowers[3] = v4;
+        }
     }
 
     public void determineMotorPowers(double x, double z, double rot) {
@@ -143,18 +150,26 @@ public class Drivetrain extends Mechanism {
             odoDown();
         }
 
-        if(gp1.dpad_up){ //precision movement forward, very slow
-            DMPZ = DMPZ + 0.45;
+        if (gp1.right_bumper && gp1.dpad_up) {
+            altMode = true;
         }
-        if(gp1.dpad_down){ //precision movement backward, very slow
-            DMPZ = DMPZ - 0.45;
+
+        if (gp1.right_bumper && gp1.dpad_down) {
+            altMode = false;
         }
-        if(gp1.dpad_left) {
-            DMPROT = DMPROT - 0.4;
-        }
-        if(gp1.dpad_right) {
-            DMPROT = DMPROT + 0.4;
-        }
+
+//        if(gp1.dpad_up){ //precision movement forward, very slow
+//            DMPZ = DMPZ + 0.45;
+//        }
+//        if(gp1.dpad_down){ //precision movement backward, very slow
+//            DMPZ = DMPZ - 0.45;
+//        }
+//        if(gp1.dpad_left) {
+//            DMPROT = DMPROT - 0.4;
+//        }
+//        if(gp1.dpad_right) {
+//            DMPROT = DMPROT + 0.4;
+//        }
 //        if(gp1.right_bumper){
 //            DMPX= DMPX + 0.55;
 //        }
@@ -167,7 +182,7 @@ public class Drivetrain extends Mechanism {
             DMPX = 0;
             DMPZ = 0;
             DMPROT = 0;
-        } else {
+        } else if (!altMode) {
             determineMotorPowers(gp1); //Updates values in motorPowers array
         }
     }

@@ -11,6 +11,9 @@ public class Turret extends Mechanism{
     public boolean backward;
     public boolean right;
 
+    public boolean altMode = false;
+    public int trim = 0;
+
     public Turret(DcMotorEx turret){
         super();
         motors.add(turret);
@@ -34,20 +37,32 @@ public class Turret extends Mechanism{
             backward = false;
             right = false;
         }
+        if (gp1.right_bumper && gp1.dpad_up) {
+            altMode = true;
+        }
+        if (gp1.right_bumper && gp1.dpad_down) {
+            altMode = false;
+        }
+
+        if (altMode && gp1.right_stick_x >= 0.3) {
+            trim = trim + 5;
+        } else if (altMode && gp1.right_stick_x <= -0.3) {
+            trim = trim - 5;
+        }
     }
 
     public void write(){
         if(forward){
-            motors.get(0).setTargetPosition(0);
+            motors.get(0).setTargetPosition(0 + trim);
             motors.get(0).setPower(60);
         } else if(left){
-            motors.get(0).setTargetPosition(2000);
+            motors.get(0).setTargetPosition(2000 + trim);
             motors.get(0).setPower(60);
         } else if(backward){
-            motors.get(0).setTargetPosition(1600);
+            motors.get(0).setTargetPosition(1600 + trim);
             motors.get(0).setPower(60);
         } else if(right){
-            motors.get(0).setTargetPosition(-2000);
+            motors.get(0).setTargetPosition(-2000 + trim);
             motors.get(0).setPower(60);
         }
     }
