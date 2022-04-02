@@ -111,9 +111,6 @@ public class TeleOpMain extends LinearOpMode{
             drivetrain.dashboardtelemetry.addData("deployed?", spinner.deployed);
             drivetrain.dashboardtelemetry.addData("endgameFlashies", endgameFlashies.hasExpired());
             drivetrain.dashboardtelemetry.addData("endgameFlashiesOver? :(", endgameFlashiesOver.hasExpired());
-            drivetrain.dashboardtelemetry.addData("x", poseEstimate.getX());
-            drivetrain.dashboardtelemetry.addData("y", drive.poseEstimate.getY());
-            drivetrain.dashboardtelemetry.addData("heading", poseEstimate.getHeading());
             if(endgameFlashies.hasExpired() && !endgameFlashiesOver.hasExpired() && currentPattern != 3){
                 currentPattern = 3;
                 blinkinLedDriver.setPattern(endgamePattern);
