@@ -36,7 +36,7 @@ public class Turret extends Mechanism{
             backward = true;
         } else if(gp2.dpad_right){
             right = true;
-        } else{
+        } else {
             forward = false;
             left = false;
             backward = false;
