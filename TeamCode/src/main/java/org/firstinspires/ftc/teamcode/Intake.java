@@ -20,11 +20,10 @@ public class Intake extends Mechanism {
     /*
      * Creates, declares, and assigns a motor to the motors array list
      */
-    public Intake(DcMotorEx intake, Servo intakeServo) {
+    public Intake(DcMotorEx intake) {
         super();
         motors.add(intake);
         motors.get(0).setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        getServos().add(intakeServo);
     }
 
     /*

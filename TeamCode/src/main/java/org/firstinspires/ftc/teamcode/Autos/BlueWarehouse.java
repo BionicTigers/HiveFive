@@ -70,7 +70,7 @@ public class BlueWarehouse extends LinearOpMode{
         output = new Output(hardwareMap.get(Servo.class, "output"));
         vuforia = new Vuforia();
         time = new ElapsedTime();
-        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intakeServo"));
+        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"));
         color = hardwareMap.get(ColorSensor.class, "color");
         Deadline stop = new Deadline(28, TimeUnit.SECONDS);
         Deadline rightTurn = new Deadline(1, TimeUnit.SECONDS);

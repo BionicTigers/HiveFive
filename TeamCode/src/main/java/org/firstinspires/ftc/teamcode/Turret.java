@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class Turret extends Mechanism{
 
@@ -10,13 +11,17 @@ public class Turret extends Mechanism{
     public boolean left;
     public boolean backward;
     public boolean right;
+    public int position = 1;
 
     public boolean altMode = false;
     public int trim = 0;
 
-    public Turret(DcMotorEx turret){
+    public Turret(DcMotorEx turret, DcMotorEx turretRise, Servo turretL, Servo turretR){
         super();
         motors.add(turret);
+        motors.add(turretRise);
+        getServos().add(turretL);
+        getServos().add(turretR);
         motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motors.get(0).setTargetPosition(0);
         motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -58,7 +63,7 @@ public class Turret extends Mechanism{
         } else if(left){
             motors.get(0).setTargetPosition(2000 + trim);
             motors.get(0).setPower(60);
-        } else if(backward){
+        } else if(backward && (position == 3 || position == 4)){
             motors.get(0).setTargetPosition(1600 + trim);
             motors.get(0).setPower(60);
         } else if(right){

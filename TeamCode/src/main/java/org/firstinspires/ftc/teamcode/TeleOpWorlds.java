@@ -55,12 +55,12 @@ public class TeleOpWorlds extends LinearOpMode{
     public void runOpMode() {
         robot = new Robot(this);
         drivetrain = new Drivetrain(robot, motorNumbers, telemetry, hardwareMap.get(Servo.class, "SDriveL"), hardwareMap.get(Servo.class, "SDriveM"), hardwareMap.get(Servo.class, "SDriveR"));
-        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intakeServo"));
+        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"));
         spinner = new Spinner(hardwareMap.get(DcMotorEx.class,"spinner"));
         transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry, hardwareMap.get(DigitalChannel.class, "channel"), hardwareMap.get(Servo.class, "STransfer1"), hardwareMap.get(Servo.class, "STransfer2"));
         output = new Output(hardwareMap.get(Servo.class, "output"));
         cap = new Cap(hardwareMap.get(CRServo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"));
-        turret = new Turret(hardwareMap.get(DcMotorEx.class, "turrets"));
+        turret = new Turret(hardwareMap.get(DcMotorEx.class, "turretSpin"), hardwareMap.get(DcMotorEx.class, "turretLift"), hardwareMap.get(Servo.class, "turretLeft"), hardwareMap.get(Servo.class, "turretRight"));
         color = hardwareMap.get(ColorSensor.class, "color");
         robot.initMotors(motorNames);
         blinkinLedDriver = hardwareMap.get(RevBlinkinLedDriver.class, "blinkin");
