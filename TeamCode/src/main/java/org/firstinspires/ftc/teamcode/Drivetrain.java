@@ -103,8 +103,8 @@ public class Drivetrain extends Mechanism {
 
         final double v1 = (P * sinRAngle) + (P * cosRAngle) - rightX;  //frontRight
         final double v2 = (P * sinRAngle) - (P * cosRAngle) + rightX;  //frontLeft
-        final double v3 = (P * sinRAngle) + (P * cosRAngle) + rightX;  //backRight
-        final double v4 = (P * sinRAngle) - (P * cosRAngle) - rightX;  //backLeft
+        final double v3 = (-P * sinRAngle) + (P * cosRAngle) + rightX;  //backRight
+        final double v4 = (-P * sinRAngle) - (P * cosRAngle) - rightX;  //backLeft
 
         if (driverPad.right_bumper) {
             motorPowers[0] = v1*0.3;
@@ -135,8 +135,8 @@ public class Drivetrain extends Mechanism {
 
         final double v1 = (P * sinRAngle) + (P * cosRAngle) - rightX;  //frontRight
         final double v2 = (P * sinRAngle) - (P * cosRAngle) + rightX;  //frontLeft
-        final double v3 = (P * sinRAngle) + (P * cosRAngle) + rightX;  //backRight
-        final double v4 = (P * sinRAngle) - (P * cosRAngle) - rightX;  //backLeft
+        final double v3 = (-P * sinRAngle) + (P * cosRAngle) + rightX;  //backRight
+        final double v4 = (-P * sinRAngle) - (P * cosRAngle) - rightX;  //backLeft
 
         motorPowers[0] = v1; motorPowers[1] = v2; motorPowers[2] = v3; motorPowers[3] = v4;
     }
@@ -453,15 +453,15 @@ public class Drivetrain extends Mechanism {
     }
 
     public void odoUp () {
-        servos.get(0).setPosition(0.3);
+        servos.get(0).setPosition(0.5);
         servos.get(1).setPosition(0.3);
-        servos.get(2).setPosition(0.54);
+        servos.get(2).setPosition(0.35);
     }
 
     public void odoDown () {
-        servos.get(0).setPosition(0.45);//L
-        servos.get(1).setPosition(0.57);//M
-        servos.get(2).setPosition(0.3);//R
+        servos.get(0).setPosition(0.7);//R
+        servos.get(1).setPosition(0.64);//M
+        servos.get(2).setPosition(0.08);//L
     }
 
     /*

@@ -11,7 +11,7 @@ public class TurretTest extends LinearOpMode {
 
     public Turret turret;
     public void runOpMode(){
-        turret = new Turret(hardwareMap.get(DcMotorEx.class, "turretSpin"), hardwareMap.get(DcMotorEx.class, "turretLift"), hardwareMap.get(Servo.class, "turretLeft"), hardwareMap.get(Servo.class, "turretRight"));
+        turret = new Turret(hardwareMap.get(DcMotorEx.class, "turretSpin"), hardwareMap.get(DcMotorEx.class, "turretLift"), hardwareMap.get(Servo.class, "turretLeft"), hardwareMap.get(Servo.class, "turretRight"), telemetry);
         waitForStart();
         while(!isStopRequested()) {
             turret.update(gamepad1, gamepad2);

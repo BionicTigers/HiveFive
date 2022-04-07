@@ -72,7 +72,7 @@ public class PositionalLift extends Mechanism {
             motors.get(0).setPower(100);
         }
         else motors.get(0).setPower(0);
-        if (up) motors.get(0).setTargetPosition(1200);
+        if (up) motors.get(0).setTargetPosition(10);
         else if (mid) motors.get(0).setTargetPosition(600);
         else if (down) motors.get(0).setTargetPosition(0);
     }
