@@ -16,17 +16,20 @@ public class Turret extends Mechanism{
     public boolean left;
     public boolean backward;
     public boolean right;
-    public int position = 1;
 
     public boolean altMode = false;
     public int spinTrim = 0;
     public int verticalTrim = 0;
     public double horizontalTrim = 0;
+    public int trim = 0;
     public boolean extend = false;
     public boolean middle = false; //middle is for extension, do not confuse with mid
     public boolean retract = false;
 
-    //public String position = "Mid";
+    public DcMotorEx elevator;
+    public DcMotorEx extender;
+    public DcMotorEx rotate;
+
     public Telemetry telemetry;
     public DcMotorEx motor;
     private boolean up;
@@ -36,19 +39,31 @@ public class Turret extends Mechanism{
 
     Deadline wait = new Deadline (500, TimeUnit.MILLISECONDS);
 
-    public Turret(DcMotorEx turret, DcMotorEx turretRise, Servo turretL, Servo turretR, Telemetry T){
+    public Turret(DcMotorEx elevator, DcMotorEx extender, DcMotorEx rotate, Telemetry T){
         super();
         telemetry = T;
-        motors.add(turret);
-        motors.add(turretRise);
-        getServos().add(turretL);
-        getServos().add(turretR);
+        this.elevator = elevator;
+        this.extender = extender;
+        this.rotate = rotate;
+        motors.add(elevator);
+        motors.add(extender);
+        motors.add(rotate);
         motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motors.get(0).setTargetPosition(0);
         motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motors.get(1).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motors.get(1).setTargetPosition(0);
         motors.get(1).setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    public void moveElevator(int distance) {
+        elevator.setTargetPosition(distance);
+    }
+    public void moveExtender(int distance) {
+        extender.setTargetPosition(distance);
+    }
+    public void rotateTurret(int angle) {
+        rotate.setTargetPosition(angle);
     }
 
     public void update(Gamepad gp1, Gamepad gp2){

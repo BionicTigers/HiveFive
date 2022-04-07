@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.graphics.Color;
+
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -17,13 +20,45 @@ public class Intake extends Mechanism {
     public boolean goingOut;
     public boolean deposit;
 
+    public DcMotorEx intake;
+
+    //Used for intake method
+    //ColorSensor color = hardwareMap.get(ColorSensor.class, "color");
+
     /*
      * Creates, declares, and assigns a motor to the motors array list
      */
     public Intake(DcMotorEx intake) {
         super();
+        this.intake = intake;
         motors.add(intake);
         motors.get(0).setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+
+    //Intakes until the color sensor detects freight
+    public void intake() {
+
+    }
+    //Intakes for a given time in seconds
+    public void intake(int duration) {
+        Deadline time = new Deadline(duration, TimeUnit.SECONDS);
+        while(!time.hasExpired()){
+            intake.setVelocity(60); //Add number
+            intake.setPower(60); //Add number
+        }
+    }
+
+    //Deposits freight while color sensor says it's there
+    public void deposit() {
+
+    }
+    //Deposits for a given time in seconds
+    public void deposit(int duration) {
+        Deadline time = new Deadline(duration, TimeUnit.SECONDS);
+        while(!time.hasExpired()){
+            intake.setVelocity(60); //Add number
+            intake.setPower(60); //Add number
+        }
     }
 
     /*
