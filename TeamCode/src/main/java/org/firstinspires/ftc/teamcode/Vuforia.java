@@ -13,7 +13,7 @@ import java.util.List;
 
  public class Vuforia extends OpenCvPipeline {
      private static int mode=1; //
-     private static double area; //represents the area of the contours around the rings
+     private static double area; //represents the area of the contours
      private Mat hslThresholdOutput = new Mat();
 
      private Mat one;
