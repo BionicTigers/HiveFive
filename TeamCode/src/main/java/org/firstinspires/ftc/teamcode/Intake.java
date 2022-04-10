@@ -68,16 +68,12 @@ public class Intake extends Mechanism {
         goingIn = gp1.right_trigger >= .3;
         goingOut = gp1.left_trigger >= .3;
         deposit = gp1.left_bumper;
-        if(gp1.right_trigger >= .3){stop.reset();}
     }
 
      //Controls the intake
     public void write() {
         run(goingIn, goingOut);
-
-        if(!stop.hasExpired() && !goingIn){
-            motors.get(0).setPower(-1);
-        }
+        if(deposit) motors.get(0).setPower(-.5);
     }
 
      //Controls the intake during TeleOp using input from update

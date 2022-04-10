@@ -2,23 +2,18 @@ package org.firstinspires.ftc.teamcode.Autos;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
 import org.firstinspires.ftc.teamcode.Cap;
-import org.firstinspires.ftc.teamcode.Drivetrain;
 import org.firstinspires.ftc.teamcode.Intake;
 import org.firstinspires.ftc.teamcode.Location;
 import org.firstinspires.ftc.teamcode.Output;
-import org.firstinspires.ftc.teamcode.PositionalTransfer;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.Spinner;
 import org.firstinspires.ftc.teamcode.SuperiorVision;
@@ -33,15 +28,11 @@ import java.util.concurrent.TimeUnit;
 public class Supvistest extends LinearOpMode {
     private Robot robot;
     private Intake intake;
-    private PositionalTransfer transfer;
     private Cap cap;
-    public Output output;
-    private Drivetrain drive;
     private Variables variables;
     private SuperiorVision superiorvision;
     private Spinner spinner;
     private ElapsedTime time;
-    public ColorSensor color;
 
     private Location position = new Location();
     private int[] wheels = {0, 1, 2, 3};
@@ -68,20 +59,12 @@ public class Supvistest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         robot = new Robot(this);
-        drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDriveL"), hardwareMap.get(Servo.class, "SDriveM"), hardwareMap.get(Servo.class, "SDriveR"));
         spinner = new Spinner(hardwareMap.get(DcMotorEx.class, "spinner"));
-        transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry, hardwareMap.get(DigitalChannel.class, "channel"), hardwareMap.get(Servo.class, "STransfer1"), hardwareMap.get(Servo.class, "STransfer2"));
-        cap = new Cap(hardwareMap.get(CRServo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"));
-        output = new Output(hardwareMap.get(Servo.class, "output"));
         superiorvision = new SuperiorVision();
         time = new ElapsedTime();
-        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intakeServo"));
-        color = hardwareMap.get(ColorSensor.class, "color");
         Deadline stop = new Deadline(28, TimeUnit.SECONDS);
         Deadline rightTurn = new Deadline(1, TimeUnit.SECONDS);
 
-        robot.odometry.reset();
-        drive.odoDown();
 
         OpenCvCamera webcam;
 
@@ -91,6 +74,7 @@ public class Supvistest extends LinearOpMode {
         webcam.setPipeline(new SuperiorVision.SkystoneDeterminationPipeline());
         webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
         superiorvision = new SuperiorVision();
+        waitForStart();
 
     }
 }
