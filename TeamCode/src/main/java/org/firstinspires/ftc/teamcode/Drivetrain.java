@@ -460,7 +460,7 @@ public class Drivetrain extends Mechanism {
 
     public void odoDown () {
         servos.get(0).setPosition(0.7);//R
-        servos.get(1).setPosition(0.64);//M
+        servos.get(1).setPosition(0.62);//M
         servos.get(2).setPosition(0.08);//L
     }
 
