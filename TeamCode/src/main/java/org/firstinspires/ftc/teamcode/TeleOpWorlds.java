@@ -7,7 +7,9 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
@@ -35,21 +37,24 @@ public class TeleOpWorlds extends LinearOpMode{
     public int currentPattern = 1;
     private RevBlinkinLedDriver.BlinkinPattern endgamePattern;
 
+    public boolean hasFreight = false;
+
     public int[] motorNumbers = {0, 1, 2, 3}; //creates motor numbers array
     private Deadline endgameFlashies = new Deadline(85, TimeUnit.SECONDS);
     private Deadline endgameFlashiesOver = new Deadline(90,TimeUnit.SECONDS);
 
-
+    DistanceSensor distance;
 
     public void runOpMode() {
         robot = new Robot(this);
         drivetrain = new Drivetrain(robot, motorNumbers, telemetry, hardwareMap.get(Servo.class, "SDriveL"), hardwareMap.get(Servo.class, "SDriveM"), hardwareMap.get(Servo.class, "SDriveR"));
-        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"));
+        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intake2"));
         spinner = new Spinner(hardwareMap.get(DcMotorEx.class,"spinner"));
         //cap = new Cap(hardwareMap.get(CRServo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"));
         turret = new Turret(hardwareMap.get(DcMotorEx.class, "turretSpin"), hardwareMap.get(DcMotorEx.class, "turretLift"), hardwareMap.get(Servo.class, "turretLeft"), hardwareMap.get(Servo.class, "turretRight"), telemetry);
         //color = hardwareMap.get(ColorSensor.class, "color");
         robot.initMotors(motorNames);
+        distance = hardwareMap.get(DistanceSensor.class, "distance");
 //        blinkinLedDriver = hardwareMap.get(RevBlinkinLedDriver.class, "blinkin");
 //        pattern = RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_LAVA_PALETTE;
 //        pattern2 = RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_FOREST_PALETTE;
@@ -71,6 +76,13 @@ public class TeleOpWorlds extends LinearOpMode{
 //        endgameFlashiesOver.reset();
         //what runs constantly once play button is pressed
         while(opModeIsActive()) {
+
+            if(distance.getDistance(DistanceUnit.CM) < 0.8) {
+                hasFreight = true;
+            } else {
+                hasFreight = false;
+            }
+
             //drivetrain.dashboardtelemetry.addData("red", color.red()/55.0);
             //drivetrain.dashboardtelemetry.addData("green", color.green()/55.0);
             //drivetrain.dashboardtelemetry.addData("blue", color.blue()/55.0);
@@ -78,6 +90,8 @@ public class TeleOpWorlds extends LinearOpMode{
             drivetrain.dashboardtelemetry.addData("Spinner Speed", spinner.motors.get(0).getPower());
             drivetrain.dashboardtelemetry.addData("Spinning?", spinner.spinning);
             drivetrain.dashboardtelemetry.addData("deployed?", spinner.deployed);
+            drivetrain.dashboardtelemetry.addData("Distance (cm)", distance.getDistance(DistanceUnit.CM));
+            drivetrain.dashboardtelemetry.addData("Has freight? ", hasFreight);
 //            drivetrain.dashboardtelemetry.addData("endgameFlashies", endgameFlashies.hasExpired());
 //            drivetrain.dashboardtelemetry.addData("endgameFlashiesOver? :(", endgameFlashiesOver.hasExpired());
 //            if(endgameFlashies.hasExpired() && !endgameFlashiesOver.hasExpired() && currentPattern != 3){
@@ -94,7 +108,7 @@ public class TeleOpWorlds extends LinearOpMode{
 //                blinkinLedDriver.setPattern(pattern);
 //                currentPattern = 1;
 //            }
-            drive.update();
+//            drive.update();
 
             for (Mechanism mech : mechanisms) { //For each mechanism in the mechanism array
                 mech.update(gamepad1, gamepad2); //Run their respective update methods

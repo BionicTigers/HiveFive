@@ -3,9 +3,14 @@ package org.firstinspires.ftc.teamcode.drive.opmode;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Drivetrain;
+import org.firstinspires.ftc.teamcode.Location;
+import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 /*
@@ -25,28 +30,31 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
  * is recommended that you use the FollowerPIDTuner opmode for further fine tuning.
  */
 @Config
-@Autonomous(group = "drive")
+@TeleOp(name = "Back and Forth")
 public class BackAndForth extends LinearOpMode {
 
     public static double DISTANCE = 50;
+    public Drivetrain drive;
+    public Robot robot;
+    private int[] wheels = {0, 1, 2, 3};
+    private Location back = new Location(0, 0, 0, 0);
+    private Location forth = new Location(0, 0 , 400, 0);
 
     @Override
     public void runOpMode() throws InterruptedException {
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-
-        Trajectory trajectoryForward = drive.trajectoryBuilder(new Pose2d())
-                .forward(DISTANCE)
-                .build();
-
-        Trajectory trajectoryBackward = drive.trajectoryBuilder(trajectoryForward.end())
-                .back(DISTANCE)
-                .build();
-
+        robot = new Robot(this);
+        drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDriveL"), hardwareMap.get(Servo.class, "SDriveM"), hardwareMap.get(Servo.class, "SDriveR"));
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
-            drive.followTrajectory(trajectoryForward);
-            drive.followTrajectory(trajectoryBackward);
+            drive.update(gamepad1, gamepad2);
+            drive.write();
+            if(gamepad1.dpad_up) {
+                drive.moveToPositionSlow(back, 5, 5, 2);
+            }
+            if(gamepad1.dpad_down) {
+                drive.moveToPositionSlow(forth, 5, 5, 2);
+            }
         }
     }
 }

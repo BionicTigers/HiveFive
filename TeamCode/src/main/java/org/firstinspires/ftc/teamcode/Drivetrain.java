@@ -75,8 +75,7 @@ public class Drivetrain extends Mechanism {
         dashboardtelemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
         dashboard.updateConfig();
         //odo = bot.odometry;
-        dashboard = FtcDashboard.getInstance();
-        dashboardtelemetry = telemetry;
+
         getServos().add(SDrive1);
         getServos().add(SDrive2);
         getServos().add(SDrive3);
@@ -207,8 +206,9 @@ public class Drivetrain extends Mechanism {
         dashboardtelemetry.addData("ErrorZ", + error.getLocation(2));
         dashboardtelemetry.addData("ErrorRotation", + error.getLocation(3));
         //Records Location as X, Z, rot
-        dashboardtelemetry.addData("Location: X_", robot.odometry.realMaybe.getLocation(0) + ", Z_" + robot.odometry.realMaybe.getLocation(2) + ", Rotation_" + robot.odometry.realMaybe.getLocation(3));
-        dashboardtelemetry.addData("Left encoder", robot.odometry.getEncoderPosition());
+        dashboardtelemetry.addData("X", robot.odometry.realMaybe.getLocation(0));
+        dashboardtelemetry.addData("Z ", robot.odometry.realMaybe.getLocation(2));
+        dashboardtelemetry.addData("Rotation ", robot.odometry.realMaybe.getLocation(3));
 //        dashboardtelemetry.addData("encoder delta MM 0", robot.odometry.getEncoderPosition()[0]);
         dashboardtelemetry.addData("encoder delta MM 0, 1, 2:", robot.odometry.currentEncoderMMPosString());
         telemetry.update();
@@ -320,7 +320,7 @@ public class Drivetrain extends Mechanism {
 
         double forwardPow = (Variables.kfP*forwardError+ Variables.kfI*integralValues[0] + Variables.kfD * (forwardError - lastForwardError));
         double sidePow = (Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError)) ;
-        double rotPow = (Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - lastRotationError));
+        double rotPow = -(Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - lastRotationError));
 
         lastForwardError = forwardPow;
         lastSidewaysError = sidePow;
@@ -454,14 +454,14 @@ public class Drivetrain extends Mechanism {
 
     public void odoUp () {
         servos.get(0).setPosition(0.5);
-        servos.get(1).setPosition(0.3);
+        servos.get(1).setPosition(0.4);
         servos.get(2).setPosition(0.35);
     }
 
     public void odoDown () {
         servos.get(0).setPosition(0.7);//R
-        servos.get(1).setPosition(0.62);//M
-        servos.get(2).setPosition(0.08);//L
+        servos.get(1).setPosition(0.61);//M
+        servos.get(2).setPosition(.05);//L
     }
 
     /*

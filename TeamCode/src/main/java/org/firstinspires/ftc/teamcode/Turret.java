@@ -20,6 +20,7 @@ public class Turret extends Mechanism{
 
     public boolean altMode = false;
     public int spinTrim = 0;
+    public int spinLocation = 0;
     public int verticalTrim = 0;
     public double horizontalTrim = 0;
     public boolean extend = false;
@@ -76,10 +77,10 @@ public class Turret extends Mechanism{
             altMode = false;
         }
 
-        if (altMode && gp1.right_stick_x >= 0.3) {
-            spinTrim = spinTrim + 5;
-        } else if (altMode && gp1.right_stick_x <= -0.3) {
-            spinTrim = spinTrim - 5;
+        if ((altMode && gp1.right_stick_x >= 0.3) || gp2.right_stick_x >=.3) {
+            spinTrim = spinTrim + 10;
+        } else if ((altMode && gp1.right_stick_x <= -0.3) || gp2.right_stick_x <= -.3) {
+            spinTrim = spinTrim - 10;
         }
         if (gp2.right_bumper) {
             extend = true;
@@ -126,17 +127,17 @@ public class Turret extends Mechanism{
         }
 
         if (gp2.left_stick_y <= -0.5) {
-            horizontalTrim = horizontalTrim + 0.005;
+            verticalTrim = verticalTrim - 15;
         }
         if (gp2.left_stick_y >= 0.5) {
-            horizontalTrim = horizontalTrim - 0.005;
+            verticalTrim = verticalTrim + 15;
         }
-        if (gp2.right_trigger >= 0.5) {
-            verticalTrim = verticalTrim + 5;
-        }
-        if (gp2.left_trigger >= 0.5) {
-            verticalTrim = verticalTrim - 5;
-        }
+//        if (gp2.right_trigger >= 0.5) {
+//            verticalTrim = verticalTrim + 5;
+//        }
+//        if (gp2.left_trigger >= 0.5) {
+//            verticalTrim = verticalTrim - 5;
+//        }
         if(gp2.x)
         {
             unfold();
@@ -180,18 +181,16 @@ public class Turret extends Mechanism{
     }
 
     public void write(){
+        motors.get(0).setPower(60);
+        motors.get(0).setTargetPosition(spinLocation + spinTrim);
         if(forward){
-            motors.get(0).setTargetPosition(2590 + spinTrim);
-            motors.get(0).setPower(60);
+            spinLocation = 2590;
         } else if(left && !(retract && down)){
-            motors.get(0).setTargetPosition(588 + spinTrim);
-            motors.get(0).setPower(60);
+            spinLocation = 588;
         } else if(backward && !down){
-            motors.get(0).setTargetPosition(1600 + spinTrim);
-            motors.get(0).setPower(60);
+            spinLocation = 1600;
         } else if(right && !(retract && down)){
-            motors.get(0).setTargetPosition(4557 + spinTrim);
-            motors.get(0).setPower(60);
+            spinLocation = 4557;
         }
         if (extend) {
             servos.get(0).setPosition(0.8 + horizontalTrim); //0.08

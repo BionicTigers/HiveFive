@@ -13,7 +13,7 @@ public class IntakeTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"));
+        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intake2"));
 
         waitForStart();
 

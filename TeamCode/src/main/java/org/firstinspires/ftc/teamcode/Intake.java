@@ -19,6 +19,7 @@ public class Intake extends Mechanism {
     public boolean goingIn;
     public boolean goingOut;
     public boolean deposit;
+    public boolean override;
 
     public DcMotorEx intake;
 
@@ -28,11 +29,12 @@ public class Intake extends Mechanism {
     /*
      * Creates, declares, and assigns a motor to the motors array list
      */
-    public Intake(DcMotorEx intake) {
+    public Intake(DcMotorEx intake, Servo intake2) {
         super();
         this.intake = intake;
         motors.add(intake);
         motors.get(0).setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        servos.add(intake2);
     }
 
     //Intakes until the color sensor detects freight
@@ -68,22 +70,29 @@ public class Intake extends Mechanism {
         goingIn = gp1.right_trigger >= .3;
         goingOut = gp1.left_trigger >= .3;
         deposit = gp1.left_bumper;
+        override = gp1.a;
     }
 
      //Controls the intake
     public void write() {
         run(goingIn, goingOut);
-        if(deposit) motors.get(0).setPower(-.5);
+        if(deposit) motors.get(0).setPower(.5);
+        if ((goingIn||deposit) && !override){
+            servos.get(0).setPosition(.1);
+        }
+        else {
+            servos.get(0).setPosition(.4);
+        }
     }
 
      //Controls the intake during TeleOp using input from update
     public void run(boolean in, boolean out) {
         if (in) {
-            motors.get(0).setPower(1);
-        } else if (out) {
             motors.get(0).setPower(-1);
+        } else if (out) {
+            motors.get(0).setPower(1);
         } else if (deposit) {
-            motors.get(0).setPower(-0.1);
+            motors.get(0).setPower(0.1);
         } else {
             motors.get(0).setPower(0);
         }

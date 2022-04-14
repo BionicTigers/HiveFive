@@ -22,62 +22,54 @@ public class Spinner extends Mechanism {
     }
 
     public void update(Gamepad gp1, Gamepad gp2) {
-        if (gp2.a && !aIsPressed && !deployed) {
+        if (gp2.right_trigger > .2 && !aIsPressed && !deployed) {
             aIsPressed = true;
             deployed = true;
         }
-        if (!gp2.a && aIsPressed) {
+        if (!(gp2.right_trigger > .2) && aIsPressed) {
             aIsPressed = false;
         }
-        if (deployed && !aIsPressed && gp2.a && gp2.back) {
+        if (deployed && !aIsPressed && gp2.right_trigger > .2 && gp2.back) {
             autoSpinBack();
             aIsPressed = true;
-        } else if (deployed && !aIsPressed && gp2.a) {
+        } else if (deployed && !aIsPressed && gp2.right_trigger > .2) {
             autoSpin();
             aIsPressed = true;
         }
         if (gp2.b) {
             deployed = false;
         }
-        if(gp2.right_bumper){
+        if(gp2.left_trigger > .2){
             x = x+50;
             motors.get(0).setTargetPosition(x);
             motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            motors.get(0).setPower(0.35*4/3);
+            motors.get(0).setPower(0.35);
         }
     }
 
     public void write() {
         if (spinning && motors.get(0).getCurrentPosition() >= 1000*4/3) {
-            motors.get(0).setPower(0.75*4/3);
+            motors.get(0).setPower(0.75);
         }
-        if (motors.get(0).getCurrentPosition() >= 1800*4/3) {
-            motors.get(0).setPower(0);
-            motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            x = 0;
-        }
+
         if (spinningBack && motors.get(0).getCurrentPosition() <= -1000*4/3) {
-            motors.get(0).setPower(0.75*4/3);
+            motors.get(0).setPower(0.75);
         }
-        if (motors.get(0).getCurrentPosition() <= -1800*4/3) {
-            motors.get(0).setPower(0);
-            motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            x = 0;
-        }
+
     }
 
     public void autoSpin() {
-        motors.get(0).setTargetPosition(1800*4/3);
+        motors.get(0).setTargetPosition(motors.get(0).getCurrentPosition() + (1900));
         motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motors.get(0).setVelocity(1600);
+        motors.get(0).setVelocity(1500);
         spinning = true;
 
     }
 
     public void autoSpinBack() {
-        motors.get(0).setTargetPosition(-1800*4/3);
+        motors.get(0).setTargetPosition(motors.get(0).getCurrentPosition() + (-1900));
         motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motors.get(0).setVelocity(1600);
+        motors.get(0).setVelocity(1500);
         spinningBack = true;
 
     }

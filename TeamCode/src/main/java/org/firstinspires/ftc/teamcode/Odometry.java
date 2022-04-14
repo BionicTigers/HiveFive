@@ -43,9 +43,9 @@ public class Odometry extends Mechanism {
     //Number of ticks on the encoders
     private static final double ODO_ENCODER_TICKS = 8192;
     //Distance between odometry encoders
-    private static final double ODO_DISTANCE_MM = 278.7;
+    private static final double ODO_DISTANCE_MM = 265.7401;
     //Distance from the center encoder to the center of the robot
-    private static final double ODO_DISTANCE_FROM_CENTER = 214.375;
+    private static final double ODO_DISTANCE_FROM_CENTER = 15.5*25.4;
 //795.3-->266.3
 
     //Odo testing:
@@ -150,7 +150,7 @@ public class Odometry extends Mechanism {
             bulkData = expansionHub.getBulkInputData();
 
             for (int i = 0; i < 3; i++) {
-                if (i == 2) {
+                if (i == 0 ) {
                     encoderPositionoffset[i] = -bulkData.getMotorCurrentPosition(i);
                 }
                 encoderPositionoffset[i] = bulkData.getMotorCurrentPosition(i);
@@ -172,7 +172,7 @@ public class Odometry extends Mechanism {
         try {
             bulkData=expansionHub.getBulkInputData();
             for(int i=0;i<3;i++) {
-                if (i == 2) {
+                if ( i == 0 ) {
                     encoderPositionoffset[i] = -bulkData.getMotorCurrentPosition(i);
                 }
                 encoderPositionoffset[i] = bulkData.getMotorCurrentPosition(i) ;
@@ -221,7 +221,7 @@ public class Odometry extends Mechanism {
             bulkData = expansionHub.getBulkInputData();
             for (int i = 0; i < 3; i++) {//updates the array encoderDeltamm for each odo wheel to see how much they've moved in mm
                 //if and else for the different expansion hubs... also because the two wheels facing forward need to have negative bulk data reads
-                if ((i == 0 )) {
+                if ((i == 1 || i == 2 )) {
                     encoderDeltamm[i] = -ODO_CIRCUMFERENCE_MM * ((bulkData.getMotorCurrentPosition(i) - encoderPositionoffset[i] + encoderPosition[i]) / ODO_ENCODER_TICKS);
                     encoderPosition[i] = -bulkData.getMotorCurrentPosition(i) + encoderPositionoffset[i];
                 } else {
@@ -240,7 +240,7 @@ public class Odometry extends Mechanism {
             relativeY = (encoderDeltamm[0] + encoderDeltamm[1]) / 2; //how much moved forward/back
             //setting current robo rotation in Location object
             // pos.setRotation((float) Math.toDegrees(((ODO_CIRCUMFERENCE_MM/**circumference*/ * ((encoderPosition[0]) / ODO_ENCODER_TICKS)/**percentage of the wheel revolved*/ - (ODO_CIRCUMFERENCE_MM * ((encoderPosition[1]) / ODO_ENCODER_TICKS)))) / ODO_DISTANCE_MM));
-            double angle = (float) Math.toDegrees((encoderPosition[1] - encoderPosition[0]) / (ODO_DISTANCE_MM * ENCODER_TICKS_PER_MM));
+            double angle = (float) Math.toDegrees(-(encoderPosition[1] - encoderPosition[0]) / (ODO_DISTANCE_MM * ENCODER_TICKS_PER_MM));
             angle=angle+rotOffset;
             position.setRotation(angle);
             if (Math.abs(botRotDelta) > 0) {
