@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class Spinner extends Mechanism {
 
+
     //Controller buttons
     public boolean deployed;
     public boolean aIsPressed;

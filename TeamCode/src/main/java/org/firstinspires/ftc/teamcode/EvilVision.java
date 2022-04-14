@@ -12,6 +12,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 import java.util.ArrayList;
 import java.util.List;
 
+//EvilVision be like: Exists
 public class EvilVision extends OpenCvPipeline {
     private static int mode=1; //
     private static double area; //represents the area of the contours around the rings
