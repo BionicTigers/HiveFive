@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.WorldsAutos;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -41,10 +42,11 @@ public class RedsideWarehouse extends LinearOpMode {
 
     DistanceSensor distance;
 
+
     public boolean hasFreight = false;
 
     private final Location dropZone = new Location(-465.544,0,0,0);
-    private final Location wall = new Location(10,0,0,0);
+    private final Location wall = new Location(200,0,0,0);
     private final Location warehouse = new Location(10,0,500,0);
     private final Location grabZone = new Location(10,0,800,0);
 
@@ -54,62 +56,88 @@ public class RedsideWarehouse extends LinearOpMode {
         drivetrain = new Drivetrain(robot, motorNumbers, telemetry, hardwareMap.get(Servo.class, "SDriveL"), hardwareMap.get(Servo.class, "SDriveM"), hardwareMap.get(Servo.class, "SDriveR"));
         intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intake2"));
         spinner = new Spinner(hardwareMap.get(DcMotorEx.class,"spinner"));
-        cap = new Cap(hardwareMap.get(CRServo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"));
+        cap = new Cap(hardwareMap.get(CRServo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"), telemetry);
         turret = new Turret(hardwareMap.get(DcMotorEx.class, "turretSpin"), hardwareMap.get(DcMotorEx.class, "turretLift"), hardwareMap.get(Servo.class, "turretLeft"), hardwareMap.get(Servo.class, "turretRight"), telemetry);
         //color = hardwareMap.get(ColorSensor.class, "color");
         robot.initMotors(motorNames);
+        distance = hardwareMap.get(DistanceSensor.class, "distance");
+
 
         Deadline park = new Deadline(25, TimeUnit.SECONDS);
         cap.getServos().get(0).setPosition(0.5);
-
+        turret.servos.get(0).setPosition(.5);
+        turret.servos.get(1).setPosition(.5);
         drivetrain.odoDown();
-        robot.odometry.reset();
+
         cap.getServos().get(0).setPosition(.5);
 
+        intake.servos.get(0).setPosition(.6);
+        while(!isStarted() && !isStopRequested()){
+            if(gamepad1.a) {
+                turret.motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                turret.motors.get(1).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+            }
+
+        }
         waitForStart();
-        while (!park.hasExpired() && opModeIsActive()) {
+        turret.motors.get(0).setTargetPosition(0);
+        turret.motors.get(1).setTargetPosition(0);
+        turret.motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.motors.get(1).setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.odometry.reset();
+//        while (!park.hasExpired() && opModeIsActive()) {
 
+            turret.motors.get(0).setTargetPosition(500);
             turret.motors.get(1).setTargetPosition(1800);
-            turret.motors.get(0).setTargetPosition(-500);
             turret.motors.get(1).setPower(100);
-            sleep(100);
-            turret.motors.get(0).setPower(60);
+            turret.servos.get(0).setPosition(0.8);
+            turret.servos.get(1).setPosition(0.2);
+            sleep(750);
+            turret.motors.get(0).setPower(75);
+
             drivetrain.moveToPosition(dropZone, 5, 5, 2,2000);
 
             //Vision stuffs
-            turret.servos.get(0).setPosition(0.8);
-            turret.servos.get(1).setPosition(0.2);
+
             intake.servos.get(0).setPosition(.1);
-            intake.deposit(250);
-
-            turret.motors.get(0).setTargetPosition(2590);
-
-            sleep(150);
-
-            //drivetrain.moveToPosition(wall, 5, 5, 2);
-            //drivetrain.moveToPosition(warehouse, 5, 5, 2);
-            //drivetrain.moveToPosition(grabZone, 5, 5, 2);
-            while (!hasFreight && opModeIsActive()) {
-                //drivetrain.motors.get(0).setPower(30);
-                //drivetrain.motors.get(1).setPower(30);
-                //drivetrain.motors.get(2).setPower(30);
-                //drivetrain.motors.get(3).setPower(30);
-                if (distance.getDistance(DistanceUnit.CM) < 0.8) {
-                    hasFreight = true;
-                }
-                intake.servos.get(0).setPosition(.4);
-                robot.odometry.updatePosition();
-            }
+            intake.motors.get(0).setPower(.5);
+            sleep(250);
             intake.motors.get(0).setPower(0);
-            turret.servos.get(0).setPosition(0.5);
-            turret.servos.get(1).setPosition(0.5);
-            //drivetrain.moveToPosition(wall, 5, 5, 2);
+            intake.servos.get(0).setPosition(0);
+            turret.motors.get(0).setTargetPosition(-2590);
+            turret.motors.get(1).setPower(60);
+            turret.motors.get(1).setTargetPosition(400);
+            drivetrain.moveToPosition(wall, 5, 5, 2,2000);
+            turret.motors.get(1).setTargetPosition(0);
+            intake.motors.get(0).setPower(-100);
+            drivetrain.moveToPosition(warehouse, 5, 5, 2,2000);
+
+
+            //drivetrain.moveToPosition(grabZone, 5, 5, 2);
+//            while (!hasFreight && opModeIsActive()) {
+//                //drivetrain.motors.get(0).setPower(30);
+//                //drivetrain.motors.get(1).setPower(30);
+//                //drivetrain.motors.get(2).setPower(30);
+//                //drivetrain.motors.get(3).setPower(30);
+//                if (distance.getDistance(DistanceUnit.CM) < 0.8) {
+//                    hasFreight = true;
+//                }
+//                telemetry.addData("HasFreight", hasFreight);
+//                telemetry.update();
+//                intake.servos.get(0).setPosition(.4);
+//                robot.odometry.updatePosition();
+//            }
+//            hasFreight = false;
+//            intake.motors.get(0).setPower(0);
+//            turret.servos.get(0).setPosition(0.5);
+//            turret.servos.get(1).setPosition(0.5);
+//            //drivetrain.moveToPosition(wall, 5, 5, 2);
         }
 
         //drivetrain.moveToPosition(wall,5,5,2);
         //drivetrain.moveToPosition(warehouse,5,5,2);
-        }
+//        }
     }
 
 //Depositing freight position

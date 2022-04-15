@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.*;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 /*
  * Picks up and scores the cap using an arm
  */
@@ -12,17 +14,18 @@ public class Cap extends Mechanism {
     /*New instance of robot*/
     public Robot robot;
     public Servo servo;
-
+    public Telemetry telemetry;
     public boolean altMode = false;
-    public double verticalPosition = 0;
+    public double verticalPosition = 0.0;
 
     /*
      * Cap constructor; makes a new instance of cap
      */
-    public Cap(CRServo capCR, Servo capN){
+    public Cap(CRServo capCR, Servo capN, Telemetry T){
         super();
         getCRServos().add(capCR);
         getServos().add(capN);
+        telemetry = T;
     }
 
     @Override
@@ -35,10 +38,12 @@ public class Cap extends Mechanism {
         }
 
         if (altMode) {
-            getCRServos().get(0).setPower(gp1.left_stick_y);
-            verticalPosition = verticalPosition + (gp1.right_stick_y*0.25);
+            getCRServos().get(0).setPower(-gp1.left_stick_y);
+            verticalPosition = verticalPosition - (gp1.right_stick_y);
             getServos().get(0).setPosition(verticalPosition);
         }
+        telemetry.addData("VerticalCapPos", verticalPosition);
+
     }
 
     @Override

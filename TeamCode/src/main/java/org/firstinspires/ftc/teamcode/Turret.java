@@ -184,13 +184,13 @@ public class Turret extends Mechanism{
         motors.get(0).setPower(60);
         motors.get(0).setTargetPosition(spinLocation + spinTrim);
         if(forward){
-            spinLocation = 2590;
+            spinLocation = 0;
         } else if(left && !(retract && down)){
-            spinLocation = 588;
+            spinLocation = 588-2590;
         } else if(backward && !down){
-            spinLocation = 1600;
+            spinLocation = -1600-2590;
         } else if(right && !(retract && down)){
-            spinLocation = 4557;
+            spinLocation = 4557-2590;
         }
         if (extend) {
             servos.get(0).setPosition(0.8 + horizontalTrim); //0.08

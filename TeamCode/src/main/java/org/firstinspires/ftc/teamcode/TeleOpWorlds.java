@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
@@ -26,7 +27,7 @@ public class TeleOpWorlds extends LinearOpMode{
     public Drivetrain drivetrain; //declares drivetrain
     public Robot robot; //declares robot
     public Intake intake;
-    //public Cap cap;
+    public Cap cap;
     public Spinner spinner;
     public Turret turret;
     //public ColorSensor color;
@@ -50,7 +51,7 @@ public class TeleOpWorlds extends LinearOpMode{
         drivetrain = new Drivetrain(robot, motorNumbers, telemetry, hardwareMap.get(Servo.class, "SDriveL"), hardwareMap.get(Servo.class, "SDriveM"), hardwareMap.get(Servo.class, "SDriveR"));
         intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intake2"));
         spinner = new Spinner(hardwareMap.get(DcMotorEx.class,"spinner"));
-        //cap = new Cap(hardwareMap.get(CRServo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"));
+        cap = new Cap(hardwareMap.get(CRServo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"), telemetry);
         turret = new Turret(hardwareMap.get(DcMotorEx.class, "turretSpin"), hardwareMap.get(DcMotorEx.class, "turretLift"), hardwareMap.get(Servo.class, "turretLeft"), hardwareMap.get(Servo.class, "turretRight"), telemetry);
         //color = hardwareMap.get(ColorSensor.class, "color");
         robot.initMotors(motorNames);
@@ -92,6 +93,7 @@ public class TeleOpWorlds extends LinearOpMode{
             drivetrain.dashboardtelemetry.addData("deployed?", spinner.deployed);
             drivetrain.dashboardtelemetry.addData("Distance (cm)", distance.getDistance(DistanceUnit.CM));
             drivetrain.dashboardtelemetry.addData("Has freight? ", hasFreight);
+            drivetrain.dashboardtelemetry.addData("CapVertPos", cap.verticalPosition);
 //            drivetrain.dashboardtelemetry.addData("endgameFlashies", endgameFlashies.hasExpired());
 //            drivetrain.dashboardtelemetry.addData("endgameFlashiesOver? :(", endgameFlashiesOver.hasExpired());
 //            if(endgameFlashies.hasExpired() && !endgameFlashiesOver.hasExpired() && currentPattern != 3){
@@ -125,7 +127,7 @@ public class TeleOpWorlds extends LinearOpMode{
             drivetrain.dashboardtelemetry.addData("Turret lift motor: ", turret.motors.get(1).getCurrentPosition());
             drivetrain.dashboardtelemetry.addData("Left servo: ", turret.servos.get(0).getPosition());
             drivetrain.dashboardtelemetry.addData("Right servo: ", turret.servos.get(1).getPosition());
-            drivetrain.dashboardtelemetry.addData("Stick: ", gamepad2.right_stick_y);
+            drivetrain.dashboardtelemetry.addData("Stick: ", gamepad1.right_stick_y);
         }
     }
 }

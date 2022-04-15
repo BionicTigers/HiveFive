@@ -15,7 +15,7 @@ public class CapOpMode extends LinearOpMode {
     /*Runs the Cap op mode*/
     public void runOpMode() throws InterruptedException {
 
-        nocap = new Cap(hardwareMap.get(CRServo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"));
+        nocap = new Cap(hardwareMap.get(CRServo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"), telemetry);
 
         waitForStart();
 
