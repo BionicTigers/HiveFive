@@ -62,6 +62,9 @@ public class RedsideWarehouse extends LinearOpMode {
         Deadline park = new Deadline(25, TimeUnit.SECONDS);
         cap.getServos().get(0).setPosition(0.5);
 
+        drivetrain.odoDown();
+        robot.odometry.reset();
+
         waitForStart();
         while (!park.hasExpired()) {
             turret.motors.get(1).setTargetPosition(0);
