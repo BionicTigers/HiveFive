@@ -58,8 +58,8 @@ public class Intake extends Mechanism {
     public void deposit(int duration) {
         Deadline time = new Deadline(duration, TimeUnit.SECONDS);
         while(!time.hasExpired()){
-            intake.setVelocity(60); //Add number
-            intake.setPower(60); //Add number
+ //Add number
+            intake.setPower(50); //Add number
         }
     }
 

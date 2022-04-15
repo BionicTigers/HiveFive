@@ -64,25 +64,31 @@ public class RedsideWarehouse extends LinearOpMode {
 
         drivetrain.odoDown();
         robot.odometry.reset();
+        cap.getServos().get(0).setPosition(.5);
+
 
         waitForStart();
-        while (!park.hasExpired()) {
-            turret.motors.get(1).setTargetPosition(0);
-            drivetrain.moveToPosition(dropZone, 5, 5, 2);
+        while (!park.hasExpired() && opModeIsActive()) {
+
+            turret.motors.get(1).setTargetPosition(1800);
+            turret.motors.get(0).setTargetPosition(-500);
+            turret.motors.get(1).setPower(100);
+            sleep(100);
+            turret.motors.get(0).setPower(60);
+            drivetrain.moveToPosition(dropZone, 5, 5, 2,2000);
 
             //Vision stuffs
-
-
-            intake.deposit(250);
-
-            turret.motors.get(1).setTargetPosition(2800);
-            turret.motors.get(0).setTargetPosition(2590);
-            sleep(150);
-            //drivetrain.moveToPosition(wall, 5, 5, 2);
-            //drivetrain.moveToPosition(warehouse, 5, 5, 2);
-            intake.intake();
             turret.servos.get(0).setPosition(0.8);
             turret.servos.get(1).setPosition(0.2);
+            intake.servos.get(0).setPosition(.1);
+            intake.deposit(250);
+
+            turret.motors.get(0).setTargetPosition(2590);
+
+            sleep(150);
+
+            //drivetrain.moveToPosition(wall, 5, 5, 2);
+            //drivetrain.moveToPosition(warehouse, 5, 5, 2);
             //drivetrain.moveToPosition(grabZone, 5, 5, 2);
             while (!hasFreight && opModeIsActive()) {
                 //drivetrain.motors.get(0).setPower(30);
@@ -92,6 +98,7 @@ public class RedsideWarehouse extends LinearOpMode {
                 if (distance.getDistance(DistanceUnit.CM) < 0.8) {
                     hasFreight = true;
                 }
+                intake.servos.get(0).setPosition(.4);
                 robot.odometry.updatePosition();
             }
             intake.motors.get(0).setPower(0);
