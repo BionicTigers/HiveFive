@@ -240,7 +240,7 @@ public class Odometry extends Mechanism {
             relativeY = (encoderDeltamm[0] + encoderDeltamm[1]) / 2; //how much moved forward/back
             //setting current robo rotation in Location object
             // pos.setRotation((float) Math.toDegrees(((ODO_CIRCUMFERENCE_MM/**circumference*/ * ((encoderPosition[0]) / ODO_ENCODER_TICKS)/**percentage of the wheel revolved*/ - (ODO_CIRCUMFERENCE_MM * ((encoderPosition[1]) / ODO_ENCODER_TICKS)))) / ODO_DISTANCE_MM));
-            double angle = (float) Math.toDegrees(-(encoderPosition[1] - encoderPosition[0]) / (ODO_DISTANCE_MM * ENCODER_TICKS_PER_MM));
+            double angle = -(float) Math.toDegrees(-(encoderPosition[1] - encoderPosition[0]) / (ODO_DISTANCE_MM * ENCODER_TICKS_PER_MM));
             angle=angle+rotOffset;
             position.setRotation(angle);
             if (Math.abs(botRotDelta) > 0) {
