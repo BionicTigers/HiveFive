@@ -50,11 +50,11 @@ public class Spinner extends Mechanism {
 
     public void write() {
         if (spinning && motors.get(0).getCurrentPosition() >= 1000*4/3) {
-            motors.get(0).setPower(0.75);
+            motors.get(0).setPower(1);
         }
 
         if (spinningBack && motors.get(0).getCurrentPosition() <= -1000*4/3) {
-            motors.get(0).setPower(0.75);
+            motors.get(0).setPower(1);
         }
 
     }

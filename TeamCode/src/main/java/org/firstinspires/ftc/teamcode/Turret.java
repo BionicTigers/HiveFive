@@ -205,7 +205,7 @@ public class Turret extends Mechanism{
         if(!liftOverride)
         {
             if(down){
-                motors.get(0).setPower(60);
+                motors.get(0).setPower(100);
             }
             else{
                 motors.get(1).setPower(100);
@@ -215,11 +215,11 @@ public class Turret extends Mechanism{
         else motors.get(1).setPower(0);
 
         if (up) {
-            motors.get(1).setTargetPosition(1800 + verticalTrim);
+            motors.get(1).setTargetPosition(-2700 + verticalTrim);
         } else if (mid) {
-            motors.get(1).setTargetPosition(900 + verticalTrim);
+            motors.get(1).setTargetPosition(-1900 + verticalTrim);
         } else if (down) {
-            motors.get(1).setTargetPosition(50 + verticalTrim);
+            motors.get(1).setTargetPosition(-50 + verticalTrim);
         }
     }
     public void unfold(){
