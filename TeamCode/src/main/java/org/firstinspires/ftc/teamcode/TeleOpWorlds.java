@@ -70,7 +70,7 @@ public class TeleOpWorlds extends LinearOpMode{
         waitForStart();
         //output.servos.get(0).setPosition(.7);
         drivetrain.odoUp();
-        Mechanism[] mechanisms = {intake, spinner, drivetrain, turret, robot.odometry};
+        Mechanism[] mechanisms = {intake, spinner, drivetrain, turret, robot.odometry, cap};
 
 
 //        endgameFlashies.reset();

@@ -353,7 +353,7 @@ public class Drivetrain extends Mechanism {
 
         double forwardPow = 0.35*((Variables.kfP*forwardError+ Variables.kfI*integralValues[0] + Variables.kfD * (forwardError - lastForwardError)));
         double sidePow = 0.35*((Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError)));
-        double rotPow = (Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - lastRotationError));
+        double rotPow = -(Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - lastRotationError));
 
         lastForwardError = forwardPow;
         lastSidewaysError = sidePow;
@@ -461,7 +461,7 @@ public class Drivetrain extends Mechanism {
     public void odoDown () {
         servos.get(0).setPosition(0.7);//R
         servos.get(1).setPosition(0.61);//M
-        servos.get(2).setPosition(.05);//L
+        servos.get(2).setPosition(.18);//L
     }
 
     /*

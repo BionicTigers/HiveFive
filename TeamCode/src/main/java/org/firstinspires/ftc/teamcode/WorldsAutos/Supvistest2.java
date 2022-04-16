@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autos;
+package org.firstinspires.ftc.teamcode.WorldsAutos;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -28,7 +28,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.concurrent.TimeUnit;
 
 //OG auto
-@Autonomous(name="Supvis")
+@Autonomous(name="Supvis2")
 public class Supvistest2 extends LinearOpMode {
     private Robot robot;
     private Intake intake;
@@ -70,7 +70,7 @@ public class Supvistest2 extends LinearOpMode {
         drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDriveL"), hardwareMap.get(Servo.class, "SDriveM"), hardwareMap.get(Servo.class, "SDriveR"));
         spinner = new Spinner(hardwareMap.get(DcMotorEx.class, "spinner"));
         transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry, hardwareMap.get(DigitalChannel.class, "channel"), hardwareMap.get(Servo.class, "STransfer1"), hardwareMap.get(Servo.class, "STransfer2"));
-        cap = new Cap(hardwareMap.get(CRServo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"));
+        cap = new Cap(hardwareMap.get(CRServo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"), telemetry);
         output = new Output(hardwareMap.get(Servo.class, "output"));
         superiorvision2 = new SuperiorVision2();
         time = new ElapsedTime();

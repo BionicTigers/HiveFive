@@ -5,28 +5,31 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
+import org.firstinspires.ftc.teamcode.Cap;
 import org.firstinspires.ftc.teamcode.Drivetrain;
 import org.firstinspires.ftc.teamcode.Intake;
 import org.firstinspires.ftc.teamcode.Location;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.Spinner;
 import org.firstinspires.ftc.teamcode.Turret;
-import org.firstinspires.ftc.teamcode.Cap;
 
 import java.util.concurrent.TimeUnit;
+
+
+
 
 //Positions needed: Hub scoring 1/2/3, intermediate, warehouse
 /*
 Uses vision to scan barcode, then scores preload on appropriate level. Until a set time within the
 auto, cycles as much freight as possible onto level 3, then parks in the warehouse.
 */
-@Autonomous(name="Warehouse Red Worlds")
-public class RedsideWarehouse extends LinearOpMode {
+@Autonomous(name="carousel Red Worlds")
+public class RedCarouselWorlds extends LinearOpMode {
     public String[] motorNames = {"frontRight","frontLeft","backLeft","backRight"}; //establishes motor names
     public Drivetrain drivetrain; //declares drivetrain
     public Robot robot; //declares robot
@@ -45,10 +48,11 @@ public class RedsideWarehouse extends LinearOpMode {
 
     public boolean hasFreight = false;
 
-    private final Location dropZone = new Location(-465.544,0,0,0);
-    private final Location wall = new Location(200,0,0,0);
-    private final Location warehouse = new Location(10,0,500,0);
-    private final Location grabZone = new Location(10,0,800,0);
+    private final Location precarousel = new Location(-75, 0, 0, 0);
+    private final Location carousel = new Location(-75,0,-590,0);
+    private final Location hubScore = new Location(-1000,0,-250,0);
+    private final Location storageUnit = new Location(-650,0,-750,0);
+    private final Location noMansLand = new Location(-1000,0,-590,0);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -65,8 +69,8 @@ public class RedsideWarehouse extends LinearOpMode {
 
         Deadline park = new Deadline(25, TimeUnit.SECONDS);
         cap.getServos().get(0).setPosition(0.5);
-        turret.servos.get(0).setPosition(.5);
-        turret.servos.get(1).setPosition(.5);
+        turret.servos.get(0).setPosition(.45);
+        turret.servos.get(1).setPosition(.55);
         drivetrain.odoDown();
 
         cap.getServos().get(0).setPosition(.5);
@@ -76,75 +80,47 @@ public class RedsideWarehouse extends LinearOpMode {
             if(gamepad1.a) {
                 turret.motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 turret.motors.get(1).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
             }
-
+            spinner.motors.get(0).setTargetPosition(0);
+            spinner.motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
         waitForStart();
         turret.motors.get(0).setTargetPosition(0);
-        turret.motors.get(1).setTargetPosition(0);
+        turret.motors.get(1).setTargetPosition(50);
         turret.motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.motors.get(1).setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.odometry.reset();
-//        while (!park.hasExpired() && opModeIsActive()) {
-
-            turret.motors.get(0).setTargetPosition(500);
-            turret.motors.get(1).setTargetPosition(1800);
-            turret.motors.get(1).setPower(100);
-            turret.servos.get(0).setPosition(0.8);
-            turret.servos.get(1).setPosition(0.2);
-            sleep(750);
-            turret.motors.get(0).setPower(75);
-
-            drivetrain.moveToPosition(dropZone, 5, 5, 2,2000);
-
-            //Vision stuffs
-
-            intake.servos.get(0).setPosition(.1);
-            intake.motors.get(0).setPower(.5);
-            sleep(500);
-            intake.motors.get(0).setPower(0);
-            intake.servos.get(0).setPosition(0);
-            turret.motors.get(0).setTargetPosition(-2590);
-            turret.motors.get(1).setPower(60);
-            turret.motors.get(1).setTargetPosition(400);
-            drivetrain.moveToPosition(wall, 5, 5, 2,2000);
-            turret.motors.get(1).setTargetPosition(0);
-            intake.motors.get(0).setPower(-100);
-            intake.servos.get(0).setPosition(0);
-            drivetrain.moveToPosition(warehouse, 5, 5, 2,2000);
-
-
-            while (!hasFreight && opModeIsActive()) {
-                drivetrain.motors.get(0).setPower(30);
-                drivetrain.motors.get(1).setPower(30);
-                drivetrain.motors.get(2).setPower(30);
-                drivetrain.motors.get(3).setPower(30);
-                if (distance.getDistance(DistanceUnit.CM) < 0.8) {
-                    hasFreight = true;
-                }
-                telemetry.addData("HasFreight ", hasFreight);
-                telemetry.update();
-
-                robot.odometry.updatePosition();
-            }
-
-            intake.servos.get(0).setPosition(.4);
-            hasFreight = false;
-            intake.motors.get(0).setPower(0);
-            turret.servos.get(0).setPosition(0.5);
-            turret.servos.get(1).setPosition(0.5);
-            drivetrain.moveToPosition(wall, 5, 5, 2,2);
-        }
-
-        //drivetrain.moveToPosition(wall,5,5,2);
-        //drivetrain.moveToPosition(warehouse,5,5,2);
-//        }
+        drivetrain.moveToPositionSlow(precarousel, 5, 5, 2, 2000);
+        drivetrain.moveToPositionSlow(carousel, 5, 5, 2, 2000);
+        spinner.motors.get(0).setTargetPosition(-2400);
+        spinner.motors.get(0).setPower(0.55);
+        sleep(3000);
+        spinner.motors.get(0).setPower(0);
+        drivetrain.moveToPositionSlow(noMansLand, 5, 5, 2, 2000);
+        drivetrain.moveToPosition(hubScore, 5, 5, 2, 2000);
+        turret.motors.get(0).setTargetPosition(-3000);
+        turret.motors.get(1).setTargetPosition(2000);
+        turret.motors.get(1).setPower(100);
+        turret.servos.get(0).setPosition(0.8);
+        turret.servos.get(1).setPosition(0.2);
+        sleep(1000);
+        turret.motors.get(0).setPower(100);
+        sleep(1200);
+        intake.servos.get(0).setPosition(.1);
+        intake.motors.get(0).setPower(.5);
+        sleep(1000);
+        intake.motors.get(0).setPower(0);
+        intake.servos.get(0).setPosition(0);
+//        turret.motors.get(0).setTargetPosition(-2590);
+//        turret.motors.get(1).setPower(60);
+//        turret.motors.get(1).setTargetPosition(400);
+//        turret.motors.get(1).setTargetPosition(0);
+//        intake.motors.get(0).setPower(-100);
+//        intake.servos.get(0).setPosition(0);
+//        drivetrain.moveToPositionSlow(noMansLand, 5, 5, 2, 2000);
+//        drivetrain.moveToPositionSlow(storageUnit, 5, 5, 2, 2000);
     }
 
-//Depositing freight position
-//465.544, 0, 0
-
-//Just in the warehouse
-//0,
+//        }
+}
 

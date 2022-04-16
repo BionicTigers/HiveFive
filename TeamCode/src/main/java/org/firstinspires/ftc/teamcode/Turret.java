@@ -196,8 +196,8 @@ public class Turret extends Mechanism{
             servos.get(0).setPosition(0.8 + horizontalTrim); //0.08
             servos.get(1).setPosition(0.2 - horizontalTrim); //0.58
         } else if (retract) {
-            servos.get(0).setPosition(0.5); //0.32
-            servos.get(1).setPosition(0.5); //0.35
+            servos.get(0).setPosition(0.45); //0.32
+            servos.get(1).setPosition(0.55); //0.35
         } else if (middle){
             servos.get(0).setPosition(0.65 + horizontalTrim);
             servos.get(1).setPosition(0.35 - horizontalTrim);
