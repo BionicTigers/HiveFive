@@ -27,11 +27,8 @@ import java.util.concurrent.TimeUnit;
 @Autonomous(name="Supvis")
 public class Supvistest extends LinearOpMode {
     private Robot robot;
-    private Intake intake;
-    private Cap cap;
     private Variables variables;
     private SuperiorVision superiorvision;
-    private Spinner spinner;
     private ElapsedTime time;
 
     private Location position = new Location();
@@ -59,7 +56,6 @@ public class Supvistest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         robot = new Robot(this);
-        spinner = new Spinner(hardwareMap.get(DcMotorEx.class, "spinner"));
         superiorvision = new SuperiorVision();
         time = new ElapsedTime();
         Deadline stop = new Deadline(28, TimeUnit.SECONDS);

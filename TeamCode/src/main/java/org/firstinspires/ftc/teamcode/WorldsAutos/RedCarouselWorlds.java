@@ -20,14 +20,6 @@ import org.firstinspires.ftc.teamcode.Turret;
 
 import java.util.concurrent.TimeUnit;
 
-
-
-
-//Positions needed: Hub scoring 1/2/3, intermediate, warehouse
-/*
-Uses vision to scan barcode, then scores preload on appropriate level. Until a set time within the
-auto, cycles as much freight as possible onto level 3, then parks in the warehouse.
-*/
 @Autonomous(name="carousel Red Worlds")
 public class RedCarouselWorlds extends LinearOpMode {
     public String[] motorNames = {"frontRight","frontLeft","backLeft","backRight"}; //establishes motor names
@@ -45,14 +37,13 @@ public class RedCarouselWorlds extends LinearOpMode {
 
     DistanceSensor distance;
 
-
     public boolean hasFreight = false;
 
-    private final Location precarousel = new Location(-75, 0, 0, 0);
-    private final Location carousel = new Location(-75,0,-590,0);
-    private final Location hubScore = new Location(-1000,0,-250,0);
-    private final Location storageUnit = new Location(-650,0,-750,0);
-    private final Location noMansLand = new Location(-1000,0,-590,0);
+    private final Location precarousel = new Location(-100, 0, 0, 0);
+    private final Location carousel = new Location(-100,0,-600,0);
+    private final Location hubScore = new Location(-1300,0,-200,0);
+    private final Location storageUnit = new Location(-650,0,-600,0);
+    private final Location noMansLand = new Location(-1300,0,-600,0);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -62,20 +53,19 @@ public class RedCarouselWorlds extends LinearOpMode {
         spinner = new Spinner(hardwareMap.get(DcMotorEx.class,"spinner"));
         cap = new Cap(hardwareMap.get(CRServo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"), telemetry);
         turret = new Turret(hardwareMap.get(DcMotorEx.class, "turretSpin"), hardwareMap.get(DcMotorEx.class, "turretLift"), hardwareMap.get(Servo.class, "turretLeft"), hardwareMap.get(Servo.class, "turretRight"), telemetry);
-        //color = hardwareMap.get(ColorSensor.class, "color");
         robot.initMotors(motorNames);
         distance = hardwareMap.get(DistanceSensor.class, "distance");
 
 
         Deadline park = new Deadline(25, TimeUnit.SECONDS);
         cap.getServos().get(0).setPosition(0.5);
-        turret.servos.get(0).setPosition(.45);
-        turret.servos.get(1).setPosition(.55);
+        turret.servos.get(0).setPosition(0.456);
+        turret.servos.get(1).setPosition(0.60);
         drivetrain.odoDown();
 
         cap.getServos().get(0).setPosition(.5);
 
-        intake.servos.get(0).setPosition(.6);
+        intake.servos.get(0).setPosition(0.4);
         while(!isStarted() && !isStopRequested()){
             if(gamepad1.a) {
                 turret.motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -85,35 +75,40 @@ public class RedCarouselWorlds extends LinearOpMode {
             spinner.motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
         waitForStart();
+        turret.servos.get(0).setPosition(0.656);
+        turret.servos.get(1).setPosition(0.4);
         turret.motors.get(0).setTargetPosition(0);
         turret.motors.get(1).setTargetPosition(-400);
         turret.motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.motors.get(1).setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.motors.get(1).setPower(100);
-        turret.servos.get(0).setPosition(0.65);
-        turret.servos.get(1).setPosition(0.35);
+        turret.servos.get(0).setPosition(0.446);
+        turret.servos.get(1).setPosition(0.61);
         robot.odometry.reset();
         drivetrain.moveToPositionSlow(precarousel, 5, 5, 2, 2000);
         drivetrain.moveToPositionSlow(carousel, 5, 5, 2, 2000);
-        spinner.motors.get(0).setTargetPosition(-2500);
-        spinner.motors.get(0).setPower(0.65);
-        sleep(3100);
+        spinner.motors.get(0).setTargetPosition(-3100);
+        spinner.motors.get(0).setPower(0.67);
+        sleep(3600);
         spinner.motors.get(0).setPower(0);
         drivetrain.moveToPositionSlow(noMansLand, 5, 5, 2, 2000);
         drivetrain.moveToPosition(hubScore, 5, 5, 2, 2000);
-        turret.motors.get(0).setTargetPosition(-2700);
-        turret.motors.get(1).setTargetPosition(-2000);
+        turret.motors.get(0).setTargetPosition(-2100);
+        turret.motors.get(1).setTargetPosition(-2900);
         turret.motors.get(1).setPower(100);
-        turret.servos.get(0).setPosition(0.8);
-        turret.servos.get(1).setPosition(0.2);
         sleep(1000);
         turret.motors.get(0).setPower(100);
         sleep(1200);
+        turret.servos.get(0).setPosition(0.856);
+        turret.servos.get(1).setPosition(0.2);
+        sleep(500);
         intake.servos.get(0).setPosition(.1);
-        intake.motors.get(0).setPower(.5);
+        sleep(250);
+        intake.motors.get(0).setPower(.35);
         sleep(1000);
         intake.motors.get(0).setPower(0);
         intake.servos.get(0).setPosition(0);
+        sleep(200);
 //        turret.motors.get(0).setTargetPosition(-2590);
 //        turret.motors.get(1).setPower(60);
 //        turret.motors.get(1).setTargetPosition(400);
@@ -123,7 +118,5 @@ public class RedCarouselWorlds extends LinearOpMode {
 //        drivetrain.moveToPositionSlow(noMansLand, 5, 5, 2, 2000);
 //        drivetrain.moveToPositionSlow(storageUnit, 5, 5, 2, 2000);
     }
-
-//        }
 }
 

@@ -26,21 +26,13 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.concurrent.TimeUnit;
-
-//OG auto
+//red carousel vision
 @Autonomous(name="Supvis2")
 public class Supvistest2 extends LinearOpMode {
     private Robot robot;
-    private Intake intake;
-    private PositionalTransfer transfer;
-    private Cap cap;
-    public Output output;
-    private Drivetrain drive;
     private Variables variables;
     private SuperiorVision2 superiorvision2;
-    private Spinner spinner;
     private ElapsedTime time;
-    public ColorSensor color;
 
     private Location position = new Location();
     private int[] wheels = {0, 1, 2, 3};
@@ -67,19 +59,10 @@ public class Supvistest2 extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         robot = new Robot(this);
-        drive = new Drivetrain(robot, wheels, telemetry, hardwareMap.get(Servo.class, "SDriveL"), hardwareMap.get(Servo.class, "SDriveM"), hardwareMap.get(Servo.class, "SDriveR"));
-        spinner = new Spinner(hardwareMap.get(DcMotorEx.class, "spinner"));
-        transfer = new PositionalTransfer(hardwareMap.get(DcMotorEx.class, "transfer"), telemetry, hardwareMap.get(DigitalChannel.class, "channel"), hardwareMap.get(Servo.class, "STransfer1"), hardwareMap.get(Servo.class, "STransfer2"));
-        cap = new Cap(hardwareMap.get(CRServo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"), telemetry);
-        output = new Output(hardwareMap.get(Servo.class, "output"));
         superiorvision2 = new SuperiorVision2();
         time = new ElapsedTime();
-        color = hardwareMap.get(ColorSensor.class, "color");
         Deadline stop = new Deadline(28, TimeUnit.SECONDS);
         Deadline rightTurn = new Deadline(1, TimeUnit.SECONDS);
-
-        robot.odometry.reset();
-        drive.odoDown();
 
         OpenCvCamera webcam;
 
@@ -89,6 +72,10 @@ public class Supvistest2 extends LinearOpMode {
         webcam.setPipeline(new SuperiorVision2.SkystoneDeterminationPipeline());
         webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
         superiorvision2 = new SuperiorVision2();
+
+        waitForStart();
+
+
 
     }
 }

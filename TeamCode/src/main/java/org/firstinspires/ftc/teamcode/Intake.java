@@ -2,12 +2,13 @@ package org.firstinspires.ftc.teamcode;
 
 import android.graphics.Color;
 
-import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 
 import java.util.concurrent.TimeUnit;
@@ -20,6 +21,7 @@ public class Intake extends Mechanism {
     public boolean goingOut;
     public boolean deposit;
     public boolean override;
+    public DistanceSensor distance;
 
     public DcMotorEx intake;
 
@@ -29,6 +31,14 @@ public class Intake extends Mechanism {
     /*
      * Creates, declares, and assigns a motor to the motors array list
      */
+    public Intake(DcMotorEx intake, Servo intake2, DistanceSensor d) {
+        super();
+        this.intake = intake;
+        motors.add(intake);
+        motors.get(0).setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        servos.add(intake2);
+        distance = d;
+    }
     public Intake(DcMotorEx intake, Servo intake2) {
         super();
         this.intake = intake;
@@ -70,7 +80,10 @@ public class Intake extends Mechanism {
         goingIn = gp1.right_trigger >= .3;
         goingOut = gp1.left_trigger >= .3;
         deposit = gp1.left_bumper;
-        override = gp1.a;
+
+        if(override && gp1.right_trigger <= .3){
+            override = false;
+        } else if(gp1.a || distance.getDistance(DistanceUnit.CM)< .8){override = true;}
     }
 
      //Controls the intake
@@ -78,10 +91,10 @@ public class Intake extends Mechanism {
         run(goingIn, goingOut);
         if(deposit) motors.get(0).setPower(.5);
         if ((goingIn||deposit) && !override){
-            servos.get(0).setPosition(.1);
+            servos.get(0).setPosition(0.1);
         }
         else {
-            servos.get(0).setPosition(1);
+            servos.get(0).setPosition(0.4);
         }
     }
 

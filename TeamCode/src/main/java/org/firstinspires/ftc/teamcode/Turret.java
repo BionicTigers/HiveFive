@@ -140,7 +140,7 @@ public class Turret extends Mechanism{
 //        }
         if(gp2.x)
         {
-            unfold();
+            //unfold();
         }
         if(!wait2retract.hasExpired())
         {
@@ -193,13 +193,13 @@ public class Turret extends Mechanism{
             spinLocation = 4557-2590;
         }
         if (extend) {
-            servos.get(0).setPosition(0.8 + horizontalTrim); //0.08
+            servos.get(0).setPosition(0.856 + horizontalTrim); //0.08
             servos.get(1).setPosition(0.2 - horizontalTrim); //0.58
         } else if (retract) {
-            servos.get(0).setPosition(0.45); //0.32
-            servos.get(1).setPosition(0.55); //0.35
+            servos.get(0).setPosition(0.456); //0.32
+            servos.get(1).setPosition(0.60); //0.35
         } else if (middle){
-            servos.get(0).setPosition(0.65 + horizontalTrim);
+            servos.get(0).setPosition(0.706 + horizontalTrim);
             servos.get(1).setPosition(0.35 - horizontalTrim);
         }
         if(!liftOverride)

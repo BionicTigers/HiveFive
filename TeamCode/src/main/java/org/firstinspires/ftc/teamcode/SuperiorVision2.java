@@ -90,11 +90,11 @@ public class SuperiorVision2 extends LinearOpMode
         /*
          * The core values which define the location and size of the sample regions
          */
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(109,98);
-        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(181,98);
-        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(253,98);
-        static final int REGION_WIDTH = 20;
-        static final int REGION_HEIGHT = 20;
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(100,124);
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(0,0);
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(217,110);
+        static final int REGION_WIDTH = 23;
+        static final int REGION_HEIGHT = 23;
 
         /*
          * Points which actually define the sample region rectangles, derived from above values
@@ -151,6 +151,10 @@ public class SuperiorVision2 extends LinearOpMode
             Imgproc.cvtColor(input, YCrCb, Imgproc.COLOR_RGB2YCrCb);
             Core.extractChannel(YCrCb, Cb, 2);
         }
+//Luke Comment part 2 electric boogaloo I think you have to change the col unless I am misunderstanding something to find different colors
+        //basically YCrCb is stupid and isn't hsv which is what I used and its wack
+        //location is set up though just call me if it gets way too confusing or whatever, get autos done first though good luck.
+        //will have links in superior vision og edition
 
         @Override
         public void init(Mat firstFrame)

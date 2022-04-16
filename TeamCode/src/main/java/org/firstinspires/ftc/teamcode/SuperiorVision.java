@@ -86,11 +86,11 @@ public class SuperiorVision extends LinearOpMode
         /*
          * The core values which define the location and size of the sample regions
          */
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(109,98);
-        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(181,98);
-        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(253,98);
-        static final int REGION_WIDTH = 20;
-        static final int REGION_HEIGHT = 20;
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(12,12);
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(181,120);
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(294,97);
+        static final int REGION_WIDTH = 22;
+        static final int REGION_HEIGHT = 22;
 
         /*
          * Points which actually define the sample region rectangles, derived from above values
@@ -147,7 +147,10 @@ public class SuperiorVision extends LinearOpMode
             Imgproc.cvtColor(input, YCrCb, Imgproc.COLOR_RGB2YCrCb);
             Core.extractChannel(YCrCb, Cb, 2);
         }
-
+//Luke Comment I think you have to change the col unless I am misunderstanding something to find different colors
+        //basically YCrCb is stupid and isn't hsv which is what I used and its wack
+        //location is set up though just call me if it gets way too confusing or whatever, get autos done first though good luck.
+        //https://tvone.com/tech-support/faqs/120-ycrcb-values-for-various-colors
         @Override
         public void init(Mat firstFrame)
         {
@@ -233,21 +236,21 @@ public class SuperiorVision extends LinearOpMode
                         GREEN, // The color the rectangle is drawn in
                         -1); // Negative thickness means solid fill
             }
-//            else if(max == avg2) // Was it from region 2?
-//            {
-//                position = SkystonePosition.CENTER; // Record our analysis
-//
-//                /*
-//                 * Draw a solid rectangle on top of the chosen region.
-//                 * Simply a visual aid. Serves no functional purpose.
-//                 */
-//                Imgproc.rectangle(
-//                        input, // Buffer to draw on
-//                        region2_pointA, // First point which defines the rectangle
-//                        region2_pointB, // Second point which defines the rectangle
-//                        GREEN, // The color the rectangle is drawn in
-//                         -1); // Negative thickness means solid fill
-//            }
+            else if(max == avg2) // Was it from region 2?
+            {
+                position = SkystonePosition.CENTER; // Record our analysis
+
+                /*
+                 * Draw a solid rectangle on top of the chosen region.
+                 * Simply a visual aid. Serves no functional purpose.
+                 */
+                Imgproc.rectangle(
+                        input, // Buffer to draw on
+                        region2_pointA, // First point which defines the rectangle
+                        region2_pointB, // Second point which defines the rectangle
+                        GREEN, // The color the rectangle is drawn in
+                         -1); // Negative thickness means solid fill
+            }
             else if(max == avg3) // Was it from region 3?
             {
                 position = SkystonePosition.RIGHT; // Record our analysis

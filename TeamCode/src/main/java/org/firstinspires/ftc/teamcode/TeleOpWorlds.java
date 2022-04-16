@@ -49,13 +49,13 @@ public class TeleOpWorlds extends LinearOpMode{
     public void runOpMode() {
         robot = new Robot(this);
         drivetrain = new Drivetrain(robot, motorNumbers, telemetry, hardwareMap.get(Servo.class, "SDriveL"), hardwareMap.get(Servo.class, "SDriveM"), hardwareMap.get(Servo.class, "SDriveR"));
-        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intake2"));
+        distance = hardwareMap.get(DistanceSensor.class, "distance");
+        intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intake2"), distance);
         spinner = new Spinner(hardwareMap.get(DcMotorEx.class,"spinner"));
         cap = new Cap(hardwareMap.get(CRServo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"), telemetry);
         turret = new Turret(hardwareMap.get(DcMotorEx.class, "turretSpin"), hardwareMap.get(DcMotorEx.class, "turretLift"), hardwareMap.get(Servo.class, "turretLeft"), hardwareMap.get(Servo.class, "turretRight"), telemetry);
         //color = hardwareMap.get(ColorSensor.class, "color");
         robot.initMotors(motorNames);
-        distance = hardwareMap.get(DistanceSensor.class, "distance");
 //        blinkinLedDriver = hardwareMap.get(RevBlinkinLedDriver.class, "blinkin");
 //        pattern = RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_LAVA_PALETTE;
 //        pattern2 = RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_FOREST_PALETTE;
