@@ -44,7 +44,8 @@ public class BlueCarouselWorlds extends LinearOpMode {
     private final Location hubScore = new Location(-1300, 0, -200, 0);
     private final Location storageUnit = new Location(-650, 0, -600, 0);
     private final Location noMansLand = new Location(-1300, 0, -600, 0);
-    public Location turn = new Location(-380, 0, 380, 90);
+    public Location turn = new Location(380, 0, -380, 90);
+
 
     @Override
     public void runOpMode() throws InterruptedException {
