@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.concurrent.TimeUnit;
 
-public class Turret extends Mechanism{
+public class BlueTurret extends Mechanism{
 
     public boolean forward;
     public boolean left;
@@ -24,23 +24,23 @@ public class Turret extends Mechanism{
     public int verticalTrim = 0;
     public double horizontalTrim = 0;
     public boolean extend = false;
-    public boolean middle = false; //middle is for extension, do not confuse with mid
+    public boolean middle = false; //middle is for extension, do not confuse with mid plz and thanks.
     public boolean retract = false;
 
     //public String position = "Mid";
     public Telemetry telemetry;
     public DcMotorEx motor;
     private boolean up;
-    private boolean mid; //mid is for height, do not confuse with middle
+    private boolean mid; //mid is for height, do not confuse with middle plz and thanks.
     private boolean liftOverride;
     private boolean down;
     public boolean scorepos;
     public boolean retractOnEnd;
-    Deadline wait = new Deadline (400, TimeUnit.MILLISECONDS);
+    Deadline wait = new Deadline (200, TimeUnit.MILLISECONDS);
 
     Deadline wait2retract = new Deadline (100, TimeUnit.MILLISECONDS);
 
-    public Turret(DcMotorEx turret, DcMotorEx turretRise, Servo turretL, Servo turretR, Telemetry T){
+    public BlueTurret(DcMotorEx turret, DcMotorEx turretRise, Servo turretL, Servo turretR, Telemetry T){
         super();
         telemetry = T;
         motors.add(turret);
@@ -58,16 +58,12 @@ public class Turret extends Mechanism{
     public void update(Gamepad gp1, Gamepad gp2){
         if(gp2.dpad_up){
             forward = true;
-            spinTrim = 0;
         } else if(gp2.dpad_left){
-            right = true;
-            spinTrim = 0;
+            left = true;
         } else if(gp2.dpad_down){
             backward = true;
-            spinTrim = 0;
         } else if(gp2.dpad_right){
-            left = true;
-            spinTrim = 0;
+            right = true;
         } else {
             forward = false;
             left = false;
@@ -81,10 +77,10 @@ public class Turret extends Mechanism{
             altMode = false;
         }
 
-        if ((altMode && gp1.left_stick_x >= 0.3) || gp2.left_stick_x >=.3) {
-            spinTrim = spinTrim - 10;
-        } else if ((altMode && gp1.left_stick_x <= -0.3) || gp2.left_stick_x <= -.3) {
+        if ((altMode && gp1.right_stick_x >= 0.3) || gp2.right_stick_x >=.3) {
             spinTrim = spinTrim + 10;
+        } else if ((altMode && gp1.right_stick_x <= -0.3) || gp2.right_stick_x <= -.3) {
+            spinTrim = spinTrim - 10;
         }
         if (gp2.right_bumper) {
             extend = true;
@@ -116,12 +112,11 @@ public class Turret extends Mechanism{
         else if (gp2.a) {
             mid = false;
             up = false;
+            down = true;
             liftOverride = false;
 
             forward = true; left = false; right = false; backward = false;
             wait2retract.reset();
-            retract = true; middle = false; extend = false;
-            spinTrim = 0;
         }
 
         if(gp2.start && gp2.back){
@@ -132,10 +127,10 @@ public class Turret extends Mechanism{
         }
 
         if (gp2.left_stick_y <= -0.5) {
-            verticalTrim = verticalTrim + 15;
+            verticalTrim = verticalTrim - 15;
         }
         if (gp2.left_stick_y >= 0.5) {
-            verticalTrim = verticalTrim - 15;
+            verticalTrim = verticalTrim + 15;
         }
 //        if (gp2.right_trigger >= 0.5) {
 //            verticalTrim = verticalTrim + 5;
@@ -146,22 +141,20 @@ public class Turret extends Mechanism{
         if(gp2.x)
         {
             unfold();
-            spinTrim = 0;
         }
         if(!wait2retract.hasExpired())
         {
             retractOnEnd = true;
         }
-        if(wait2retract.hasExpired() && retractOnEnd && ((motors.get(0).getCurrentPosition() < 1000 && motors.get(0).getCurrentPosition() > 0) || (motors.get(0).getCurrentPosition() > -1000 && motors.get(0).getCurrentPosition() < 0)))
+        if(wait2retract.hasExpired() && retractOnEnd)
         {
             retractOnEnd = false;
-            down = true;
             retract = true; middle = false; extend = false;
         }
         if(!wait.hasExpired())
-        {
+        {            right = true;
             forward = false;
-            left = false;
+            right = false;
             backward = false;
             up = true;
             scorepos = true;
@@ -172,13 +165,12 @@ public class Turret extends Mechanism{
 
 
         }
-        if(scorepos && wait.hasExpired() && motors.get(1).getCurrentPosition() < -400)
+        if(scorepos && wait.hasExpired())
         {
-            right = true;
             scorepos = false;
-            extend = false;
+            extend = true;
             retract = false;
-            middle = true;
+            middle = false;
         }
         telemetry.addData("up:", up);
         telemetry.addData("mid:", mid);
@@ -189,11 +181,10 @@ public class Turret extends Mechanism{
     }
 
     public void write(){
-        motors.get(0).setPower(100);
+        motors.get(0).setPower(60);
         motors.get(0).setTargetPosition(spinLocation + spinTrim);
         if(forward){
             spinLocation = 0;
-            spinTrim = 0;
         } else if(left && !(retract && down)){
             spinLocation = 588-2590;
         } else if(backward && !down){

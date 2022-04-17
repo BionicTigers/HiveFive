@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+
 
 import java.util.concurrent.TimeUnit;
 
@@ -61,7 +61,6 @@ public class TeleOpWorlds extends LinearOpMode{
 //        pattern2 = RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_FOREST_PALETTE;
 //        endgamePattern = RevBlinkinLedDriver.BlinkinPattern.BEATS_PER_MINUTE_PARTY_PALETTE;
 //        blinkinLedDriver.setPattern(pattern);
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
 
 //        Deadline endgameFlashiesOver = new Deadline(90,TimeUnit.SECONDS);

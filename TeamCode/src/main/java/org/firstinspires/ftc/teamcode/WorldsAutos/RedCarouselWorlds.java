@@ -43,6 +43,7 @@ public class RedCarouselWorlds extends LinearOpMode {
     private final Location carousel = new Location(-100,0,-600,0);
     private final Location hubScore = new Location(-1300,0,-200,0);
     private final Location storageUnit = new Location(-650,0,-600,0);
+    private final Location storageUnitPark = new Location(-750,0,-700,0);
     private final Location noMansLand = new Location(-1300,0,-600,0);
 
     @Override
@@ -104,19 +105,18 @@ public class RedCarouselWorlds extends LinearOpMode {
         sleep(500);
         intake.servos.get(0).setPosition(.1);
         sleep(250);
-        intake.motors.get(0).setPower(.35);
+        intake.motors.get(0).setPower(.5);
         sleep(1000);
         intake.motors.get(0).setPower(0);
         intake.servos.get(0).setPosition(0);
         sleep(200);
-//        turret.motors.get(0).setTargetPosition(-2590);
-//        turret.motors.get(1).setPower(60);
-//        turret.motors.get(1).setTargetPosition(400);
-//        turret.motors.get(1).setTargetPosition(0);
-//        intake.motors.get(0).setPower(-100);
-//        intake.servos.get(0).setPosition(0);
-//        drivetrain.moveToPositionSlow(noMansLand, 5, 5, 2, 2000);
-//        drivetrain.moveToPositionSlow(storageUnit, 5, 5, 2, 2000);
+        turret.servos.get(0).setPosition(0.356);
+        turret.servos.get(1).setPosition(0.7);
+        turret.motors.get(0).setTargetPosition(-2000);
+        turret.motors.get(1).setPower(60);
+        turret.motors.get(1).setTargetPosition(0);
+        drivetrain.moveToPositionSlow(noMansLand, 5, 5, 2, 2000);
+        drivetrain.moveToPositionSlow(storageUnitPark, 5, 5, 2, 2000);
     }
 }
 

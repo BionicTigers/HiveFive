@@ -44,8 +44,8 @@ public class BlueCarouselWorlds extends LinearOpMode {
     private final Location hubScore = new Location(-1300, 0, -200, 0);
     private final Location storageUnit = new Location(-650, 0, -600, 0);
     private final Location noMansLand = new Location(-1300, 0, -600, 0);
-    public Location turn = new Location(380, 0, -380, 90);
-
+    public Location turn = new Location(-300, 0, -1000, 270);
+    public Location strafe = new Location(100, 0, 0, 0);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -68,7 +68,25 @@ public class BlueCarouselWorlds extends LinearOpMode {
         cap.getServos().get(0).setPosition(.5);
 
         intake.servos.get(0).setPosition(0.4);
+        robot.odometry.reset();
         waitForStart();
-        drivetrain.moveToPosition(turn, 5, 5, 2, 2000);
+        turret.servos.get(0).setPosition(0.656);
+        turret.servos.get(1).setPosition(0.4);
+        turret.motors.get(0).setTargetPosition(0);
+        turret.motors.get(1).setTargetPosition(-400);
+        turret.motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.motors.get(1).setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.motors.get(1).setPower(100);
+        turret.servos.get(0).setPosition(0.446);
+        turret.servos.get(1).setPosition(0.61);
+        robot.odometry.reset();
+        drivetrain.moveToPosition(strafe, 5, 5, 2, 1000);
+        drivetrain.moveToPosition(turn, 5, 5, 2,3500);
+        spinner.motors.get(0).setTargetPosition(3600);
+        spinner.motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        spinner.motors.get(0).setPower(100);
+        sleep(30000);
+
+
     }
 }
