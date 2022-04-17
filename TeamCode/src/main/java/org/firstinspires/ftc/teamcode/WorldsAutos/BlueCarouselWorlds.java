@@ -39,12 +39,13 @@ public class BlueCarouselWorlds extends LinearOpMode {
 
     public boolean hasFreight = false;
 
-    private final Location precarousel = new Location(-100, 0, 0, 0);
-    private final Location carousel = new Location(-100, 0, -600, 0);
-    private final Location hubScore = new Location(-1300, 0, -200, 0);
-    private final Location storageUnit = new Location(-650, 0, -600, 0);
-    private final Location noMansLand = new Location(-1300, 0, -600, 0);
-    public Location turn = new Location(-300, 0, -1000, 270);
+    private final Location precarousel = new Location(0, 0, 125, 0);
+    private final Location carousel = new Location(520, 0, 125, 0);
+    private final Location hubScore = new Location(100, 0, 1100, 0);
+    private final Location storageUnit = new Location(540, 0, 615, 0);
+    private final Location noMansLand = new Location(515, 0, 1100, 0);
+    private final Location noMan2 = new Location(540, 0, 1100, 0);
+    public Location turn = new Location(100, 0, 0, 270);
     public Location strafe = new Location(100, 0, 0, 0);
 
     @Override
@@ -70,8 +71,6 @@ public class BlueCarouselWorlds extends LinearOpMode {
         intake.servos.get(0).setPosition(0.4);
         robot.odometry.reset();
         waitForStart();
-        turret.servos.get(0).setPosition(0.656);
-        turret.servos.get(1).setPosition(0.4);
         turret.motors.get(0).setTargetPosition(0);
         turret.motors.get(1).setTargetPosition(-400);
         turret.motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -81,12 +80,44 @@ public class BlueCarouselWorlds extends LinearOpMode {
         turret.servos.get(1).setPosition(0.61);
         robot.odometry.reset();
         drivetrain.moveToPosition(strafe, 5, 5, 2, 1000);
-        drivetrain.moveToPosition(turn, 5, 5, 2,3500);
+        drivetrain.moveToPosition(turn, 5, 5, 2,750);
+        robot.odometry.reset();
+        drivetrain.moveToPositionSlow(precarousel, 5, 5, 2, 2000);
+        drivetrain.moveToPositionSlow(carousel, 5, 5, 2, 2000);
         spinner.motors.get(0).setTargetPosition(3600);
         spinner.motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        spinner.motors.get(0).setPower(100);
-        sleep(30000);
-
-
+        spinner.motors.get(0).setPower(-0.67);
+        sleep(3600);
+        drivetrain.moveToPositionSlow(noMansLand, 5, 5, 2, 2000);
+        drivetrain.moveToPositionSlow(hubScore, 5, 5, 2, 2000);
+        turret.servos.get(0).setPosition(0.53);
+        turret.servos.get(1).setPosition(0.47);
+        sleep(750);
+        turret.motors.get(1).setTargetPosition(-2700);
+        turret.motors.get(1).setPower(100);
+        sleep(2000);
+        turret.motors.get(0).setTargetPosition(4100);
+        turret.motors.get(0).setPower(1);
+        sleep(1500);
+        turret.servos.get(0).setPosition(0.856);
+        turret.servos.get(1).setPosition(0.2);
+        sleep(600);
+        intake.servos.get(0).setPosition(.1);
+        sleep(250);
+        intake.motors.get(0).setPower(-0.5);
+        sleep(1000);
+        intake.motors.get(0).setPower(0);
+        intake.servos.get(0).setPosition(0);
+        sleep(200);
+        turret.servos.get(0).setPosition(0.356);
+        turret.servos.get(1).setPosition(0.7);
+        turret.motors.get(0).setTargetPosition(2168);
+        sleep(1000);
+        turret.motors.get(1).setPower(60);
+        turret.motors.get(1).setTargetPosition(0);
+        sleep(2000);
+        drivetrain.moveToPositionSlow(noMan2, 5, 5, 5, 2000);
+        sleep(100);
+        drivetrain.moveToPositionSlow(storageUnit, 5, 5, 5, 2000);
     }
 }

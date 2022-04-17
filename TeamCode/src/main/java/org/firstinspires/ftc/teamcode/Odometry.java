@@ -221,7 +221,7 @@ public class Odometry extends Mechanism {
             bulkData = expansionHub.getBulkInputData();
             for (int i = 0; i < 3; i++) {//updates the array encoderDeltamm for each odo wheel to see how much they've moved in mm
                 //if and else for the different expansion hubs... also because the two wheels facing forward need to have negative bulk data reads
-                if ((i == 1 )) {
+                if ((i == 1 || i == 2)) {
                     encoderDeltamm[i] = -ODO_CIRCUMFERENCE_MM * ((bulkData.getMotorCurrentPosition(i) - encoderPositionoffset[i] + encoderPosition[i]) / ODO_ENCODER_TICKS);
                     encoderPosition[i] = -bulkData.getMotorCurrentPosition(i) + encoderPositionoffset[i];
                 } else {

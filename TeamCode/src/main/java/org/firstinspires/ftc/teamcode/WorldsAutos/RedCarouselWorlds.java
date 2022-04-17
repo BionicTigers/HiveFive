@@ -76,24 +76,20 @@ public class RedCarouselWorlds extends LinearOpMode {
             spinner.motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
         waitForStart();
-        turret.servos.get(0).setPosition(0.656);
-        turret.servos.get(1).setPosition(0.4);
         turret.motors.get(0).setTargetPosition(0);
-        turret.motors.get(1).setTargetPosition(-400);
         turret.motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.motors.get(1).setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        turret.motors.get(1).setPower(100);
         turret.servos.get(0).setPosition(0.446);
         turret.servos.get(1).setPosition(0.61);
         robot.odometry.reset();
-        drivetrain.moveToPositionSlow(precarousel, 5, 5, 2, 2000);
-        drivetrain.moveToPositionSlow(carousel, 5, 5, 2, 2000);
+        drivetrain.moveToPositionSlow(precarousel, 5, 5, 5, 2000);
+        drivetrain.moveToPositionSlow(carousel, 5, 5, 5, 2000);
         spinner.motors.get(0).setTargetPosition(-3100);
         spinner.motors.get(0).setPower(0.67);
         sleep(3600);
         spinner.motors.get(0).setPower(0);
-        drivetrain.moveToPositionSlow(noMansLand, 5, 5, 2, 2000);
-        drivetrain.moveToPosition(hubScore, 5, 5, 2, 2000);
+        drivetrain.moveToPositionSlow(noMansLand, 5, 5, 5, 2000);
+        drivetrain.moveToPosition(hubScore, 5, 5, 5, 2000);
         turret.motors.get(0).setTargetPosition(-2100);
         turret.motors.get(1).setTargetPosition(-2900);
         turret.motors.get(1).setPower(100);
@@ -115,8 +111,8 @@ public class RedCarouselWorlds extends LinearOpMode {
         turret.motors.get(0).setTargetPosition(-2000);
         turret.motors.get(1).setPower(60);
         turret.motors.get(1).setTargetPosition(0);
-        drivetrain.moveToPositionSlow(noMansLand, 5, 5, 2, 2000);
-        drivetrain.moveToPositionSlow(storageUnitPark, 5, 5, 2, 2000);
+        drivetrain.moveToPositionSlow(noMansLand, 5, 5, 5, 2000);
+        drivetrain.moveToPositionSlow(storageUnitPark, 5, 5, 5, 2000);
     }
 }
 
