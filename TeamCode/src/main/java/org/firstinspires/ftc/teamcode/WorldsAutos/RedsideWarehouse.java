@@ -47,8 +47,8 @@ public class RedsideWarehouse extends LinearOpMode {
 
     private final Location dropZone = new Location(-465.544,0,0,0);
     private final Location wall = new Location(200,0,0,0);
-    private final Location warehouse = new Location(10,0,500,0);
-    private final Location grabZone = new Location(10,0,800,0);
+    private final Location warehouse = new Location(10,0,900,0);
+    private final Location grabZone = new Location(-900,0,1000,0);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -88,11 +88,11 @@ public class RedsideWarehouse extends LinearOpMode {
         robot.odometry.reset();
 //        while (!park.hasExpired() && opModeIsActive()) {
 
-            turret.motors.get(0).setTargetPosition(500);
-            turret.motors.get(1).setTargetPosition(1800);
+            turret.motors.get(0).setTargetPosition(850); // level 3 = 800
+            turret.motors.get(1).setTargetPosition(-1000); // level 3 = -2900
             turret.motors.get(1).setPower(100);
-            turret.servos.get(0).setPosition(0.8);
-            turret.servos.get(1).setPosition(0.2);
+            turret.servos.get(0).setPosition(0.78); // level 3 = .8 level 2 = .7
+            turret.servos.get(1).setPosition(0.276); // level 3 = .256 level 2 = .356
             sleep(750);
             turret.motors.get(0).setPower(75);
 
@@ -101,40 +101,26 @@ public class RedsideWarehouse extends LinearOpMode {
             //Vision stuffs
 
             intake.servos.get(0).setPosition(.1);
-            intake.motors.get(0).setPower(.5);
+            intake.motors.get(0).setPower(-.65);
             sleep(500);
+            turret.servos.get(0).setPosition(.5);
+            turret.servos.get(1).setPosition(.556);
             intake.motors.get(0).setPower(0);
             intake.servos.get(0).setPosition(0);
-            turret.motors.get(0).setTargetPosition(-2590);
+            turret.motors.get(0).setTargetPosition(-2000);
             turret.motors.get(1).setPower(60);
-            turret.motors.get(1).setTargetPosition(400);
+            turret.motors.get(1).setTargetPosition(-600);
             drivetrain.moveToPosition(wall, 5, 5, 2,2000);
             turret.motors.get(1).setTargetPosition(0);
-            intake.motors.get(0).setPower(-100);
+            intake.motors.get(0).setPower(100);
             intake.servos.get(0).setPosition(0);
-            drivetrain.moveToPosition(warehouse, 5, 5, 2,2000);
-
-
-            while (!hasFreight && opModeIsActive()) {
-                drivetrain.motors.get(0).setPower(30);
-                drivetrain.motors.get(1).setPower(30);
-                drivetrain.motors.get(2).setPower(30);
-                drivetrain.motors.get(3).setPower(30);
-                if (distance.getDistance(DistanceUnit.CM) < 0.8) {
-                    hasFreight = true;
-                }
-                telemetry.addData("HasFreight ", hasFreight);
-                telemetry.update();
-
-                robot.odometry.updatePosition();
-            }
-
             intake.servos.get(0).setPosition(.4);
             hasFreight = false;
-            intake.motors.get(0).setPower(0);
+            intake.motors.get(0).setPower(100);
             turret.servos.get(0).setPosition(0.5);
             turret.servos.get(1).setPosition(0.5);
-            drivetrain.moveToPosition(wall, 5, 5, 2,2);
+        drivetrain.moveToPosition(warehouse, 5, 5, 2,2000);
+        drivetrain.moveToPosition(grabZone, 5, 5, 2, 2000);
         }
 
         //drivetrain.moveToPosition(wall,5,5,2);

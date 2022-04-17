@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.config.Config;
+
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -13,10 +15,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 //EvilVision be like: Exists
+@Config
 public class EvilVision extends OpenCvPipeline {
     private static int mode=1; //
     private static double area; //represents the area of the contours around the rings
     private Mat hslThresholdOutput = new Mat();
+    public static double minHue = 3;
+    public static double maxHue = 23;
+    public static double minSat = 50;
+    public static double maxSat = 255;
+    public static double minLum = 45;
+    public static double maxLum = 235;
+    public static double minR = 3;
+    public static double maxR = 23;
+    public static double minB = 50;
+    public static double maxB = 255;
+    public static double minG = 45;
+    public static double maxG = 235;
+
+   // double[] hslThresholdHue = {3, 23};
+//    double[] hslThresholdSaturation = {50, 255};
+//    double[] hslThresholdLuminance = {45, 235};
 
     private Mat one;
 
@@ -60,29 +79,34 @@ public class EvilVision extends OpenCvPipeline {
      * @return
      */
 @Override
+
     public Mat processFrame(Mat source0) {
         Mat hiarchy = new Mat();
+//
+//    double[] hslThresholdHue = {3, 23};
+//    double[] hslThresholdSaturation = {50, 255};
+//    double[] hslThresholdLuminance = {45, 235};
 
-    double[] hslThresholdHue = {3, 23};
+    double[] hslThresholdHue = {3, 30};
     double[] hslThresholdSaturation = {50, 255};
-    double[] hslThresholdLuminance = {45 , 235};
+    double[] hslThresholdLuminance = {45, 235};
         //takes values for hue, saturation, and luminance and apply's them to what the camera sees
         hslThreshold(source0, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, hslThresholdOutput);
         List<MatOfPoint> contoursBlack = new ArrayList<>();
 
    Imgproc.GaussianBlur(source0, source0, new Size(9,9), 0);
 
+
         //adds a blur to what the camera sees
 
 
-
         //finds contours from what the camera sees
-        Imgproc.findContours(hslThresholdOutput, contoursBlack, hiarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
+        Imgproc.findContours(hslThresholdOutput, contoursBlack, hiarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_TC89_KCOS);
 
         List<MatOfPoint> Shipppingelement = new ArrayList<>();
 
    for(MatOfPoint con :contoursBlack){
-       if(Imgproc.contourArea(con) >= 500){
+       if(Imgproc.contourArea(con) >= 500 && Imgproc.contourArea(con) < 2000){
            Shipppingelement.add(con);
        }
    }

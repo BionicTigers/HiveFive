@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import android.graphics.Color;
 
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -36,6 +37,7 @@ public class Intake extends Mechanism {
         this.intake = intake;
         motors.add(intake);
         motors.get(0).setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motors.get(0).setDirection(DcMotorSimple.Direction.FORWARD);
         servos.add(intake2);
         distance = d;
     }
@@ -89,7 +91,7 @@ public class Intake extends Mechanism {
      //Controls the intake
     public void write() {
         run(goingIn, goingOut);
-        if(deposit) motors.get(0).setPower(.5);
+        if(deposit) motors.get(0).setPower(-.5);
         if ((goingIn||deposit) && !override){
             servos.get(0).setPosition(0.1);
         }
@@ -101,9 +103,9 @@ public class Intake extends Mechanism {
      //Controls the intake during TeleOp using input from update
     public void run(boolean in, boolean out) {
         if (in) {
-            motors.get(0).setPower(-1);
-        } else if (out) {
             motors.get(0).setPower(1);
+        } else if (out) {
+            motors.get(0).setPower(-1);
         } else if (deposit) {
             motors.get(0).setPower(0.1);
         } else {

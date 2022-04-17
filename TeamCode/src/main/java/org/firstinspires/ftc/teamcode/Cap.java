@@ -39,7 +39,7 @@ public class Cap extends Mechanism {
 
         if (altMode) {
             getCRServos().get(0).setPower(-gp1.left_stick_y);
-            verticalPosition = verticalPosition - (gp1.right_stick_y * .05);
+            verticalPosition = verticalPosition - (gp1.right_stick_y * .02);
             if(verticalPosition > 1) verticalPosition = 1;
             if(verticalPosition < -1) verticalPosition = -1;
             servos.get(0).setPosition(verticalPosition);

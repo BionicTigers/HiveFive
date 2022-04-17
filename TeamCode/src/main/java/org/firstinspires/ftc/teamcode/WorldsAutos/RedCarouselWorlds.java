@@ -8,15 +8,19 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 import org.firstinspires.ftc.teamcode.Cap;
 import org.firstinspires.ftc.teamcode.Drivetrain;
+import org.firstinspires.ftc.teamcode.EvilVision;
 import org.firstinspires.ftc.teamcode.Intake;
 import org.firstinspires.ftc.teamcode.Location;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.Spinner;
 import org.firstinspires.ftc.teamcode.Turret;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.concurrent.TimeUnit;
 
@@ -34,6 +38,7 @@ public class RedCarouselWorlds extends LinearOpMode {
     private Location position = new Location();
     private int[] wheels = {0, 1, 2, 3};
     private int mode;
+    public EvilVision evilvision;
 
     DistanceSensor distance;
 
@@ -45,6 +50,7 @@ public class RedCarouselWorlds extends LinearOpMode {
     private final Location storageUnit = new Location(-650,0,-600,0);
     private final Location storageUnitPark = new Location(-750,0,-700,0);
     private final Location noMansLand = new Location(-1300,0,-600,0);
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -63,17 +69,28 @@ public class RedCarouselWorlds extends LinearOpMode {
         turret.servos.get(0).setPosition(0.456);
         turret.servos.get(1).setPosition(0.60);
         drivetrain.odoDown();
+        OpenCvCamera webcam;
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        webcam.openCameraDevice();
+        webcam.setPipeline(new EvilVision());
+        webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+        evilvision = new EvilVision(webcam);
 
         cap.getServos().get(0).setPosition(.5);
 
         intake.servos.get(0).setPosition(0.4);
+
         while(!isStarted() && !isStopRequested()){
             if(gamepad1.a) {
                 turret.motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 turret.motors.get(1).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             }
+            mode = evilvision.getMode();
             spinner.motors.get(0).setTargetPosition(0);
             spinner.motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            telemetry.addData("mode: ", mode);
+
         }
         waitForStart();
         turret.motors.get(0).setTargetPosition(0);

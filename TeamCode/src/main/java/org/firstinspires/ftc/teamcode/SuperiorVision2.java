@@ -149,7 +149,7 @@ public class SuperiorVision2 extends LinearOpMode
         void inputToCb(Mat input)
         {
             Imgproc.cvtColor(input, YCrCb, Imgproc.COLOR_RGB2YCrCb);
-            Core.extractChannel(YCrCb, Cb, 2);
+            Core.extractChannel(YCrCb, Cb, 1);
         }
 //Luke Comment part 2 electric boogaloo I think you have to change the col unless I am misunderstanding something to find different colors
         //basically YCrCb is stupid and isn't hsv which is what I used and its wack
