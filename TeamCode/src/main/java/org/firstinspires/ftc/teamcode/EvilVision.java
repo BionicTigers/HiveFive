@@ -87,7 +87,7 @@ public class EvilVision extends OpenCvPipeline {
 //    double[] hslThresholdSaturation = {50, 255};
 //    double[] hslThresholdLuminance = {45, 235};
 
-    double[] hslThresholdHue = {3, 30};
+    double[] hslThresholdHue = {3, 23};
     double[] hslThresholdSaturation = {50, 255};
     double[] hslThresholdLuminance = {45, 235};
         //takes values for hue, saturation, and luminance and apply's them to what the camera sees
