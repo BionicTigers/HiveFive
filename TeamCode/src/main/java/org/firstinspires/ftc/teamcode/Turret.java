@@ -37,6 +37,9 @@ public class Turret extends Mechanism{
     public boolean scorepos;
     public boolean retractOnEnd;
     Deadline wait = new Deadline (400, TimeUnit.MILLISECONDS);
+    public boolean sharedHubExtend;
+    public boolean sharedHubExtendleft;
+
 
     Deadline wait2retract = new Deadline (100, TimeUnit.MILLISECONDS);
 
@@ -59,13 +62,13 @@ public class Turret extends Mechanism{
         if(gp2.dpad_up){
             forward = true;
             spinTrim = 0;
-        } else if(gp2.dpad_left){
+        } else if(gp2.dpad_left && !gp2.left_bumper){
             right = true;
             spinTrim = 0;
         } else if(gp2.dpad_down){
             backward = true;
             spinTrim = 0;
-        } else if(gp2.dpad_right){
+        } else if(gp2.dpad_right && !gp2.left_bumper){
             left = true;
             spinTrim = 0;
         } else {
@@ -73,6 +76,16 @@ public class Turret extends Mechanism{
             left = false;
             backward = false;
             right = false;
+        }
+        if(gp2.left_bumper && gp2.dpad_right){
+            mid = true; up = false; down = false;
+            middle = false; extend = false; retract = true;
+            sharedHubExtend = true;
+        }
+        else if (gp2.left_bumper && gp2.dpad_left){
+            mid = true; up = false; down = false;
+            middle = true; extend = false; retract = true;
+            sharedHubExtendleft = true;
         }
         if (gp1.right_bumper && gp1.dpad_up) {
             altMode = true;
@@ -122,6 +135,7 @@ public class Turret extends Mechanism{
             wait2retract.reset();
             retract = true; middle = false; extend = false;
             spinTrim = 0;
+            retractOnEnd = true;
         }
 
         if(gp2.start && gp2.back){
@@ -132,10 +146,10 @@ public class Turret extends Mechanism{
         }
 
         if (gp2.left_stick_y <= -0.5) {
-            verticalTrim = verticalTrim + 15;
+            verticalTrim = verticalTrim - 15;
         }
         if (gp2.left_stick_y >= 0.5) {
-            verticalTrim = verticalTrim - 15;
+            verticalTrim = verticalTrim + 15;
         }
 //        if (gp2.right_trigger >= 0.5) {
 //            verticalTrim = verticalTrim + 5;
@@ -148,11 +162,8 @@ public class Turret extends Mechanism{
             unfold();
             spinTrim = 0;
         }
-        if(!wait2retract.hasExpired())
-        {
-            retractOnEnd = true;
-        }
-        if(wait2retract.hasExpired() && retractOnEnd && ((motors.get(0).getCurrentPosition() < 1000 && motors.get(0).getCurrentPosition() > 0) || (motors.get(0).getCurrentPosition() > -1000 && motors.get(0).getCurrentPosition() < 0)))
+
+        if(wait2retract.hasExpired() && retractOnEnd && ((motors.get(0).getCurrentPosition() < 300 && motors.get(0).getCurrentPosition() > 0) || (motors.get(0).getCurrentPosition() > -300 && motors.get(0).getCurrentPosition() < 0)))
         {
             retractOnEnd = false;
             down = true;
@@ -167,12 +178,16 @@ public class Turret extends Mechanism{
             scorepos = true;
             mid = false;
             down = false;
-
-
-
-
         }
-        if(scorepos && wait.hasExpired() && motors.get(1).getCurrentPosition() < -400)
+        if(sharedHubExtend && motors.get(1).getCurrentPosition() < -800){
+            left = true; right = false; forward = false; backward = false;
+            sharedHubExtend = false;
+        }
+        if(sharedHubExtendleft && motors.get(1).getCurrentPosition() < -800){
+            left = false; right = true; forward = false; backward = false;
+            sharedHubExtendleft = false;
+        }
+        if(scorepos && wait.hasExpired() && motors.get(1).getCurrentPosition() < -800)
         {
             right = true;
             scorepos = false;
@@ -180,7 +195,11 @@ public class Turret extends Mechanism{
             retract = false;
             middle = true;
         }
-        telemetry.addData("up:", up);
+        if (gp2.right_stick_button){
+            motors.get(1).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motors.get(1).setTargetPosition(0);
+            motors.get(1).setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
         telemetry.addData("mid:", mid);
         telemetry.addData("down:", down);
         telemetry.addData("override:", liftOverride);
@@ -208,8 +227,8 @@ public class Turret extends Mechanism{
             servos.get(0).setPosition(0.456); //0.32
             servos.get(1).setPosition(0.60); //0.35
         } else if (middle){
-            servos.get(0).setPosition(0.706 + horizontalTrim);
-            servos.get(1).setPosition(0.35 - horizontalTrim);
+            servos.get(0).setPosition(0.606 + horizontalTrim);
+            servos.get(1).setPosition(0.45 - horizontalTrim);
         }
         if(!liftOverride)
         {
@@ -226,7 +245,7 @@ public class Turret extends Mechanism{
         if (up) {
             motors.get(1).setTargetPosition(-2700 + verticalTrim);
         } else if (mid) {
-            motors.get(1).setTargetPosition(-1900 + verticalTrim);
+            motors.get(1).setTargetPosition(-900 + verticalTrim);
         } else if (down) {
             motors.get(1).setTargetPosition(-50 + verticalTrim);
         }

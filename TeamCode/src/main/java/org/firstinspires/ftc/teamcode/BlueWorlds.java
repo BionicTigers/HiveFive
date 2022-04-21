@@ -21,15 +21,15 @@ This class calls the different mechanisms on the robot so that they can all be u
 controller input
 */
 
-@TeleOp (name = "TeleOpWorlds")
-public class TeleOpWorlds extends LinearOpMode{
+@TeleOp (name = "BlueWorlds")
+public class BlueWorlds extends LinearOpMode{
     public String[] motorNames = {"frontRight","frontLeft","backLeft","backRight"}; //establishes motor names
     public Drivetrain drivetrain; //declares drivetrain
     public Robot robot; //declares robot
     public Intake intake;
     public Cap cap;
-    public Spinner spinner;
-    public Turret turret;
+    public SpinnerBlue spinner;
+    public BlueTurret turret;
     //public ColorSensor color;
     //public RevBlinkinLedDriver blinkinLedDriver;
     //RevBlinkinLedDriver.BlinkinPattern pattern;
@@ -51,9 +51,9 @@ public class TeleOpWorlds extends LinearOpMode{
         drivetrain = new Drivetrain(robot, motorNumbers, telemetry, hardwareMap.get(Servo.class, "SDriveL"), hardwareMap.get(Servo.class, "SDriveM"), hardwareMap.get(Servo.class, "SDriveR"));
         distance = hardwareMap.get(DistanceSensor.class, "distance");
         intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"), hardwareMap.get(Servo.class, "intake2"), distance);
-        spinner = new Spinner(hardwareMap.get(DcMotorEx.class,"spinner"));
+        spinner = new SpinnerBlue(hardwareMap.get(DcMotorEx.class,"spinner"));
         cap = new Cap(hardwareMap.get(CRServo.class, "cap1"), hardwareMap.get(Servo.class, "cap2"), telemetry);
-        turret = new Turret(hardwareMap.get(DcMotorEx.class, "turretSpin"), hardwareMap.get(DcMotorEx.class, "turretLift"), hardwareMap.get(Servo.class, "turretLeft"), hardwareMap.get(Servo.class, "turretRight"), telemetry);
+        turret = new BlueTurret(hardwareMap.get(DcMotorEx.class, "turretSpin"), hardwareMap.get(DcMotorEx.class, "turretLift"), hardwareMap.get(Servo.class, "turretLeft"), hardwareMap.get(Servo.class, "turretRight"), telemetry);
         //color = hardwareMap.get(ColorSensor.class, "color");
         robot.initMotors(motorNames);
 //        blinkinLedDriver = hardwareMap.get(RevBlinkinLedDriver.class, "blinkin");
@@ -93,6 +93,7 @@ public class TeleOpWorlds extends LinearOpMode{
             drivetrain.dashboardtelemetry.addData("Distance (cm)", distance.getDistance(DistanceUnit.CM));
             drivetrain.dashboardtelemetry.addData("Has freight? ", hasFreight);
             drivetrain.dashboardtelemetry.addData("CapVertPos", cap.verticalPosition);
+            drivetrain.dashboardtelemetry.addData("LeftStickX:", gamepad2.left_stick_x);
 //            drivetrain.dashboardtelemetry.addData("endgameFlashies", endgameFlashies.hasExpired());
 //            drivetrain.dashboardtelemetry.addData("endgameFlashiesOver? :(", endgameFlashiesOver.hasExpired());
 //            if(endgameFlashies.hasExpired() && !endgameFlashiesOver.hasExpired() && currentPattern != 3){
@@ -127,11 +128,6 @@ public class TeleOpWorlds extends LinearOpMode{
             drivetrain.dashboardtelemetry.addData("Left servo: ", turret.servos.get(0).getPosition());
             drivetrain.dashboardtelemetry.addData("Right servo: ", turret.servos.get(1).getPosition());
             drivetrain.dashboardtelemetry.addData("Stick: ", gamepad1.right_stick_y);
-            drivetrain.dashboardtelemetry.addData("forward?", turret.forward);
-            drivetrain.dashboardtelemetry.addData("left?", turret.left);
-            drivetrain.dashboardtelemetry.addData("right?", turret.right);
-
-
         }
     }
 }

@@ -26,6 +26,8 @@ public class BlueTurret extends Mechanism{
     public boolean extend = false;
     public boolean middle = false; //middle is for extension, do not confuse with mid plz and thanks.
     public boolean retract = false;
+    public boolean sharedHubExtend;
+    public boolean sharedHubExtendleft;
 
     //public String position = "Mid";
     public Telemetry telemetry;
@@ -59,11 +61,11 @@ public class BlueTurret extends Mechanism{
         if(gp2.dpad_up){
             forward = true;
         } else if(gp2.dpad_left){
-            left = true;
+            right = true;
         } else if(gp2.dpad_down){
             backward = true;
         } else if(gp2.dpad_right){
-            right = true;
+            left = true;
         } else {
             forward = false;
             left = false;
@@ -76,10 +78,20 @@ public class BlueTurret extends Mechanism{
         if (gp1.right_bumper && gp1.dpad_down) {
             altMode = false;
         }
-
-        if ((altMode && gp1.right_stick_x >= 0.3) || gp2.right_stick_x >=.3) {
+        if(gp2.left_bumper && gp2.dpad_right){
+            mid = true; up = false; down = false;
+            middle = false; extend = false; retract = true;
+            sharedHubExtend = true;
+        }
+        else if (gp2.left_bumper && gp2.dpad_left){
+            mid = true; up = false; down = false;
+            middle = true; extend = false; retract = true;
+            sharedHubExtendleft = true;
+        }
+        if ((altMode && gp1.right_stick_x >= 0.3) || gp2.left_stick_x <=-.5) {
             spinTrim = spinTrim + 10;
-        } else if ((altMode && gp1.right_stick_x <= -0.3) || gp2.right_stick_x <= -.3) {
+        }
+        else if ((altMode && gp1.right_stick_x <= -0.3) || gp2.left_stick_x >= .5) {
             spinTrim = spinTrim - 10;
         }
         if (gp2.right_bumper) {
@@ -118,12 +130,20 @@ public class BlueTurret extends Mechanism{
             forward = true; left = false; right = false; backward = false;
             wait2retract.reset();
         }
+        if(sharedHubExtend && motors.get(1).getCurrentPosition() <= -800){
+            left = true; right = false; forward = false; backward = false;
+            sharedHubExtend = false;
+        }
+        if(sharedHubExtendleft && motors.get(1).getCurrentPosition() <= -800){
+            left = false; right = true; forward = false; backward = false;
+            sharedHubExtendleft = false;
+        }
 
         if(gp2.start && gp2.back){
             liftOverride = true;
         }
         if(gp2.right_stick_button && gp2.left_stick_button){
-            unfold();
+            unfoldblue();
         }
 
         if (gp2.left_stick_y <= -0.5) {
@@ -140,7 +160,7 @@ public class BlueTurret extends Mechanism{
 //        }
         if(gp2.x)
         {
-            unfold();
+            unfoldblue();
         }
         if(!wait2retract.hasExpired())
         {
@@ -154,7 +174,7 @@ public class BlueTurret extends Mechanism{
         if(!wait.hasExpired())
         {            right = true;
             forward = false;
-            right = false;
+            left = false;
             backward = false;
             up = true;
             scorepos = true;
@@ -217,12 +237,12 @@ public class BlueTurret extends Mechanism{
         if (up) {
             motors.get(1).setTargetPosition(-2700 + verticalTrim);
         } else if (mid) {
-            motors.get(1).setTargetPosition(-1900 + verticalTrim);
+            motors.get(1).setTargetPosition(-800 + verticalTrim);
         } else if (down) {
             motors.get(1).setTargetPosition(-50 + verticalTrim);
         }
     }
-    public void unfold(){
+    public void unfoldblue(){
         wait.reset();
     }
 }

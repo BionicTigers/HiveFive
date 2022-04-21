@@ -65,7 +65,6 @@ public class RedCarouselWorlds extends LinearOpMode {
 
 
         Deadline park = new Deadline(25, TimeUnit.SECONDS);
-        cap.getServos().get(0).setPosition(0.5);
         turret.servos.get(0).setPosition(0.456);
         turret.servos.get(1).setPosition(0.60);
         drivetrain.odoDown();
@@ -76,8 +75,6 @@ public class RedCarouselWorlds extends LinearOpMode {
         webcam.setPipeline(new EvilVision());
         webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
         evilvision = new EvilVision(webcam);
-
-        cap.getServos().get(0).setPosition(.5);
 
         intake.servos.get(0).setPosition(0.4);
 

@@ -8,15 +8,20 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 import org.firstinspires.ftc.teamcode.Cap;
 import org.firstinspires.ftc.teamcode.Drivetrain;
+import org.firstinspires.ftc.teamcode.EvilVision;
 import org.firstinspires.ftc.teamcode.Intake;
 import org.firstinspires.ftc.teamcode.Location;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.Spinner;
 import org.firstinspires.ftc.teamcode.Turret;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.concurrent.TimeUnit;
 
@@ -61,15 +66,24 @@ public class BlueCarouselWorlds extends LinearOpMode {
 
 
         Deadline park = new Deadline(25, TimeUnit.SECONDS);
-        cap.getServos().get(0).setPosition(0.5);
         turret.servos.get(0).setPosition(0.456);
         turret.servos.get(1).setPosition(0.60);
         drivetrain.odoDown();
 
-        cap.getServos().get(0).setPosition(.5);
-
         intake.servos.get(0).setPosition(0.4);
         robot.odometry.reset();
+        OpenCvCamera webcam;
+
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        webcam.openCameraDevice();
+        webcam.setPipeline(new EvilVision());
+        webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+        EvilVision evilVision = new EvilVision(webcam);
+        while(!isStarted() && !isStopRequested())
+        {
+            telemetry.addData("Mode: ", evilVision.getMode());
+        }
         waitForStart();
         turret.motors.get(0).setTargetPosition(0);
         turret.motors.get(1).setTargetPosition(-400);

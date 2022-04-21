@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-public class Spinner extends Mechanism {
+public class SpinnerBlue extends Mechanism {
 
 
     //Controller buttons
@@ -16,7 +16,7 @@ public class Spinner extends Mechanism {
     public int startSpot = 0;
 
     //Used to declare new instances of Spinner
-    public Spinner(DcMotorEx spinner) {
+    public SpinnerBlue(DcMotorEx spinner) {
         super();
         motors.add(spinner);
         motors.get(0).setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -34,7 +34,7 @@ public class Spinner extends Mechanism {
     }
 
     public void write() {
-        if (spinning && motors.get(0).getCurrentPosition() <= startSpot - 1000*4/3) {
+        if (spinning && motors.get(0).getCurrentPosition() >= startSpot+(1000*(4/3))) {
             motors.get(0).setVelocity(2500);
         }
 
@@ -42,7 +42,7 @@ public class Spinner extends Mechanism {
 
     public void autoSpin() {
         startSpot = motors.get(0).getCurrentPosition();
-        motors.get(0).setTargetPosition(motors.get(0).getCurrentPosition() - 1900);
+        motors.get(0).setTargetPosition(motors.get(0).getCurrentPosition() + 1900);
         motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motors.get(0).setVelocity(1500);
         spinning = true;
