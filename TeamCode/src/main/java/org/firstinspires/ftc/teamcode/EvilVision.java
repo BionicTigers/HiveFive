@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
@@ -20,24 +21,25 @@ public class EvilVision extends OpenCvPipeline {
     private static int mode=1; //
     private static double area; //represents the area of the contours around the rings
     private Mat hslThresholdOutput = new Mat();
-    public static double minHue = 3;
-    public static double maxHue = 23;
+    public static double minHue = 150;
+    public static double maxHue = 180;
     public static double minSat = 50;
     public static double maxSat = 255;
     public static double minLum = 45;
     public static double maxLum = 235;
-    public static double minR = 3;
-    public static double maxR = 23;
-    public static double minB = 50;
-    public static double maxB = 255;
-    public static double minG = 45;
-    public static double maxG = 235;
+    public double x = 5;
+    public double y = 0;
+    public Rect rect;
+    public static List<MatOfPoint> Shippingelement = new ArrayList<>();
+    int i = -1;
+
 
    // double[] hslThresholdHue = {3, 23};
 //    double[] hslThresholdSaturation = {50, 255};
 //    double[] hslThresholdLuminance = {45, 235};
 
     private Mat one;
+    public static boolean showHSL;
 
     public EvilVision(OpenCvCamera cam) {
 
@@ -87,9 +89,9 @@ public class EvilVision extends OpenCvPipeline {
 //    double[] hslThresholdSaturation = {50, 255};
 //    double[] hslThresholdLuminance = {45, 235};
 
-    double[] hslThresholdHue = {3, 23};
-    double[] hslThresholdSaturation = {50, 255};
-    double[] hslThresholdLuminance = {45, 235};
+    double[] hslThresholdHue = {minHue, maxHue};
+    double[] hslThresholdSaturation = {minSat, maxSat};
+    double[] hslThresholdLuminance = {minLum, maxLum};
         //takes values for hue, saturation, and luminance and apply's them to what the camera sees
         hslThreshold(source0, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, hslThresholdOutput);
         List<MatOfPoint> contoursBlack = new ArrayList<>();
@@ -101,22 +103,34 @@ public class EvilVision extends OpenCvPipeline {
 
 
         //finds contours from what the camera sees
-        Imgproc.findContours(hslThresholdOutput, contoursBlack, hiarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_TC89_KCOS);
+        Imgproc.findContours(hslThresholdOutput, contoursBlack, hiarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
 
-        List<MatOfPoint> Shipppingelement = new ArrayList<>();
+
 
    for(MatOfPoint con :contoursBlack){
-       if(Imgproc.contourArea(con) >= 500 && Imgproc.contourArea(con) < 2000){
-           Shipppingelement.add(con);
+       if(Imgproc.contourArea(con) >= 500 ){
+           Shippingelement.add(con);
+           i++;
        }
    }
 
    //uses the matrix from the last loop and draws the contours for the rings over what the camera sees
-   Imgproc.drawContours(source0, Shipppingelement, -1, new Scalar(250,0,250),1);
+    if(showHSL){
+        source0 = hslThresholdOutput;
+
+    }
+
+
+
 
    //gets the area of the contours around the rings
-   if(Shipppingelement.size() > 0){
-       area = Imgproc.contourArea(Shipppingelement.get(0));
+   if(Shippingelement.size() > 0){
+       rect = Imgproc.boundingRect(Shippingelement.get(i));
+       x = rect.x + rect.width/2.0;
+       y = rect.y + rect.height / 2.0;
+       Imgproc.drawContours(source0, Shippingelement, -1, new Scalar(250,0,250),3);
+       Imgproc.rectangle(source0, rect, new Scalar(0,255,0));
+       area = Imgproc.contourArea(Shippingelement.get(i));
    }
    else {
        area = 0;
@@ -167,6 +181,7 @@ public class EvilVision extends OpenCvPipeline {
     public double getArea(){
         return area;
     }
+    public int getRectx() {return rect.x;}
 
     //based of the area of the contours, this method finds the number of rings the camera is seeing (0, 1, 4)
     public void Elementlocation(){
@@ -177,8 +192,6 @@ public class EvilVision extends OpenCvPipeline {
         else if(area <= 6500)
             mode =2;
     }
-
-
     public int getMode(){
         return mode;
     }

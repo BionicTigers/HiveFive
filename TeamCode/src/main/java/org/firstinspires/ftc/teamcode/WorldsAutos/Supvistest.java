@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.WorldsAutos;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -11,9 +12,11 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
 import org.firstinspires.ftc.teamcode.Cap;
+import org.firstinspires.ftc.teamcode.EvilVision;
 import org.firstinspires.ftc.teamcode.Intake;
 import org.firstinspires.ftc.teamcode.Location;
 import org.firstinspires.ftc.teamcode.Output;
+import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.Spinner;
 import org.firstinspires.ftc.teamcode.SuperiorVision;
@@ -51,12 +54,13 @@ public class Supvistest extends LinearOpMode {
     private final Location levelTwoDeposit = new Location(-308.83, 0, -530, 356.14);
 
     private final Location levelThreeDeposit = new Location(-302.02, 0, -428.28, 356.67);
+    private EvilVision evilVision;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        robot = new Robot(this);
         superiorvision = new SuperiorVision();
+
         time = new ElapsedTime();
         Deadline stop = new Deadline(28, TimeUnit.SECONDS);
         Deadline rightTurn = new Deadline(1, TimeUnit.SECONDS);
@@ -67,9 +71,20 @@ public class Supvistest extends LinearOpMode {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         webcam.openCameraDevice();
-        webcam.setPipeline(new SuperiorVision.SkystoneDeterminationPipeline());
+        webcam.setPipeline(new EvilVision());
         webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
-        superiorvision = new SuperiorVision();
+//        FtcDashboard.getInstance().startCameraStream(webcam, 2);
+        evilVision = new EvilVision(webcam);
+        while(!isStopRequested() && !isStarted()) {
+            mode = evilVision.getMode();
+            telemetry.addData("rect y", evilVision.getRectx());
+            telemetry.addData("mode", mode);
+            telemetry.addData("area", evilVision.getArea());
+            telemetry.addData("shippingElement x", evilVision.x);
+            telemetry.addData("Shipping element y: ", evilVision.y);
+            telemetry.update();
+        }
+
         waitForStart();
 
     }
