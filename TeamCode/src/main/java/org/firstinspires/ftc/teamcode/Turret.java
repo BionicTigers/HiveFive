@@ -65,7 +65,7 @@ public class Turret extends Mechanism{
         } else if(gp2.dpad_left && !gp2.left_bumper){
             right = true;
             spinTrim = 0;
-        } else if(gp2.dpad_down){
+        } else if(gp2.dpad_down && !gp2.left_bumper){
             backward = true;
             spinTrim = 0;
         } else if(gp2.dpad_right && !gp2.left_bumper){
@@ -81,11 +81,13 @@ public class Turret extends Mechanism{
             mid = true; up = false; down = false;
             middle = false; extend = false; retract = true;
             sharedHubExtend = true;
+            spinTrim = 0;
         }
         else if (gp2.left_bumper && gp2.dpad_left){
             mid = true; up = false; down = false;
             middle = true; extend = false; retract = true;
             sharedHubExtendleft = true;
+            spinTrim = 0;
         }
         if (gp1.right_bumper && gp1.dpad_up) {
             altMode = true;
@@ -95,19 +97,21 @@ public class Turret extends Mechanism{
         }
 
         if ((altMode && gp1.left_stick_x >= 0.3) || gp2.left_stick_x >=.3) {
-            spinTrim = spinTrim - 10;
-        } else if ((altMode && gp1.left_stick_x <= -0.3) || gp2.left_stick_x <= -.3) {
-            spinTrim = spinTrim + 10;
+            spinTrim = spinTrim - 20;
         }
-        if (gp2.right_bumper) {
+        else if ((altMode && gp1.left_stick_x <= -0.3) || gp2.left_stick_x <= -.3) {
+            spinTrim = spinTrim + 20;
+        }
+
+        if (gp2.right_bumper || (altMode && gp1.dpad_up && !gp1.right_bumper)) {
             extend = true;
             retract = false;
             middle = false;
-        } else if (gp2.right_stick_y >= 0.5) {
+        } else if (gp2.right_stick_y >= 0.5|| (altMode && gp1.dpad_down && !gp1.right_bumper)) {
             extend = false;
             retract = true;
             middle = false;
-        } else if (gp2.right_stick_y <= -0.5) {
+        } else if (gp2.right_stick_y <= -0.5|| (altMode && (gp1.dpad_left || gp1.dpad_right) && !gp1.right_bumper)) {
             middle = true;
             extend = false;
             retract = false;
@@ -145,18 +149,18 @@ public class Turret extends Mechanism{
             unfold();
         }
 
-        if (gp2.left_stick_y <= -0.5) {
-            verticalTrim = verticalTrim - 15;
-        }
         if (gp2.left_stick_y >= 0.5) {
             verticalTrim = verticalTrim + 15;
         }
-//        if (gp2.right_trigger >= 0.5) {
-//            verticalTrim = verticalTrim + 5;
-//        }
-//        if (gp2.left_trigger >= 0.5) {
-//            verticalTrim = verticalTrim - 5;
-//        }
+        if (gp2.left_stick_y <= -0.5) {
+            verticalTrim = verticalTrim - 15;
+        }
+        if (gp2.right_stick_x >= 0.5) {
+            horizontalTrim = horizontalTrim - 15;
+        }
+        if (gp2.right_stick_x <= -0.5) {
+            horizontalTrim = horizontalTrim - 15;
+        }
         if(gp2.x)
         {
             unfold();
@@ -245,7 +249,7 @@ public class Turret extends Mechanism{
         if (up) {
             motors.get(1).setTargetPosition(-2700 + verticalTrim);
         } else if (mid) {
-            motors.get(1).setTargetPosition(-900 + verticalTrim);
+            motors.get(1).setTargetPosition(-1100 + verticalTrim);
         } else if (down) {
             motors.get(1).setTargetPosition(-50 + verticalTrim);
         }

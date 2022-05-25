@@ -81,7 +81,7 @@ public class ConciseIntake extends Mechanism {
      //Controls the intake
     public void write() {
         run();
-        if ((forceDown || distance.getDistance(DistanceUnit.CM)<0.8) && !intaking) {
+        if ((forceDown || distance.getDistance(DistanceUnit.CM)<0.8)) {
             servos.get(0).setPosition(0.4);
         } else {
             servos.get(0).setPosition(0.1);

@@ -33,12 +33,13 @@ public class RedCarouselWorlds extends LinearOpMode {
     public Cap cap;
     public Spinner spinner;
     public Turret turret;
+    private EvilVision evilvision;
+
     public int[] motorNumbers = {0, 1, 2, 3}; //creates motor numbers array
 
     private Location position = new Location();
     private int[] wheels = {0, 1, 2, 3};
     private int mode;
-    public EvilVision evilvision;
 
     DistanceSensor distance;
 
@@ -87,6 +88,7 @@ public class RedCarouselWorlds extends LinearOpMode {
             spinner.motors.get(0).setTargetPosition(0);
             spinner.motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
             telemetry.addData("mode: ", mode);
+            telemetry.update();
 
         }
         waitForStart();
@@ -104,8 +106,22 @@ public class RedCarouselWorlds extends LinearOpMode {
         spinner.motors.get(0).setPower(0);
         drivetrain.moveToPositionSlow(noMansLand, 5, 5, 5, 2000);
         drivetrain.moveToPosition(hubScore, 5, 5, 5, 2000);
-        turret.motors.get(0).setTargetPosition(-2100);
-        turret.motors.get(1).setTargetPosition(-2900);
+
+        switch(mode) {
+            case 1:
+                turret.motors.get(1).setTargetPosition(-900);
+                turret.motors.get(0).setTargetPosition(-1800);
+                break;
+            case 2:
+                turret.motors.get(1).setTargetPosition(-1800);
+                turret.motors.get(0).setTargetPosition(-1800);
+                break;
+
+            default:
+                turret.motors.get(1).setTargetPosition(-2900);
+                turret.motors.get(0).setTargetPosition(-2100);
+                break;
+        }
         turret.motors.get(1).setPower(100);
         sleep(1000);
         turret.motors.get(0).setPower(100);
@@ -115,7 +131,7 @@ public class RedCarouselWorlds extends LinearOpMode {
         sleep(500);
         intake.servos.get(0).setPosition(.1);
         sleep(250);
-        intake.motors.get(0).setPower(.5);
+        intake.motors.get(0).setPower(-.5);
         sleep(1000);
         intake.motors.get(0).setPower(0);
         intake.servos.get(0).setPosition(0);

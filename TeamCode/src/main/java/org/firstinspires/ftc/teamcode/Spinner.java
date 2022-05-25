@@ -34,7 +34,7 @@ public class Spinner extends Mechanism {
     }
 
     public void write() {
-        if (spinning && motors.get(0).getCurrentPosition() <= startSpot - 1000*4/3) {
+        if (spinning && motors.get(0).getCurrentPosition() <= startSpot - (1300*4/3)) {
             motors.get(0).setVelocity(2500);
         }
 
@@ -42,7 +42,7 @@ public class Spinner extends Mechanism {
 
     public void autoSpin() {
         startSpot = motors.get(0).getCurrentPosition();
-        motors.get(0).setTargetPosition(motors.get(0).getCurrentPosition() - 1900);
+        motors.get(0).setTargetPosition(motors.get(0).getCurrentPosition() - 2900);
         motors.get(0).setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motors.get(0).setVelocity(1500);
         spinning = true;

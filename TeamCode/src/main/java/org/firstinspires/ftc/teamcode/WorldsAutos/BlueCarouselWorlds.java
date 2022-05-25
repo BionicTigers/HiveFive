@@ -19,6 +19,7 @@ import org.firstinspires.ftc.teamcode.Location;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.Spinner;
 import org.firstinspires.ftc.teamcode.Turret;
+import org.firstinspires.ftc.teamcode.Vuforia;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -39,6 +40,7 @@ public class BlueCarouselWorlds extends LinearOpMode {
     private Location position = new Location();
     private int[] wheels = {0, 1, 2, 3};
     private int mode;
+    Vuforia vuforia;
 
     DistanceSensor distance;
 
@@ -77,12 +79,14 @@ public class BlueCarouselWorlds extends LinearOpMode {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         webcam.openCameraDevice();
-        webcam.setPipeline(new EvilVision());
+        webcam.setPipeline(new Vuforia());
         webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
-        EvilVision evilVision = new EvilVision(webcam);
+        vuforia = new Vuforia(webcam);
         while(!isStarted() && !isStopRequested())
         {
-            telemetry.addData("Mode: ", evilVision.getMode());
+            telemetry.addData("Mode: ", mode);
+            telemetry.update();
+            mode = vuforia.getMode();
         }
         waitForStart();
         turret.motors.get(0).setTargetPosition(0);
@@ -107,7 +111,17 @@ public class BlueCarouselWorlds extends LinearOpMode {
         turret.servos.get(0).setPosition(0.53);
         turret.servos.get(1).setPosition(0.47);
         sleep(750);
-        turret.motors.get(1).setTargetPosition(-2700);
+        switch(mode) {
+            case 1:
+                turret.motors.get(1).setTargetPosition(-900);
+                break;
+            case 2:
+                turret.motors.get(1).setTargetPosition(-1800);
+                break;
+            default:
+                turret.motors.get(1).setTargetPosition(-2900);
+                break;
+        }
         turret.motors.get(1).setPower(100);
         sleep(2000);
         turret.motors.get(0).setTargetPosition(4100);
@@ -133,5 +147,7 @@ public class BlueCarouselWorlds extends LinearOpMode {
         drivetrain.moveToPositionSlow(noMan2, 5, 5, 5, 2000);
         sleep(100);
         drivetrain.moveToPositionSlow(storageUnit, 5, 5, 5, 2000);
+        drivetrain.odoUp();
+        sleep(1000);
     }
 }

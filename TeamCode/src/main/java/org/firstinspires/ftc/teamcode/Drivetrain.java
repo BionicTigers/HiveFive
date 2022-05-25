@@ -37,13 +37,6 @@ public class Drivetrain extends Mechanism {
     Declares instances of Location to move the robot forward, backward, left, right, clockwise,
     counterclockwise, and to the center of the field
      */
-    private Location forward = new Location (0, 0, 1000, 0);
-    private Location backward = new Location (0, 0, -1000, 0);
-    private Location left = new Location (-500, 0, 0, 0);
-    private Location right = new Location (500, 0, 0, 0);
-    private Location clockwise = new Location (0, 0, 0, 90);
-    private Location counterclockwise = new Location (0, 0, 0, 270);
-    private Location center = new Location (0, 0, 0, 0);
 
     //Spin PID variables
     public double spinError;
@@ -74,7 +67,6 @@ public class Drivetrain extends Mechanism {
         FtcDashboard dashboard = FtcDashboard.getInstance();
         dashboardtelemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
         dashboard.updateConfig();
-        //odo = bot.odometry;
 
         getServos().add(SDrive1);
         getServos().add(SDrive2);

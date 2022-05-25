@@ -16,7 +16,7 @@ public class Cap extends Mechanism {
     public Servo servo;
     public Telemetry telemetry;
     public boolean altMode = false;
-    public double verticalPosition = 0.0;
+    public double verticalPosition = 0.3;
 
     /*
      * Cap constructor; makes a new instance of cap
@@ -38,8 +38,14 @@ public class Cap extends Mechanism {
         }
 
         if (altMode) {
-            getCRServos().get(0).setPower(-gp1.left_stick_y);
-            verticalPosition = verticalPosition - (gp1.right_stick_y * .02);
+            if (gp1.left_stick_y >= 0.3) {
+                getCRServos().get(0).setPower(-1);
+            } else if (gp1.left_stick_y <= -0.3) {
+                getCRServos().get(0).setPower(1);
+            } else {
+                getCRServos().get(0).setPower(0);
+            }
+            verticalPosition = verticalPosition - (gp1.right_stick_y * .005);
             if(verticalPosition > 1) verticalPosition = 1;
             if(verticalPosition < -1) verticalPosition = -1;
             servos.get(0).setPosition(verticalPosition);

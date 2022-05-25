@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.config.Config;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -21,17 +22,21 @@ public class EvilVision extends OpenCvPipeline {
     private static int mode=1; //
     private static double area; //represents the area of the contours around the rings
     private Mat hslThresholdOutput = new Mat();
-    public static double minHue = 150;
-    public static double maxHue = 180;
+    public static double minHue = 3;
+    public static double maxHue = 23;
     public static double minSat = 50;
     public static double maxSat = 255;
     public static double minLum = 45;
     public static double maxLum = 235;
-    public double x = 5;
-    public double y = 0;
-    public Rect rect;
+    public int x = 5;
+    public int y = 0;
+    public int width, height = 0;
+    public Telemetry telemetry;
+
+    public Rect rect = new Rect(1,1,1,1);
     public static List<MatOfPoint> Shippingelement = new ArrayList<>();
-    int i = -1;
+    public int i;
+
 
 
    // double[] hslThresholdHue = {3, 23};
@@ -42,11 +47,11 @@ public class EvilVision extends OpenCvPipeline {
     public static boolean showHSL;
 
     public EvilVision(OpenCvCamera cam) {
-
+        i = -1;
     }
 
     public EvilVision() {
-
+        i = -1;
     }
 
     /**
@@ -125,12 +130,17 @@ public class EvilVision extends OpenCvPipeline {
 
    //gets the area of the contours around the rings
    if(Shippingelement.size() > 0){
-       rect = Imgproc.boundingRect(Shippingelement.get(i));
-       x = rect.x + rect.width/2.0;
-       y = rect.y + rect.height / 2.0;
-       Imgproc.drawContours(source0, Shippingelement, -1, new Scalar(250,0,250),3);
+       rect = Imgproc.boundingRect(Shippingelement.get(0));
+
+
+       x = rect.x;
+       y = rect.y;
+       width = rect.width;
+       height = rect.height;
+       y = rect.y + rect.height / 2;
+       Imgproc.drawContours(source0, Shippingelement, -1, new Scalar(250,0,250),1);
        Imgproc.rectangle(source0, rect, new Scalar(0,255,0));
-       area = Imgproc.contourArea(Shippingelement.get(i));
+       area = Imgproc.contourArea(Shippingelement.get(0));
    }
    else {
        area = 0;
@@ -181,15 +191,15 @@ public class EvilVision extends OpenCvPipeline {
     public double getArea(){
         return area;
     }
-    public int getRectx() {return rect.x;}
+    public int geti() {return i;}
 
     //based of the area of the contours, this method finds the number of rings the camera is seeing (0, 1, 4)
     public void Elementlocation(){
         if(area <= 500)
             mode = 1;
-        else if(area > 6500)
+        else if(area > 3000)
             mode = 3;
-        else if(area <= 6500)
+        else if(area <= 3000)
             mode =2;
     }
     public int getMode(){

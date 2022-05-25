@@ -58,7 +58,7 @@ public class Supvistest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-
+        robot = new Robot(this);
         superiorvision = new SuperiorVision();
 
         time = new ElapsedTime();
@@ -73,15 +73,19 @@ public class Supvistest extends LinearOpMode {
         webcam.openCameraDevice();
         webcam.setPipeline(new EvilVision());
         webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
-//        FtcDashboard.getInstance().startCameraStream(webcam, 2);
+        FtcDashboard.getInstance().startCameraStream(webcam, 4);
         evilVision = new EvilVision(webcam);
         while(!isStopRequested() && !isStarted()) {
             mode = evilVision.getMode();
-            telemetry.addData("rect y", evilVision.getRectx());
+            telemetry.addData("rect width", evilVision.width);
+            telemetry.addData("rect height", evilVision.height);
+
             telemetry.addData("mode", mode);
             telemetry.addData("area", evilVision.getArea());
             telemetry.addData("shippingElement x", evilVision.x);
             telemetry.addData("Shipping element y: ", evilVision.y);
+            telemetry.addData("i: ", evilVision.geti());
+            telemetry.addData("rect.x", evilVision.rect.x);
             telemetry.update();
         }
 

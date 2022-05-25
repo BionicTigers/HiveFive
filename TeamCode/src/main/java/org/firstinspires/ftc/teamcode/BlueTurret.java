@@ -60,11 +60,11 @@ public class BlueTurret extends Mechanism{
     public void update(Gamepad gp1, Gamepad gp2){
         if(gp2.dpad_up){
             forward = true;
-        } else if(gp2.dpad_left){
+        } else if(gp2.dpad_left && !gp2.left_bumper){
             right = true;
-        } else if(gp2.dpad_down){
+        } else if(gp2.dpad_down && !gp2.left_bumper){
             backward = true;
-        } else if(gp2.dpad_right){
+        } else if(gp2.dpad_right && !gp2.left_bumper){
             left = true;
         } else {
             forward = false;
@@ -88,21 +88,21 @@ public class BlueTurret extends Mechanism{
             middle = true; extend = false; retract = true;
             sharedHubExtendleft = true;
         }
-        if ((altMode && gp1.right_stick_x >= 0.3) || gp2.left_stick_x <=-.5) {
-            spinTrim = spinTrim + 10;
+        if ((altMode && gp1.left_stick_x >= 0.3) || gp2.left_stick_x >=.3) {
+            spinTrim = spinTrim - 20;
         }
-        else if ((altMode && gp1.right_stick_x <= -0.3) || gp2.left_stick_x >= .5) {
-            spinTrim = spinTrim - 10;
+        else if ((altMode && gp1.left_stick_x <= -0.3) || gp2.left_stick_x <= -.3) {
+            spinTrim = spinTrim + 20;
         }
-        if (gp2.right_bumper) {
+        if (gp2.right_bumper || (altMode && gp1.dpad_up && !gp1.right_bumper)) {
             extend = true;
             retract = false;
             middle = false;
-        } else if (gp2.right_stick_y >= 0.5) {
+        } else if (gp2.right_stick_y >= 0.5|| (altMode && gp1.dpad_down && !gp1.right_bumper)) {
             extend = false;
             retract = true;
             middle = false;
-        } else if (gp2.right_stick_y <= -0.5) {
+        } else if (gp2.right_stick_y <= -0.5|| (altMode && (gp1.dpad_left || gp1.dpad_right) && !gp1.right_bumper)) {
             middle = true;
             extend = false;
             retract = false;
@@ -124,7 +124,6 @@ public class BlueTurret extends Mechanism{
         else if (gp2.a) {
             mid = false;
             up = false;
-            down = true;
             liftOverride = false;
 
             forward = true; left = false; right = false; backward = false;
@@ -166,15 +165,16 @@ public class BlueTurret extends Mechanism{
         {
             retractOnEnd = true;
         }
-        if(wait2retract.hasExpired() && retractOnEnd)
+        if(wait2retract.hasExpired() && retractOnEnd && ((motors.get(0).getCurrentPosition() < 300 && motors.get(0).getCurrentPosition() > 0) || (motors.get(0).getCurrentPosition() > -300 && motors.get(0).getCurrentPosition() < 0)))
         {
             retractOnEnd = false;
+            down = true;
             retract = true; middle = false; extend = false;
         }
         if(!wait.hasExpired())
-        {            right = true;
+        {            left = true;
             forward = false;
-            left = false;
+            right = false;
             backward = false;
             up = true;
             scorepos = true;
@@ -235,9 +235,9 @@ public class BlueTurret extends Mechanism{
         else motors.get(1).setPower(0);
 
         if (up) {
-            motors.get(1).setTargetPosition(-2700 + verticalTrim);
+            motors.get(1).setTargetPosition(-2900 + verticalTrim);
         } else if (mid) {
-            motors.get(1).setTargetPosition(-800 + verticalTrim);
+            motors.get(1).setTargetPosition(-1100 + verticalTrim);
         } else if (down) {
             motors.get(1).setTargetPosition(-50 + verticalTrim);
         }

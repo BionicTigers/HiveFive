@@ -98,7 +98,7 @@ public class Intake extends Mechanism {
             servos.get(0).setPosition(0.1);
         }
         else {
-            servos.get(0).setPosition(0.4);
+            servos.get(0).setPosition(0.6);
         }
     }
 

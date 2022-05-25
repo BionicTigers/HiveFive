@@ -80,7 +80,7 @@ import java.util.List;
          List<MatOfPoint> Shipppingelement = new ArrayList<>();
 
     for(MatOfPoint con :contoursBlack){
-        if(Imgproc.contourArea(con) >= 1000){
+        if(Imgproc.contourArea(con) >= 500){
             Shipppingelement.add(con);
         }
     }
@@ -144,11 +144,11 @@ import java.util.List;
 
      //based of the area of the contours, this method finds the position of the team shipping elemen (Left Middle Right)
      public void Elementlocation(){
-         if(area <= 1000)
+         if(area <= 500)
              mode = 1;
-         else if(area > 6500)
+         else if(area > 3000)
              mode = 3;
-         else if(area <= 6500)
+         else if(area <= 3000)
              mode =2;
      }
 

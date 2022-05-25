@@ -118,6 +118,8 @@ public class RedsideWarehouse extends LinearOpMode {
             turret.servos.get(1).setPosition(0.5);
         drivetrain.moveToPosition(warehouse, 5, 5, 2,2000);
         drivetrain.moveToPosition(grabZone, 5, 5, 2, 2000);
+        drivetrain.odoUp();
+        wait(1000);
         }
 
         //drivetrain.moveToPosition(wall,5,5,2);
