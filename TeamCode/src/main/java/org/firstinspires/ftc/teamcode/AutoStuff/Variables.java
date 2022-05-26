@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 
 @Config
 public class Variables {
+    /**Forward p*/
     public static double kfP = 0.006;
     public static double kfI = 0.000005;
     public static double kfD = 0;
