@@ -5,9 +5,14 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Intake;
 import org.firstinspires.ftc.teamcode.Mechanism;
 
+import java.util.ArrayList;
+
 public class PracticeClass extends Mechanism {
+
+    public Intake intake;
 
     public PracticeClass(DcMotorEx motor, Servo servo, CRServo continuous){
         motors.add(motor);
@@ -17,6 +22,7 @@ public class PracticeClass extends Mechanism {
 
     public boolean rookie;
     public boolean buttons;
+    public boolean objectFound;
 
     public void update(Gamepad gp1, Gamepad gp2) {
         if(gp1.a && !gp1.b){
@@ -89,10 +95,34 @@ public class PracticeClass extends Mechanism {
             isTrue = false;
             arr[i] = 5;
         }
-        //for each
-        for(int a: arr) {
 
+        /*
+            Arrays vs. ArrayList
+         */
+        //Arrays
+        boolean[] programRobot = {true, true, true, true, true, true, true, true};
+        boolean[] wireRobot = new boolean[8];
+        //loop?
+        for(boolean bool: programRobot) {
+            wireRobot[1] = !bool;
         }
+        for(int i = programRobot.length; i > 0; i--) {
+            wireRobot[i] = false;
+        }
+
+        //ArrayLists
+        ArrayList<String> turr = new ArrayList<String>(8);
+        turr.add("turret");
+        turr.add(1, "turret");
+        turr.get(1);
+
+
+
+//        if(objectFound) {
+//            //turn on the intake
+//            objectIn.deposit();
+//        }
+
     }
 
     public void write() {

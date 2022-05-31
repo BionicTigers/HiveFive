@@ -64,7 +64,7 @@ public class Intake extends Mechanism {
 
     //Deposits freight while color sensor says it's there
     public void deposit() {
-
+        //Deposit freight
     }
     //Deposits for a given time in seconds
     public void deposit(int duration) {
