@@ -18,6 +18,9 @@ public class TrainDrive extends Mechanism {
     public DcMotorEx frontLeft;
     public DcMotorEx backRight;
     public DcMotorEx backLeft;
+
+    private int moveDirection;
+    private float movePower;
     //Constructor
     public TrainDrive(DcMotorEx fl, DcMotorEx fr, DcMotorEx bl, DcMotorEx  br){
         frontRight = fr;
@@ -26,29 +29,73 @@ public class TrainDrive extends Mechanism {
         backLeft = bl;
     }
     //Methods
-    public void moveForwardRight(){
-        frontRight.setPower(-1);
-        backRight.setPower(-1);
+    private void moveForwardRight(float power){
+        frontRight.setPower(-power);
+        backRight.setPower(-power);
     }
-    public void moveBackwardRight(){
-        frontRight.setPower(1);
-        backRight.setPower(1);
+    private void moveBackwardRight(float power){
+        frontRight.setPower(power);
+        backRight.setPower(power);
     }
-    public void moveForwardLeft(){
-        frontLeft.setPower(-1);
-        backLeft.setPower(-1);
+    private void moveForwardLeft(float power){
+        frontLeft.setPower(-power);
+        backLeft.setPower(-power);
     }
-    public void moveBackwardLeft(){
-        frontLeft.setPower(1);
-        backLeft.setPower(1);
+    private void moveBackwardLeft(float power){
+        frontLeft.setPower(power);
+        backLeft.setPower(power);
     }
-    @Override
+    public void moveForward(float power) {
+        moveForwardLeft(power);
+        moveForwardRight(power);
+    }
+    public void moveBackward(float power) {
+        moveBackwardLeft(power);
+        moveBackwardRight(power);
+    }
+    public void turnRight(float power) {
+        moveForwardRight(power);
+        moveBackwardLeft(power);
+    }
+    public void turnLeft(float power) {
+        moveForwardLeft(power);
+        moveBackwardRight(power);
+    }
+    public void stop() {
+        frontRight.setPower(0);
+        frontLeft.setPower(0);
+        backRight.setPower(0);
+        backLeft.setPower(0);
+    }
+
     public void update(Gamepad gp1, Gamepad gp2) {
-
+        if (gp1.left_stick_y > 0.3) {
+            moveDirection = 1;
+            movePower = Math.abs(gp1.left_stick_y);
+        } else if (gp1.left_stick_y < -0.3) {
+            moveDirection = 3;
+            movePower = Math.abs(gp1.left_stick_y);
+        } else if (gp1.left_stick_x > 0.3) {
+            moveDirection = 4;
+            movePower = Math.abs(gp1.left_stick_x);
+        } else if (gp1.left_stick_x < -0.3) {
+            moveDirection = 2;
+            movePower = Math.abs(gp1.left_stick_x);
+        }
     }
 
-    @Override
     public void write() {
-
+        switch (moveDirection) {
+            case 1: //Forward
+                moveForward(movePower);
+            case 2: //Left
+                turnLeft(movePower);
+            case 3: //Backwards
+                moveBackward(movePower);
+            case 4: //Right
+                turnRight(movePower);
+            default:
+                stop();
+        }
     }
 }
