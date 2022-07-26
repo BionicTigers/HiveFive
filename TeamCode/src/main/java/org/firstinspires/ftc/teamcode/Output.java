@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.internal.system.Deadline;
+
 public class Output extends Mechanism {
 
     //This variable controls the position of the dropper
@@ -11,7 +13,7 @@ public class Output extends Mechanism {
     public Servo servo;
     public boolean drop2;
     public boolean mid;
-
+    public Deadline open;
      //Creates, declares, and assigns a servo to the servos array list
     public Output(Servo d) {
         super();
@@ -19,8 +21,7 @@ public class Output extends Mechanism {
         getServos().add(servo);
     }
 
-
-     //Deposits an object in the output and returns it to
+    //Deposits an object in the output and returns it to
     public void deposit(){
         //It looks ugly, but this is how wait works
         servo.setPosition(0.8);
