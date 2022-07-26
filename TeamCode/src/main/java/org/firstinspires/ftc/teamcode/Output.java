@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 
+import java.util.concurrent.TimeUnit;
+
 public class Output extends Mechanism {
 
     //This variable controls the position of the dropper
@@ -13,7 +15,7 @@ public class Output extends Mechanism {
     public Servo servo;
     public boolean drop2;
     public boolean mid;
-    public Deadline open;
+    Deadline open = new Deadline(500, TimeUnit.MILLISECONDS);
      //Creates, declares, and assigns a servo to the servos array list
     public Output(Servo d) {
         super();
@@ -23,14 +25,11 @@ public class Output extends Mechanism {
 
     //Deposits an object in the output and returns it to
     public void deposit(){
-        //It looks ugly, but this is how wait works
+        open.reset();
         servo.setPosition(0.8);
-        try {
-            wait(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if(open.hasExpired()) {
+            servo.setPosition(0.2);
         }
-        servo.setPosition(0.2);
     }
 
     public void update(Gamepad gp1, Gamepad gp2) {
