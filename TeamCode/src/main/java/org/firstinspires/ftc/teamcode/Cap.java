@@ -36,19 +36,10 @@ public class Cap extends Mechanism {
     public void moveToScoringHeight(){
         servos.get(0).setPosition(0.61);
     }
-    public void moveToScoringHeight2(){
+    public void moveToDoubleScoringHeight(){
         servos.get(0).setPosition(0.75);
     }
-    public void movetoBalanceHeight() {servos.get(0).setPosition(.68);}
-    public void pickUpElement(){
-        servos.get(0).setPosition(0);
-        try {
-            wait(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        servo.setPosition(1);
-    }
+    public void moveToBalanceHeight() {servos.get(0).setPosition(.68);}
 
     /*
      * Returns arm servo position
@@ -67,13 +58,13 @@ public class Cap extends Mechanism {
         if(gp2.dpad_down)
             moveToIntakeHeight();
         if(gp2.x){
-            moveToScoringHeight2();
+            moveToDoubleScoringHeight();
         }
         if(gp2.y){
             moveToScoringHeight();
         }
         if(gp2.right_stick_button){
-            movetoBalanceHeight();
+            moveToBalanceHeight();
         }
     }
 
