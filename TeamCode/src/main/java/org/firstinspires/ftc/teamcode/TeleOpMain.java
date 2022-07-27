@@ -27,7 +27,6 @@ public class TeleOpMain extends LinearOpMode{
     public Output output;
     public Cap cap;
     public Spinner spinner;
-    //public BNO055IMU gyro;
 
     public int[] motorNumbers = {0, 1, 2, 3}; //creates motor numbers array
 
@@ -41,10 +40,6 @@ public class TeleOpMain extends LinearOpMode{
         spinner = new Spinner(hardwareMap.get(CRServo.class, "spinner"), hardwareMap.get(Servo.class, "carouselB"));
         cap = new Cap(hardwareMap.get(Servo.class, "capServo"));
         robot.initMotors(motorNames);
-//        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-//        gyro = new Gyro(telemetry);
-//        gyro = hardwareMap.get(BNO055IMU.class, "imu");
-//        gyro.initialize(parameters);
         //These lines set motors and servos to their default position once teleOp starts
         waitForStart();
         spinner.servos.get(0).setPosition(.5);
