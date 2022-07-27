@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -13,10 +14,9 @@ public class Spinner extends Mechanism{
     public boolean servoB;
 
      //Used to declare new instances of Spinner
-    public Spinner(CRServo spinner, Servo carouselB) {
+    public Spinner(DcMotorEx spinner) {
         super();
-        crServos.add(spinner);
-        servos.add(carouselB);
+        motors.add(spinner);
     }
 
     //Carousel arm methods

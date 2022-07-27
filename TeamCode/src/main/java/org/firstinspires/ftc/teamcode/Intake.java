@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class Intake extends Mechanism {
 
@@ -15,6 +16,9 @@ public class Intake extends Mechanism {
     public Intake(DcMotorEx intake) {
         super();
         motors.add(intake);
+    }
+
+    public Intake(DcMotorEx intakeMotor, Servo intakeServo) {
     }
 
     /*
