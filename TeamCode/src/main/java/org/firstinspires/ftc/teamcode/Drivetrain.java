@@ -64,7 +64,7 @@ public class Drivetrain extends Mechanism {
 
 
     //Constructs a drivetrain object with parameters of the robot, motor numbers, telemetry, and 3 servos
-    public Drivetrain(@NonNull org.firstinspires.ftc.teamcode.Robot bot, @NonNull int[] motorNumbers, Telemetry T, Servo SDrive1, Servo SDrive2, Servo SDrive3) {
+    public Drivetrain(@NonNull org.firstinspires.ftc.teamcode.Robot bot, @NonNull int[] motorNumbers, Telemetry T /*Servo SDrive1, Servo SDrive2, Servo SDrive3*/) {
         DcMotorEx motorPlaceholder;
         robot = bot;
         motorIndices = motorNumbers;
@@ -76,9 +76,9 @@ public class Drivetrain extends Mechanism {
         //odo = bot.odometry;
         dashboard = FtcDashboard.getInstance();
         dashboardtelemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
-        getServos().add(SDrive1);
-        getServos().add(SDrive2);
-        getServos().add(SDrive3);
+        //getServos().add(SDrive1);
+        //getServos().add(SDrive2);
+        //getServos().add(SDrive3);
 
         for (int motNum : motorNumbers) {
             motorPlaceholder = robot.motors.get(motNum);

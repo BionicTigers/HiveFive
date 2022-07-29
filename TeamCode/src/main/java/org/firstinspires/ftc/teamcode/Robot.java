@@ -42,10 +42,10 @@ public  class Robot {
         hardwareMap = oop.hardwareMap;
 
         motors = new ArrayList<>();
-        motors.add((DcMotorEx)hardwareMap.get(DcMotorEx.class,"frontLeft"));
-        motors.add((DcMotorEx)hardwareMap.get(DcMotorEx.class,"frontRight"));
-        motors.add((DcMotorEx)hardwareMap.get(DcMotorEx.class,"backLeft"));
-        motors.add((DcMotorEx)hardwareMap.get(DcMotorEx.class,"backRight"));
+        motors.add(hardwareMap.get(DcMotorEx.class,"frontLeft"));
+        motors.add(hardwareMap.get(DcMotorEx.class,"frontRight"));
+        motors.add(hardwareMap.get(DcMotorEx.class,"backLeft"));
+        motors.add(hardwareMap.get(DcMotorEx.class,"backRight"));
         motors.get(0).setDirection(DcMotorSimple.Direction.REVERSE);
         motors.get(1).setDirection(DcMotorSimple.Direction.REVERSE);
         motors.get(3).setDirection(DcMotorSimple.Direction.REVERSE);
@@ -59,7 +59,7 @@ public  class Robot {
 //
 
 
-        odometry = new Odometry(hardwareMap);
+//        odometry = new Odometry(hardwareMap);
     }
 
 
@@ -70,10 +70,10 @@ public  class Robot {
         hardwareMap = linoop.hardwareMap;
 
         motors = new ArrayList<>();
-        motors.add((DcMotorEx)hardwareMap.get(DcMotor.class,"frontRight"));
-        motors.add((DcMotorEx)hardwareMap.get(DcMotor.class,"frontLeft"));
-        motors.add((DcMotorEx)hardwareMap.get(DcMotor.class,"backLeft"));
-        motors.add((DcMotorEx)hardwareMap.get(DcMotor.class,"backRight"));
+        motors.add(hardwareMap.get(DcMotorEx.class,"frontRight"));
+        motors.add(hardwareMap.get(DcMotorEx.class,"frontLeft"));
+        motors.add(hardwareMap.get(DcMotorEx.class,"backLeft"));
+        motors.add(hardwareMap.get(DcMotorEx.class,"backRight"));
         motors.get(0).setDirection(DcMotorSimple.Direction.REVERSE);
         motors.get(3).setDirection(DcMotorSimple.Direction.REVERSE);
         time = new ElapsedTime();

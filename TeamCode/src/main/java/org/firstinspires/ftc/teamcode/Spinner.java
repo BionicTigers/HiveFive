@@ -18,12 +18,12 @@ public class Spinner extends Mechanism {
     public int x = 0;
 
     //Used to declare new instances of Spinner
-    public Spinner(DcMotorEx spinner, Servo carouselB) {
+    public Spinner(DcMotorEx spinner/*, Servo carouselB*/) {
         super();
         motors.add(spinner);
         motors.get(0).setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        servos.add(carouselB);
-        motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        servos.add(carouselB);
+//        motors.get(0).setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     //Carousel arm methods

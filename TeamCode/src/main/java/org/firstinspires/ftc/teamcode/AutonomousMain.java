@@ -95,7 +95,7 @@
 //        }
 //        spinner.crServos.get(0).setPower(0);
 //        spinner.servos.get(0).setPosition(.5);
-//        transfer.motors.get(0).setTargetPosition(0);
+////        transfer.motors.get(0).setTargetPosition(0);
 //        switch(mode) {
 //            case 2:
 //

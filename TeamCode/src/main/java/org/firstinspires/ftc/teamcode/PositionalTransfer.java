@@ -1,3 +1,4 @@
+
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -16,9 +17,11 @@ public class PositionalTransfer extends Mechanism{
     public int trim = 0;
     public int trim2 = 0;
     public boolean currentlyPressed = false;
-    private DigitalChannel channel;
+//    private DigitalChannel channel;
     private HardwareMap hardwareMap;
     private boolean reset = false;
+    private boolean liftOverride = false;
+    private boolean isPressed = false;
 
     public PositionalTransfer(DcMotorEx m, Telemetry T, DigitalChannel channel){
         super();
@@ -33,7 +36,7 @@ public class PositionalTransfer extends Mechanism{
         sensors.get(0).setMode(DigitalChannel.Mode.INPUT);
     }
 
-     //Moves the arm to the bottom
+    //Moves the arm to the bottom
 //    public void moveToBottom(){
 //        motor.setTargetPosition(-250);
 //    }
@@ -56,8 +59,17 @@ public class PositionalTransfer extends Mechanism{
             position = "Down";
         }
 
-         else if (gp2.left_bumper) {
-            trim = trim + 1;
+        else if (gp2.left_bumper) {
+            trim = trim +1;
+        }
+
+        if(gp2.start && gp2.back && !isPressed){
+            if(liftOverride) liftOverride = false;
+            else liftOverride = true;
+            isPressed = true;
+        }
+        else if(!gp2.start && !gp2.back && isPressed){
+            isPressed = false;
         }
 
         if (gp2.right_stick_button) {
@@ -66,6 +78,9 @@ public class PositionalTransfer extends Mechanism{
         if(gp1.y){
             trim2 ++;
         }
+        if(gp2.back){
+            position = "shared";
+        }
         telemetry.addData("position", motors.get(0).getCurrentPosition());
         telemetry.addData("Amps", motors.get(0).getCurrent(CurrentUnit.AMPS));
         telemetry.addData("Is pressed? ", sensors.get(0).getState());
@@ -73,6 +88,7 @@ public class PositionalTransfer extends Mechanism{
         if(gp2.dpad_down){
             position = "intake";
         }
+        if(liftOverride) motors.get(0).setPower(0);
 //        telemetry.update();
     }
 
@@ -87,6 +103,7 @@ public class PositionalTransfer extends Mechanism{
         else if(position == "Down" && sensors.get(0).getState()) {
             motors.get(0).setPower(60);
             motors.get(0).setTargetPosition(-trim2);
+
             if(reset || trim2 < 50) {
                 trim2 = trim2 + 10;
             }
@@ -98,6 +115,10 @@ public class PositionalTransfer extends Mechanism{
         else if (position == "intake")
         {
             motors.get(0).setTargetPosition(250 * 223/312);
+        }
+        else if(position.equals("shared"))
+        {
+            motors.get(0).setTargetPosition(1475*223/312);
         }
         if (position == "Down")
         {
