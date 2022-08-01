@@ -51,9 +51,9 @@ public class PositionalTransfer extends Mechanism{
 //    }
 
     public void update(Gamepad gp1, Gamepad gp2){
-        if(gp2.right_trigger >= 0.5){
+        if(gp2.right_trigger >= 0.5 /* TEMPORARY */ || gp1.y){
             position = "Up";
-        } else if(gp2.left_trigger >= 0.3){
+        } else if(gp2.left_trigger >= 0.3 /* TEMPORARY */ || gp1.a){
             position = "Mid";
         } else if((gp1.right_trigger >= .3  && position != "Up" )){
             position = "Down";

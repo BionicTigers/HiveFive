@@ -36,9 +36,9 @@ public class Output extends Mechanism {
         drop = gp1.right_bumper||gp2.dpad_right;
         drop2 = gp1.left_bumper || gp2.dpad_left;
         reset = gp2.left_trigger >= 0.2 || gp1.right_trigger >= .2 || gp2.dpad_down;
-        if(gp2.left_trigger >= 0.2  || gp2.dpad_down){
+        if(gp2.left_trigger >= 0.2  || gp2.dpad_down /* TEMPORARY */ || gp1.a){
             mid = true;
-        } else if(gp2.right_trigger>=0.2){
+        } else if(gp2.right_trigger>=0.2 /* TEMPORARY */ || gp1.y){
             mid = false;
         }
     }

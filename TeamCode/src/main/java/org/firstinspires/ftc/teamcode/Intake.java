@@ -37,7 +37,7 @@ public class Intake extends Mechanism {
         run(goingIn, goingOut);
 
         if(!stop.hasExpired() && !goingIn){
-            motors.get(0).setPower(1);
+            motors.get(0).setPower(-1);
         }
     }
 
@@ -45,10 +45,10 @@ public class Intake extends Mechanism {
      //Controls the intake during TeleOp using input from update
     public void run(boolean in, boolean out) {
         if (in) {
-            motors.get(0).setPower(-1);
+            motors.get(0).setPower(1);
 
         } else if (out) {
-            motors.get(0).setPower(1);
+            motors.get(0).setPower(-1);
         } else {
             motors.get(0).setPower(0);
         }
