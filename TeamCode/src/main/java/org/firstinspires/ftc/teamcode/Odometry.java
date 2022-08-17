@@ -42,10 +42,7 @@ public class Odometry extends Mechanism {
     private static final double ODO_DISTANCE_MM = 409.3973989;
     //Distance from the center encoder to the center of the robot
     private static final double ODO_DISTANCE_FROM_CENTER = 113.875;
-//795.3-->266.3
 
-//497.10236
-//503.48
 
     //Circumference of the encoder
     private static final double ODO_CIRCUMFERENCE_MM = ODO_DIAMETER_EFFECTIVE_MM * Math.PI;
@@ -89,27 +86,6 @@ public class Odometry extends Mechanism {
         reset();
     }
 
-    /*
-     * Odometry Constructor
-     */
-    public Odometry(HardwareMap hardwareMap, Location startPos) {
-        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Control Hub");
-
-        reset(startPos);
-    }
-
-    /*
-     * Odometry constructor
-     */
-    //New odometry constructor for new robot! The distance and distance from center will be different
-    public Odometry(HardwareMap hardwareMap, double distance, double centerDistance,Location startingLocation) {
-        expansionHub = hardwareMap.get(ExpansionHubEx.class, "Control Hub");
-        reset(startingLocation);
-        //ODO_DISTANCE_MM = 414.25;
-        //ODO_DISTANCE_FROM_CENTER = -56.92; //-88.42
-        //ODO_CIRCUMFERENCE_MM = Math.PI * ODO_DIAMETER_MM;
-        //ENCODER_TICKS_PER_MM = ODO_ENCODER_TICKS / ODO_CIRCUMFERENCE_MM;
-    }
 
     /*
      * Odometry constructor
@@ -133,7 +109,6 @@ public class Odometry extends Mechanism {
     public void reset() {
         try {
             bulkData = expansionHub.getBulkInputData();
-
             for (int i = 0; i < 3; i++) {
                 if (i == 2) {
                     encoderPositionoffset[i] = -bulkData.getMotorCurrentPosition(i);
@@ -166,31 +141,6 @@ public class Odometry extends Mechanism {
             encoderPosition = new int[3];
             position = resettiSpot;
             rotOffset = resettiSpot.getLocation(3);
-        } catch (NullPointerException e) {
-
-        }
-    }
-
-    /*
-     * Resets methods and the robot's position, either to whatever argument is/arguments are passed
-     * in, or, in the case of no arguments, to (0, 0, 0), also resets the encoder positions.
-     */
-    public void reset(Location resetPos) {
-        try {
-            bulkData = expansionHub.getBulkInputData();
-            for (int i = 0; i < 3; i++) {
-                if (i == 2) {
-                    encoderPositionoffset[i] = -bulkData.getMotorCurrentPosition(i);
-                }
-                encoderPositionoffset[i] = bulkData.getMotorCurrentPosition(i);
-            }
-            encoderPosition = new int[3];
-            // if you are running into issues with this method this may be the cause
-            // I have to reset a little backwards because of the jank way the odo is switched for backawards compatability
-            position = resetPos;
-            realMaybe=new Location(resetPos.getLocation(2),0,resetPos.getLocation(0),resetPos.getLocation(3));
-
-            rotOffset = resetPos.getLocation(3);
         } catch (NullPointerException e) {
 
         }
@@ -261,12 +211,10 @@ public class Odometry extends Mechanism {
 
     /* *************************** TELEMETRY STRING METHODS *************************** */
 
-
-     //Converts the encoder position to a string
+    //Converts the encoder position to a string
     public String currentEncoderPosString() {return encoderPosition[0] + ", " + encoderPosition[1] + ", " + encoderPosition[2];}
-
+    //Converts the mm that the encoder has rotated to a string
     public String currentEncoderMMPosString() {return encoderPosition[0] / ENCODER_TICKS_PER_MM + ", " + encoderPosition[1]/ ENCODER_TICKS_PER_MM + ", " + encoderPosition[2]/ ENCODER_TICKS_PER_MM;}
-
     //Converts the robot position to a string
     public String currentRobotPositionString() {return position.getLocation(0) + ", " + position.getLocation(2) + ", " + position.getLocation(3);}
 
