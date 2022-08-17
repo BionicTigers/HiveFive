@@ -2,14 +2,12 @@ package org.firstinspires.ftc.teamcode;
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.AutoStuff.Variables;
-import com.qualcomm.robotcore.hardware.Servo;
 
 /*
  * This class declares the drivetrain mechanism, sends data from the controller to the robot and
@@ -191,7 +189,7 @@ public class Drivetrain extends Mechanism {
         dashboardtelemetry.addData("ErrorZ", + error.getLocation(2));
         dashboardtelemetry.addData("ErrorRotation", + error.getLocation(3));
         //Records Location as X, Z, rot
-        dashboardtelemetry.addData("Location: X_", robot.odometry.realMaybe.getLocation(0) + ", Z_" + robot.odometry.realMaybe.getLocation(2) + ", Rotation_" + robot.odometry.realMaybe.getLocation(3));
+        dashboardtelemetry.addData("Location: X_", robot.odometry.position.getLocation(0) + ", Z_" + robot.odometry.position.getLocation(2) + ", Rotation_" + robot.odometry.position.getLocation(3));
         dashboardtelemetry.addData("Left encoder", robot.odometry.getEncoderPosition());
 //        dashboardtelemetry.addData("encoder delta MM 0", robot.odometry.getEncoderPosition()[0]);
         dashboardtelemetry.addData("encoder delta MM 0, 1, 2:", robot.odometry.currentEncoderMMPosString());
@@ -283,17 +281,17 @@ public class Drivetrain extends Mechanism {
     //Finds location error
     public Location findError(Location goalPos) {
         Location error = new Location(
-                goalPos.getLocation(0)-robot.odometry.realMaybe.getLocation(0),
+                goalPos.getLocation(0)-robot.odometry.position.getLocation(0),
                 0,
-                goalPos.getLocation(2) - robot.odometry.realMaybe.getLocation(2),
-                rotationError(goalPos.getLocation(3), robot.odometry.realMaybe.getLocation(3)));
+                goalPos.getLocation(2) - robot.odometry.position.getLocation(2),
+                rotationError(goalPos.getLocation(3), robot.odometry.position.getLocation(3)));
         //this is to change the global xy error into robot specific error
         magnitude = Math.hypot(-error.getLocation(0),error.getLocation(2));
         robotheading = robot.odometry.getPosition().getLocation(3)- Math.atan2(error.getLocation(2),-error.getLocation(0));
         robotheading = Math.atan2(error.getLocation(0),error.getLocation(2));
 
-        double forwardError = (Math.cos(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude);
-        double strafeError = (Math.sin(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude);
+        double forwardError = (Math.cos(robotheading-Math.toRadians(robot.odometry.position.getLocation(3)))*magnitude);
+        double strafeError = (Math.sin(robotheading-Math.toRadians(robot.odometry.position.getLocation(3)))*magnitude);
 
         if(Math.abs(Variables.kfP*forwardError + Variables.kfI*integralValues[0] + Variables.kfD * (forwardError- lastForwardError))<1)
             integralValues[0]= integralValues[0]+forwardError;
@@ -316,17 +314,17 @@ public class Drivetrain extends Mechanism {
 
     public Location findErrorSlow(Location goalPos) {
         Location error = new Location(
-                goalPos.getLocation(0)-robot.odometry.realMaybe.getLocation(0),
+                goalPos.getLocation(0)-robot.odometry.position.getLocation(0),
                 0,
-                goalPos.getLocation(2) - robot.odometry.realMaybe.getLocation(2),
-                rotationError(goalPos.getLocation(3), robot.odometry.realMaybe.getLocation(3)));
+                goalPos.getLocation(2) - robot.odometry.position.getLocation(2),
+                rotationError(goalPos.getLocation(3), robot.odometry.position.getLocation(3)));
         //this is to change the global xy error into robot specific error
         magnitude = Math.hypot(-error.getLocation(0),error.getLocation(2));
         robotheading = robot.odometry.getPosition().getLocation(3)- Math.atan2(error.getLocation(2),-error.getLocation(0));
         robotheading = Math.atan2(error.getLocation(0),error.getLocation(2));
 
-        double forwardError = Math.cos(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude;
-        double strafeError = Math.sin(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude;
+        double forwardError = Math.cos(robotheading-Math.toRadians(robot.odometry.position.getLocation(3)))*magnitude;
+        double strafeError = Math.sin(robotheading-Math.toRadians(robot.odometry.position.getLocation(3)))*magnitude;
 
         if(Math.abs(Variables.kfP*forwardError + Variables.kfI*integralValues[0] + Variables.kfD * (forwardError- lastForwardError))<1)
             integralValues[0]= integralValues[0]+forwardError;
@@ -349,17 +347,17 @@ public class Drivetrain extends Mechanism {
 
     public Location findErrorSuperSlow(Location goalPos) {
         Location error = new Location(
-                goalPos.getLocation(0)-robot.odometry.realMaybe.getLocation(0),
+                goalPos.getLocation(0)-robot.odometry.position.getLocation(0),
                 0,
-                goalPos.getLocation(2) - robot.odometry.realMaybe.getLocation(2),
-                rotationError(goalPos.getLocation(3), robot.odometry.realMaybe.getLocation(3)));
+                goalPos.getLocation(2) - robot.odometry.position.getLocation(2),
+                rotationError(goalPos.getLocation(3), robot.odometry.position.getLocation(3)));
         //this is to change the global xy error into robot specific error
         magnitude = Math.hypot(-error.getLocation(0),error.getLocation(2));
         robotheading = robot.odometry.getPosition().getLocation(3)- Math.atan2(error.getLocation(2),-error.getLocation(0));
         robotheading = Math.atan2(error.getLocation(0),error.getLocation(2));
 
-        double forwardError = Math.cos(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude;
-        double strafeError = Math.sin(robotheading-Math.toRadians(robot.odometry.realMaybe.getLocation(3)))*magnitude;
+        double forwardError = Math.cos(robotheading-Math.toRadians(robot.odometry.position.getLocation(3)))*magnitude;
+        double strafeError = Math.sin(robotheading-Math.toRadians(robot.odometry.position.getLocation(3)))*magnitude;
 
         if(Math.abs(Variables.kfP*forwardError + Variables.kfI*integralValues[0] + Variables.kfD * (forwardError- lastForwardError))<1)
             integralValues[0]= integralValues[0]+forwardError;

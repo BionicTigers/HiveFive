@@ -57,9 +57,7 @@ public class Odometry extends Mechanism {
 
     //Current position fields
     /*Declares a new Location object to track position*/
-    private Location position = new Location();
-    /*Declares another new Location object to track position*/
-    public Location realMaybe = new Location();
+    public Location position = new Location();
     /*X position relative to starting location*/
     public double relativeX;
     /*Y position relative to starting location*/
@@ -117,8 +115,8 @@ public class Odometry extends Mechanism {
             }
             rotOffset = 0;
             encoderPosition = new int[3];
-            position.setLocation(0, 0, 0, 0);
-            realMaybe.setLocation(0,0,0,0);
+//            position.setLocation(0, 0, 0, 0);
+            position.setLocation(0,0,0,0);
         } catch (NullPointerException e) {
 
         }
@@ -176,7 +174,7 @@ public class Odometry extends Mechanism {
             //setting current robo rotation in Location object
             // pos.setRotation((float) Math.toDegrees(((ODO_CIRCUMFERENCE_MM/**circumference*/ * ((encoderPosition[0]) / ODO_ENCODER_TICKS)/**percentage of the wheel revolved*/ - (ODO_CIRCUMFERENCE_MM * ((encoderPosition[1]) / ODO_ENCODER_TICKS)))) / ODO_DISTANCE_MM));
             double angle = (float) Math.toDegrees((encoderPosition[1] - encoderPosition[0]) / (ODO_DISTANCE_MM * ENCODER_TICKS_PER_MM));
-            angle=angle+rotOffset;
+            angle = angle + rotOffset;
             position.setRotation(angle);
             if (Math.abs(botRotDelta) > 0) {
                 double radiusOfMovement = (encoderDeltamm[0] + encoderDeltamm[1]) / (2 * botRotDelta); //Radius that robot moves around
@@ -189,7 +187,7 @@ public class Odometry extends Mechanism {
             }
 
             position.translateLocal(relativeY, relativeX, 0);
-            realMaybe.setLocation(position.getLocation(2), position.getLocation(1), position.getLocation(0), position.getLocation(3));
+            position.setLocation(position.getLocation(2), position.getLocation(1), position.getLocation(0), position.getLocation(3));
         } catch (NullPointerException e) {
 
         }
@@ -217,8 +215,6 @@ public class Odometry extends Mechanism {
     public String currentEncoderMMPosString() {return encoderPosition[0] / ENCODER_TICKS_PER_MM + ", " + encoderPosition[1]/ ENCODER_TICKS_PER_MM + ", " + encoderPosition[2]/ ENCODER_TICKS_PER_MM;}
     //Converts the robot position to a string
     public String currentRobotPositionString() {return position.getLocation(0) + ", " + position.getLocation(2) + ", " + position.getLocation(3);}
-
-    /* *************************** GETTER METHODS *************************** */
 
 
      //Updates every cycle

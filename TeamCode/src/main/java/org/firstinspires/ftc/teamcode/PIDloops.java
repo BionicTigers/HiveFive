@@ -33,9 +33,9 @@ public class PIDloops extends Drivetrain {
     }
 
     public Location determineError(Location location) {
-        error.setLocation(0, location.getLocation(0) - robot.odometry.realMaybe.getLocation(0));
-        error.setLocation(2, location.getLocation(2) - robot.odometry.realMaybe.getLocation(2));
-        error.setLocation(3, rotationError(location.getLocation(3), robot.odometry.realMaybe.getLocation(3)));
+        error.setLocation(0, location.getLocation(0) - robot.odometry.position.getLocation(0));
+        error.setLocation(2, location.getLocation(2) - robot.odometry.position.getLocation(2));
+        error.setLocation(3, rotationError(location.getLocation(3), robot.odometry.position.getLocation(3)));
 
         return error;
     }
