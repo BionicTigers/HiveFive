@@ -47,9 +47,9 @@ public class Drivetrain extends Mechanism {
     public double spinError;
     public double previousSpinError=20;
 
-    private double lastForwardError; //Most recent forward error
-    private double lastSidewaysError; //Most recent sideways error
-    private double lastRotationError; //Most recent rotation error
+    private double forwardPow; //Most recent forward error
+    private double sidePow; //Most recent sideways error
+    private double rotPow; //Most recent rotation error
 
     //Declares a new instance of location to store x y and z errors
     public Location error = new Location();
@@ -278,7 +278,7 @@ public class Drivetrain extends Mechanism {
     }
 
 
-    //Finds location error
+    //Finds the distance between the target position, and the robot's current position
     public Location findError(Location goalPos) {
         Location error = new Location(
                 goalPos.getLocation(0)-robot.odometry.position.getLocation(0),
@@ -293,20 +293,16 @@ public class Drivetrain extends Mechanism {
         double forwardError = (Math.cos(robotheading-Math.toRadians(robot.odometry.position.getLocation(3)))*magnitude);
         double strafeError = (Math.sin(robotheading-Math.toRadians(robot.odometry.position.getLocation(3)))*magnitude);
 
-        if(Math.abs(Variables.kfP*forwardError + Variables.kfI*integralValues[0] + Variables.kfD * (forwardError- lastForwardError))<1)
+        if(Math.abs(Variables.kfP*forwardError + Variables.kfI*integralValues[0] + Variables.kfD * (forwardError- forwardPow))<1)
             integralValues[0]= integralValues[0]+forwardError;
-        if(Math.abs(Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError))<1)
+        if(Math.abs(Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - sidePow))<1)
             integralValues[2]= integralValues[2]+strafeError;
-        if(Math.abs(Variables.krP*error.getLocation(3) + Variables.krI*integralValues[3] + Variables.krD * (error.getLocation(3) - lastRotationError))<1)
+        if(Math.abs(Variables.krP*error.getLocation(3) + Variables.krI*integralValues[3] + Variables.krD * (error.getLocation(3) - rotPow))<1)
             integralValues[3]= integralValues[3]+error.getLocation(3);
 
-        double forwardPow = (Variables.kfP*forwardError+ Variables.kfI*integralValues[0] + Variables.kfD * (forwardError - lastForwardError));
-        double sidePow = (Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError)) ;
-        double rotPow = (Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - lastRotationError));
-
-        lastForwardError = forwardPow;
-        lastSidewaysError = sidePow;
-        lastRotationError = rotPow;
+        double forwardPow = (Variables.kfP*forwardError+ Variables.kfI*integralValues[0] + Variables.kfD * (forwardError - this.forwardPow));
+        double sidePow = (Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - this.sidePow)) ;
+        double rotPow = (Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - this.rotPow));
 
         determineMotorPowers(sidePow,forwardPow,rotPow);
         return error;
@@ -326,20 +322,16 @@ public class Drivetrain extends Mechanism {
         double forwardError = Math.cos(robotheading-Math.toRadians(robot.odometry.position.getLocation(3)))*magnitude;
         double strafeError = Math.sin(robotheading-Math.toRadians(robot.odometry.position.getLocation(3)))*magnitude;
 
-        if(Math.abs(Variables.kfP*forwardError + Variables.kfI*integralValues[0] + Variables.kfD * (forwardError- lastForwardError))<1)
+        if(Math.abs(Variables.kfP*forwardError + Variables.kfI*integralValues[0] + Variables.kfD * (forwardError- forwardPow))<1)
             integralValues[0]= integralValues[0]+forwardError;
-        if(Math.abs(Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError))<1)
+        if(Math.abs(Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - sidePow))<1)
             integralValues[2]= integralValues[2]+strafeError;
-        if(Math.abs(Variables.krP*error.getLocation(3) + Variables.krI*integralValues[3] + Variables.krD * (error.getLocation(3) - lastRotationError))<1)
+        if(Math.abs(Variables.krP*error.getLocation(3) + Variables.krI*integralValues[3] + Variables.krD * (error.getLocation(3) - rotPow))<1)
             integralValues[3]= integralValues[3]+error.getLocation(3);
 
-        double forwardPow = 0.35*((Variables.kfP*forwardError+ Variables.kfI*integralValues[0] + Variables.kfD * (forwardError - lastForwardError)));
-        double sidePow = 0.35*((Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError)));
-        double rotPow = (Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - lastRotationError));
-
-        lastForwardError = forwardPow;
-        lastSidewaysError = sidePow;
-        lastRotationError = rotPow;
+        forwardPow = 0.35*((Variables.kfP*forwardError+ Variables.kfI*integralValues[0] + Variables.kfD * (forwardError - this.forwardPow)));
+        sidePow = 0.35*((Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - this.sidePow)));
+        rotPow = (Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - this.rotPow));
 
         determineMotorPowers(sidePow,forwardPow,rotPow);
         return error;
@@ -359,20 +351,20 @@ public class Drivetrain extends Mechanism {
         double forwardError = Math.cos(robotheading-Math.toRadians(robot.odometry.position.getLocation(3)))*magnitude;
         double strafeError = Math.sin(robotheading-Math.toRadians(robot.odometry.position.getLocation(3)))*magnitude;
 
-        if(Math.abs(Variables.kfP*forwardError + Variables.kfI*integralValues[0] + Variables.kfD * (forwardError- lastForwardError))<1)
+        if(Math.abs(Variables.kfP*forwardError + Variables.kfI*integralValues[0] + Variables.kfD * (forwardError- forwardPow))<1)
             integralValues[0]= integralValues[0]+forwardError;
-        if(Math.abs(Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError))<1)
+        if(Math.abs(Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - sidePow))<1)
             integralValues[2]= integralValues[2]+strafeError;
-        if(Math.abs(Variables.krP*error.getLocation(3) + Variables.krI*integralValues[3] + Variables.krD * (error.getLocation(3) - lastRotationError))<1)
+        if(Math.abs(Variables.krP*error.getLocation(3) + Variables.krI*integralValues[3] + Variables.krD * (error.getLocation(3) - rotPow))<1)
             integralValues[3]= integralValues[3]+error.getLocation(3);
 
-        double forwardPow = 0.2*((Variables.kfP*forwardError+ Variables.kfI*integralValues[0] + Variables.kfD * (forwardError - lastForwardError)));
-        double sidePow = 0.2*((Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - lastSidewaysError)));
-        double rotPow = ((Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - lastRotationError)));
+        double forwardPow = 0.2*((Variables.kfP*forwardError+ Variables.kfI*integralValues[0] + Variables.kfD * (forwardError - this.forwardPow)));
+        double sidePow = 0.2*((Variables.ksP*strafeError + Variables.ksI*integralValues[2] + Variables.ksD * (strafeError - this.sidePow)));
+        double rotPow = ((Variables.krP *error.getLocation(3) + Variables.krI*integralValues[3] +Variables.krD * ( error.getLocation(3) - this.rotPow)));
 
-        lastForwardError = forwardPow;
-        lastSidewaysError = sidePow;
-        lastRotationError = rotPow;
+        this.forwardPow = forwardPow;
+        this.sidePow = sidePow;
+        this.rotPow = rotPow;
 
         determineMotorPowers(sidePow,forwardPow,rotPow);
         return error;
