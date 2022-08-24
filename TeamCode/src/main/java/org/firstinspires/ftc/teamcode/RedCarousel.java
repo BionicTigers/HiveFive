@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous(name = "BlueCarousel", group = "Autonomous")
-public class BlueCarousel extends LinearOpMode {
+@Autonomous(name = "RedCarousel", group = "Autonomous")
+public class RedCarousel extends LinearOpMode {
     private Robot robot;
     private Intake intake;
     private PositionalTransfer transfer;
@@ -24,35 +24,30 @@ public class BlueCarousel extends LinearOpMode {
         output = new Output(hardwareMap.get(Servo.class, "output"));
         intake = new Intake(hardwareMap.get(DcMotorEx.class, "intakeMotor"));
         waitForStart();
-        drive.motors.get(0).setPower(-0.5);
+        drive.motors.get(0).setPower(0.5);
         drive.motors.get(1).setPower(0.5);
-        drive.motors.get(2).setPower(-0.5);
+        drive.motors.get(2).setPower(0.5);
         drive.motors.get(3).setPower(0.5);
         sleep(200);
-        drive.motors.get(0).setPower(-0.5);
+        drive.motors.get(0).setPower(0.5);
         drive.motors.get(1).setPower(-0.5);
-        drive.motors.get(2).setPower(-0.5);
+        drive.motors.get(2).setPower(0.5);
         drive.motors.get(3).setPower(-0.5);
-        sleep(200);
+        sleep(300);
         drive.motors.get(0).setPower(0);
         drive.motors.get(1).setPower(0);
         drive.motors.get(2).setPower(0);
         drive.motors.get(3).setPower(0);
-        spinner.autoSpin();
+        spinner.backSpin();
         sleep(2300);
         drive.motors.get(0).setPower(0.5);
         drive.motors.get(1).setPower(0.5);
         drive.motors.get(2).setPower(0.5);
         drive.motors.get(3).setPower(0.5);
-        sleep(150);
-        drive.motors.get(0).setPower(-0.5);
-        drive.motors.get(1).setPower(0.5);
-        drive.motors.get(2).setPower(-0.5);
-        drive.motors.get(3).setPower(0.5);
-        sleep(1050);
-        drive.motors.get(0).setPower(-0.5);
+        sleep(550);
+        drive.motors.get(0).setPower(0.5);
         drive.motors.get(1).setPower(-0.5);
-        drive.motors.get(2).setPower(-0.5);
+        drive.motors.get(2).setPower(0.5);
         drive.motors.get(3).setPower(-0.5);
         sleep(500);
         drive.motors.get(0).setPower(0);
